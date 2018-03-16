@@ -63,50 +63,49 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         return node
     }
     
-    //    func orbitalAnimateTest(node: SCNNode, centeredAnchor: ARAnchor) {
-    //        if let sun = sceneView.node(for: centeredAnchor){
-    //            var actions: [SCNAction] = []
-    //            let radius = simd_distance(sun.simdTransform.columns.3, node.simdTransform.columns.3)
-    //
-    //            let originX = sun.simdTransform.columns.3.x
-    //            let originZ = sun.simdTransform.columns.3.z
-    //
-    //            for angle in 0..<360{
-    //                let x = originX + cos(Float(angle)) * radius
-    //                let z = originZ + sin(Float(angle)) * radius
-    //                let y = node.simdTransform.columns.3.y
-    //                actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.01))
-    //            }
-    //
-    //            let sequenceAction = SCNAction.sequence(actions)
-    //            node.runAction(sequenceAction)
-    //        }
-    //
-    ////        node.runAction(SCNAction.move(to: SCNVector3(-0.5, 0, -0.5), duration: 2))
-    //    }
-    
-    func orbitalAnimateTest(node: SCNNode, centeredNode: SCNNode) {
-        var actions: [SCNAction] = []
-        //        let radius = abs(node.position.x - centeredNode.position.x)
-        let radius = simd_distance(node.simdTransform.columns.3, sunAnchor.transform.columns.3)
-        
-        for angle in 0..<360{
-            let originX = sunAnchor.transform.columns.3.x
-            let originZ = sunAnchor.transform.columns.3.z
+        func orbitalAnimateTest(node: SCNNode, centeredAnchor: ARAnchor) {
+            var actions: [SCNAction] = []
+            //        let radius = abs(node.position.x - centeredNode.position.x)
+            let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
             
-            let x = originX + cos(Float(angle)) * radius
-            let z = originZ + sin(Float(angle)) * radius
-            let y = node.simdTransform.columns.3.y
+            for angle in 0..<360{
+                let originX = centeredAnchor.transform.columns.3.x
+                let originZ = centeredAnchor.transform.columns.3.z
+                
+                let x = originX + cos(Float(angle)) * radius
+                let z = originZ + sin(Float(angle)) * radius
+                let y = node.simdTransform.columns.3.y
+                
+                print("X: \(x), Z: \(z)")
+                actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.7))
+            }
             
-            print("X: \(x), Z: \(z)")
-            actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.7))
+            let sequenceAction = SCNAction.sequence(actions)
+            node.runAction(sequenceAction)
         }
-        
-        let sequenceAction = SCNAction.sequence(actions)
-        node.runAction(sequenceAction)
-        
-        //        node.runAction(SCNAction.move(to: SCNVector3(-0.5, 0, -0.5), duration: 2))
-    }
+    
+    
+//    func orbitalAnimateTest(node: SCNNode, centeredNode: SCNNode) {
+//        var actions: [SCNAction] = []
+//        //        let radius = abs(node.position.x - centeredNode.position.x)
+//        let radius = simd_distance(node.simdTransform.columns.3, sunAnchor.transform.columns.3)
+//
+//        for angle in 0..<360{
+//            let originX = sunAnchor.transform.columns.3.x
+//            let originZ = sunAnchor.transform.columns.3.z
+//
+//            let x = originX + cos(Float(angle)) * radius
+//            let z = originZ + sin(Float(angle)) * radius
+//            let y = node.simdTransform.columns.3.y
+//
+//            print("X: \(x), Z: \(z)")
+//            actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.7))
+//        }
+//
+//        let sequenceAction = SCNAction.sequence(actions)
+//        node.runAction(sequenceAction)
+//
+//    }
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,7 +146,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         node.runAction(action)
         
         if let earth = earth{
-            orbitalAnimateTest(node: earth, centeredNode: node)
+            orbitalAnimateTest(node: earth, centeredAnchor: anchor)
         }
         
         return node
