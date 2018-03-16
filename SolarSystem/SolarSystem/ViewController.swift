@@ -66,23 +66,33 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         func orbitalAnimateTest(node: SCNNode, centeredAnchor: ARAnchor) {
             var actions: [SCNAction] = []
             //        let radius = abs(node.position.x - centeredNode.position.x)
-            let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
-            
-            for angle in 0..<360{
+            let radius = Float(0.4)
+//                Float( degreesToRadians(degrees: CGFloat(simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3))))
+
+            for angle in stride(from: 360, through: 0, by: -1){
+                
                 let originX = centeredAnchor.transform.columns.3.x
                 let originZ = centeredAnchor.transform.columns.3.z
                 
-                let x = originX + cos(Float(angle)) * radius
-                let z = originZ + sin(Float(angle)) * radius
+                let radianAngle = degreesToRadians(degrees: Float(angle))
+
+                let x = originX + cos(radianAngle) * radius
+                let z = (originZ + sin(radianAngle) * radius)
                 let y = node.simdTransform.columns.3.y
-                
+
                 print("X: \(x), Z: \(z)")
-                actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.7))
+                actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.01))
             }
-            
-            let sequenceAction = SCNAction.sequence(actions)
-            node.runAction(sequenceAction)
+
+            let sequenceAction = SCNAction.sequence(actions)//.reversed()
+            let repeatSequence = SCNAction.repeatForever(sequenceAction)
+            node.runAction(repeatSequence)
         }
+    
+        func degreesToRadians(degrees: Float) -> Float {
+            return degrees * Float(Double.pi) / 180
+        }
+    
     
     
 //    func orbitalAnimateTest(node: SCNNode, centeredNode: SCNNode) {
