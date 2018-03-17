@@ -22,36 +22,17 @@ enum PlanetName: String{
     static var allcases = [sun,mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 }
 
-class Planet: SCNNode{
+class Planet{
     var planetName: PlanetName
-    var radius: CGFloat
+    var node: SCNNode
     
-    init(planetName: PlanetName, position: SCNVector3) {
+    init(planetName: PlanetName, sphere: SCNSphere) {
         self.planetName = planetName
-        self.radius = 0
-        
-        super.init()
-        self.setupPlanet()
-        self.position = position
+        self.node = SCNNode(geometry: sphere)
     }
     
-    convenience init(planetName: PlanetName, position: SCNVector3, withRadius: CGFloat) {
-        self.init(planetName: planetName, position: position)
-        self.radius = radius
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupPlanet() {
-        let sphere = SCNSphere.init(radius: radius)
-        
-        //TO DO: CHANGE THE TEXTURE ACCORDING TO THE PLANET NAME
-        let material = SCNMaterial()
-        material.diffuse.contents = UIImage(named: "art.scnassets/texture.png")
-        sphere.firstMaterial = material
-        
-        self.geometry = sphere
+    convenience init(planetName: PlanetName, sphere: SCNSphere, position: SCNVector3) {
+        self.init(planetName: planetName, sphere: sphere)
+        node.position = position
     }
 }
