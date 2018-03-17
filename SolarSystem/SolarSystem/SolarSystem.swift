@@ -25,29 +25,60 @@ class SolarSystem: SCNScene {
     func setupPlanets(){
         var position = SCNVector3(0, 0, -0.4)
         for planetName in PlanetName.allcases{
-            let sphere = generateSphere(forPlanet: planetName, withRadius: 0.1)
+            
             
             if planetName == .sun{
+                let sphere = generateSphere(planetName: planetName, withRadius: 0.05)
                 planets.append(Planet(planetName: planetName, sphere: sphere))
             }else{
-                planets.append(Planet(planetName: planetName, sphere: sphere, position: position))
+                let sphere = generateSphere(planetName: planetName, withRadius: 0.025)
+                let planet = Planet(planetName: planetName, sphere: sphere, position: position)
+                planets.append(planet)
+                rootNode.addChildNode(planet.node)
             }
-            position.x += 0.4
+            position.x += 0.1
         }
     }
     
-    func generateSphere(forPlanet: PlanetName, withRadius radius: CGFloat) -> SCNSphere{
+    func generateSphere(planetName: PlanetName, withRadius radius: CGFloat) -> SCNSphere{
         let sphere = SCNSphere(radius: radius)
         
         //TO DO: CHANGE THE TEXTURE ACCORDING TO THE PLANET NAME
-        sphere.setMaterial(with: UIImage(named: "art.scnassets/texture.png"))
+        switch planetName {
+        case .sun:
+            sphere.setMaterial(with: UIColor.yellow)
+        case .mercury:
+            sphere.setMaterial(with: UIColor.gray)
+        case .venus:
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/texture.png"))
+        case .earth:
+            sphere.setMaterial(with: UIColor.green)
+        case .mars:
+            sphere.setMaterial(with: UIColor.red)
+        case .jupiter:
+            sphere.setMaterial(with: UIColor.brown)
+        case .saturn:
+            sphere.setMaterial(with: UIColor.orange)
+        case .uranus:
+            sphere.setMaterial(with: UIColor.cyan)
+        case .neptune:
+            sphere.setMaterial(with: UIColor.blue)
+        }
         
         return sphere
     }
     
+    func allPlanetsOrbitating(at anchor: ARAnchor) {
+        planets.forEach { (planet) in
+            if planet.planetName != .sun{
+                orbitalAnimate(node: planet.node, centeredAnchor: anchor)
+            }
+        }
+    }
+    
     func orbitalAnimate(node: SCNNode, centeredAnchor: ARAnchor) {
         var actions: [SCNAction] = []
-        let radius = Float(0.4)
+        let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
         
         for angle in stride(from: 360, through: 0, by: -1){
             
@@ -78,11 +109,7 @@ class SolarSystem: SCNScene {
 extension SolarSystem: ARSCNViewDelegate{
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         if let sun = planets.first(where: { $0.planetName == PlanetName.sun }) {
-            
-            //should be out of here
-            self.rootNode.addChildNode(planets[1].node)
-            orbitalAnimate(node: planets[1].node, centeredAnchor: anchor)
-            
+            allPlanetsOrbitating(at: anchor)
             return sun.node
         }
         
