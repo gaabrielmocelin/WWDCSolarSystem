@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E13DE55E205D952100FADF11 /* Planet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DE55D205D952100FADF11 /* Planet.swift */; };
+		E13DE560205DA44400FADF11 /* SolarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DE55F205DA44400FADF11 /* SolarSystem.swift */; };
 		E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570A205C307400F962E9 /* AppDelegate.swift */; };
 		E1EF570D205C307400F962E9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF570C205C307400F962E9 /* art.scnassets */; };
 		E1EF570F205C307400F962E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570E205C307400F962E9 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E13DE55D205D952100FADF11 /* Planet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Planet.swift; sourceTree = "<group>"; };
+		E13DE55F205DA44400FADF11 /* SolarSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystem.swift; sourceTree = "<group>"; };
 		E1EF5707205C307400F962E9 /* SolarSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EF570A205C307400F962E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1EF570C205C307400F962E9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				E1EF5713205C307400F962E9 /* Assets.xcassets */,
 				E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */,
 				E1EF5718205C307400F962E9 /* Info.plist */,
+				E13DE55D205D952100FADF11 /* Planet.swift */,
+				E13DE55F205DA44400FADF11 /* SolarSystem.swift */,
 			);
 			path = SolarSystem;
 			sourceTree = "<group>";
@@ -140,7 +146,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E13DE55E205D952100FADF11 /* Planet.swift in Sources */,
 				E1EF570F205C307400F962E9 /* ViewController.swift in Sources */,
+				E13DE560205DA44400FADF11 /* SolarSystem.swift in Sources */,
 				E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
