@@ -69,16 +69,20 @@ class SolarSystem: SCNScene {
     }
     
     func allPlanetsOrbitating(at anchor: ARAnchor) {
+        var time: TimeInterval = 4
         planets.forEach { (planet) in
             if planet.planetName != .sun{
-                orbitalAnimate(node: planet.node, centeredAnchor: anchor)
+                orbitalAnimate(node: planet.node, centeredAnchor: anchor, time: time)
+                time += 1.2
             }
         }
     }
     
-    func orbitalAnimate(node: SCNNode, centeredAnchor: ARAnchor) {
+    func orbitalAnimate(node: SCNNode, centeredAnchor: ARAnchor, time: TimeInterval) {
         var actions: [SCNAction] = []
         let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
+        
+        let fractionedTime = time / 360
         
         for angle in stride(from: 360, through: 0, by: -1){
             
@@ -92,7 +96,7 @@ class SolarSystem: SCNScene {
             let y = node.simdTransform.columns.3.y
             
             print("X: \(x), Z: \(z)")
-            actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: 0.01))
+            actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: fractionedTime))
         }
         
         let sequenceAction = SCNAction.sequence(actions)
