@@ -53,8 +53,10 @@ class SolarSystem: SCNScene {
         switch body {
         case .sun:
             let sphere = SCNSphere(radius: 0.05)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/sun.jpg"))
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/sun.jpg"), constant: true)
             let sun = CelestialBody(planetName: body, sphere: sphere)
+//            sun.node.light = SCNLight()
+//            sun.node.light?.type = .omni
             return sun
         case .mercury:
             let sphere = SCNSphere(radius: 0.025)
@@ -209,8 +211,13 @@ extension SolarSystem: ARSCNViewDelegate{
 }
 
 extension SCNGeometry{
-    func setMaterial(with content: Any?) {
+    func setMaterial(with content: Any?, constant: Bool = false) {
         let material = SCNMaterial()
+        
+        if constant{
+            material.lightingModel = .constant
+        }
+        
         if let content = content as? UIImage{
             material.diffuse.contents = content
             self.firstMaterial = material
