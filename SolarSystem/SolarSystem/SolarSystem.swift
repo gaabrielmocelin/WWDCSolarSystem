@@ -12,6 +12,10 @@ import ARKit
 class SolarSystem: SCNScene {
     var planets: [Planet]
     
+    var sun: Planet? {
+        return planets.first(where: { $0.planetName == PlanetName.sun })
+    }
+    
     override init() {
         planets = []
         super.init()
@@ -120,7 +124,6 @@ class SolarSystem: SCNScene {
             let z = (originZ + sin(radianAngle) * radius)
             let y = node.simdTransform.columns.3.y
             
-            print("X: \(x), Z: \(z)")
             actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: fractionedTime))
         }
         
@@ -137,7 +140,7 @@ class SolarSystem: SCNScene {
 
 extension SolarSystem: ARSCNViewDelegate{
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        if let sun = planets.first(where: { $0.planetName == PlanetName.sun }) {
+        if let sun = sun {
             allPlanetsOrbitating(at: anchor)
             return sun.node
         }
