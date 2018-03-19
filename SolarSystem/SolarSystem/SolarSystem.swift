@@ -60,37 +60,37 @@ class SolarSystem: SCNScene {
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/mercury.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.1, y: 0, z: -0.4))
-            planet.yearDuration = 4
+            planet.yearDuration = 10
             return planet
         case .venus:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/venus.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.2, y: 0, z: -0.4))
-            planet.yearDuration = 5
+            planet.yearDuration = 17
             return planet
         case .earth:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/earth_day.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.3, y: 0, z: -0.4))
-            planet.yearDuration = 6.5
+            planet.yearDuration = 22
             return planet
         case .mars:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/mars.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.4, y: 0, z: -0.4))
-            planet.yearDuration = 9
+            planet.yearDuration = 32
             return planet
         case .jupiter:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/jupiter.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.5, y: 0, z: -0.4))
-            planet.yearDuration = 13
+            planet.yearDuration = 45
             return planet
         case .saturn:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/saturn.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
-            planet.yearDuration = 17
+            planet.yearDuration = 60
             planet.node.eulerAngles = SCNVector3(-0.7, -0.7, 0)
             
             //saturn ring
@@ -104,13 +104,13 @@ class SolarSystem: SCNScene {
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/uranus.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.7, y: 0, z: -0.4))
-            planet.yearDuration = 22
+            planet.yearDuration = 90
             return planet
         case .neptune:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/neptune.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.8, y: 0, z: -0.4))
-            planet.yearDuration = 30
+            planet.yearDuration = 125
             return planet
         }
     }
@@ -146,9 +146,15 @@ class SolarSystem: SCNScene {
             actions.append(SCNAction.move(to: SCNVector3.init(x, y, z), duration: fractionedTime))
         }
         
-        let sequenceAction = SCNAction.sequence(actions)
-        let repeatSequence = SCNAction.repeatForever(sequenceAction)
-        node.runAction(repeatSequence)
+        let rotateTime: TimeInterval = time < 30 ? time / (time / 0.9) : time / (time / 1.5)
+        let repeatRotateAction = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: rotateTime))
+        
+        let orbitalSequenceAction = SCNAction.sequence(actions)
+        let repeatOrbitalAction = SCNAction.repeatForever(orbitalSequenceAction)
+        
+        let groupAction = SCNAction.group([repeatRotateAction, repeatOrbitalAction])
+        
+        node.runAction(groupAction)
     }
     
     //GENERATE A FLOAT EXTENSION TO DO THATTTT
