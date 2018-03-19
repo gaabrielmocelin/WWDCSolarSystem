@@ -108,7 +108,7 @@ class SolarSystem: SCNScene {
     }
     
     func allPlanetsOrbitating(at anchor: ARAnchor) {
-       // generateOrbitalPaths()
+        generateOrbitalPaths()
         
         planets.forEach { (planet) in
             if let yearDuration = planet.yearDuration{
@@ -152,23 +152,22 @@ class SolarSystem: SCNScene {
         return simd_distance(body.node.simdTransform.columns.3, anchor.transform.columns.3)
     }
     
-    
-    //NOT WORKINGGGGG ---------------------------------
     func generateOrbitalPaths() {
         guard let anchor = sunAnchor else { return }
         planets.forEach { (planet) in
-            let torus = SCNTorus(ringRadius: CGFloat(distance(of: planet, toAnchor: anchor)), pipeRadius: 0.001)
+            let torus = SCNTorus(ringRadius: CGFloat(distance(of: planet, toAnchor: anchor)), pipeRadius: 0.0007)
+            torus.setMaterial(with: UIColor.lightGray)
             let pathNode = SCNNode(geometry: torus)
+            
+            let x = anchor.transform.columns.3.x
+            let y = anchor.transform.columns.3.y
+            let z = anchor.transform.columns.3.z
+            
+            pathNode.position = SCNVector3(x,y,z)
             orbitalPaths.append(pathNode)
             rootNode.addChildNode(pathNode)
         }
     }
-    
-    func removeOrbitalPaths() {
-        orbitalPaths.forEach{$0.removeFromParentNode()}
-        orbitalPaths = []
-    }
-
 }
 
 extension SolarSystem: ARSCNViewDelegate{
@@ -181,12 +180,6 @@ extension SolarSystem: ARSCNViewDelegate{
         
         return SCNNode()
     }
-    
-//    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-//        sunAnchor = anchor
-//        removeOrbitalPaths()
-//        generateOrbitalPaths()
-//    }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
@@ -201,7 +194,7 @@ extension SolarSystem: ARSCNViewDelegate{
     }
 }
 
-extension SCNSphere{
+extension SCNGeometry{
     func setMaterial(with content: Any?) {
         let material = SCNMaterial()
         if let content = content as? UIImage{
