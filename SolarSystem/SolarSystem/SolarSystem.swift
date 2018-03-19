@@ -95,16 +95,15 @@ class SolarSystem: SCNScene {
     }
     
     func allPlanetsOrbitating(at anchor: ARAnchor) {
-        var time: TimeInterval = 4
         planets.forEach { (planet) in
-            if planet.planetName != .sun{
-                orbitalAnimate(node: planet.node, centeredAnchor: anchor, time: time)
-                time += 1.2
+            if let yearDuration = planet.yearDuration, planet.planetName != .sun{
+                orbitalAnimate(planet: planet, centeredAnchor: anchor, time: yearDuration)
             }
         }
     }
     
-    func orbitalAnimate(node: SCNNode, centeredAnchor: ARAnchor, time: TimeInterval) {
+    func orbitalAnimate(planet: Planet, centeredAnchor: ARAnchor, time: TimeInterval) {
+        let node = planet.node
         var actions: [SCNAction] = []
         let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
         
