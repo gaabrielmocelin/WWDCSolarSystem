@@ -53,54 +53,54 @@ class SolarSystem: SCNScene {
         switch body {
         case .sun:
             let sphere = SCNSphere(radius: 0.05)
-            sphere.setMaterial(with: UIColor.yellow)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/sun.jpg"))
             let sun = CelestialBody(planetName: body, sphere: sphere)
             return sun
         case .mercury:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.gray)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/mercury.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.1, y: 0, z: -0.4))
             planet.yearDuration = 4
             return planet
         case .venus:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/texture.png"))
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/venus.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.2, y: 0, z: -0.4))
             planet.yearDuration = 5
             return planet
         case .earth:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.green)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/earth_day.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.3, y: 0, z: -0.4))
             planet.yearDuration = 6.5
             return planet
         case .mars:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.red)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/mars.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.4, y: 0, z: -0.4))
             planet.yearDuration = 9
             return planet
         case .jupiter:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.brown)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/jupiter.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.5, y: 0, z: -0.4))
             planet.yearDuration = 13
             return planet
         case .saturn:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.orange)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/saturn.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
             planet.yearDuration = 17
             return planet
         case .uranus:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.cyan)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/uranus.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.7, y: 0, z: -0.4))
             planet.yearDuration = 22
             return planet
         case .neptune:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIColor.blue)
+            sphere.setMaterial(with: UIImage(named: "art.scnassets/neptune.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.8, y: 0, z: -0.4))
             planet.yearDuration = 30
             return planet
