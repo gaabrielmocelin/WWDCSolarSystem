@@ -91,7 +91,7 @@ class SolarSystem: SCNScene {
             sphere.setMaterial(with: UIImage(named: "art.scnassets/saturn.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
             planet.yearDuration = 17
-            planet.node.eulerAngles = SCNVector3(0.7, 0.1, 0)
+            planet.node.eulerAngles = SCNVector3(-0.7, -0.7, 0)
             
             //saturn ring
             let tube = SCNTube(innerRadius: 0.03, outerRadius: 0.05, height: 0.0005)
