@@ -24,6 +24,7 @@ enum PlanetName: String{
 
 class Planet{
     var planetName: PlanetName
+    var yearDuration: TimeInterval?
     var node: SCNNode
     
     init(planetName: PlanetName, sphere: SCNSphere) {

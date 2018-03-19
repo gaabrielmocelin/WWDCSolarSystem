@@ -23,49 +23,75 @@ class SolarSystem: SCNScene {
     }
     
     func setupPlanets(){
-        var position = SCNVector3(0, 0, -0.4)
         for planetName in PlanetName.allcases{
-            
-            
             if planetName == .sun{
-                let sphere = generateSphere(planetName: planetName, withRadius: 0.05)
-                planets.append(Planet(planetName: planetName, sphere: sphere))
+                planets.append(generatePlanet(planetName: planetName))
             }else{
-                let sphere = generateSphere(planetName: planetName, withRadius: 0.025)
-                let planet = Planet(planetName: planetName, sphere: sphere, position: position)
+                let planet = generatePlanet(planetName: planetName)
                 planets.append(planet)
                 rootNode.addChildNode(planet.node)
             }
-            position.x += 0.1
         }
     }
     
-    func generateSphere(planetName: PlanetName, withRadius radius: CGFloat) -> SCNSphere{
-        let sphere = SCNSphere(radius: radius)
+    func generatePlanet(planetName: PlanetName) -> Planet{
         
         //TO DO: CHANGE THE TEXTURE ACCORDING TO THE PLANET NAME
         switch planetName {
         case .sun:
+            let sphere = SCNSphere(radius: 0.05)
             sphere.setMaterial(with: UIColor.yellow)
+            let planet = Planet(planetName: planetName, sphere: sphere)
+            return planet
         case .mercury:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.gray)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.1, y: 0, z: -0.4))
+            planet.yearDuration = 4
+            return planet
         case .venus:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/texture.png"))
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.2, y: 0, z: -0.4))
+            planet.yearDuration = 5
+            return planet
         case .earth:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.green)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.3, y: 0, z: -0.4))
+            planet.yearDuration = 6.5
+            return planet
         case .mars:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.red)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.4, y: 0, z: -0.4))
+            planet.yearDuration = 9
+            return planet
         case .jupiter:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.brown)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.5, y: 0, z: -0.4))
+            planet.yearDuration = 13
+            return planet
         case .saturn:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.orange)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
+            planet.yearDuration = 17
+            return planet
         case .uranus:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.cyan)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.7, y: 0, z: -0.4))
+            planet.yearDuration = 22
+            return planet
         case .neptune:
+            let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.blue)
+            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.8, y: 0, z: -0.4))
+            planet.yearDuration = 30
+            return planet
         }
-        
-        return sphere
     }
     
     func allPlanetsOrbitating(at anchor: ARAnchor) {
