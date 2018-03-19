@@ -20,8 +20,13 @@ class SolarSystem: SCNScene {
         return celestialBodies.first(where: { $0.bodyName == BodyName.sun })
     }
     
+    var orbitalPaths: [SCNNode]
+    
+    var sunAnchor: ARAnchor?
+    
     override init() {
         celestialBodies = []
+        orbitalPaths = []
         super.init()
         setupBodies()
     }
@@ -103,6 +108,8 @@ class SolarSystem: SCNScene {
     }
     
     func allPlanetsOrbitating(at anchor: ARAnchor) {
+       // generateOrbitalPaths()
+        
         planets.forEach { (planet) in
             if let yearDuration = planet.yearDuration{
                 orbitalAnimate(planet: planet, centeredAnchor: anchor, time: yearDuration)
@@ -141,9 +148,25 @@ class SolarSystem: SCNScene {
         return degrees * Float(Double.pi) / 180
     }
     
+    func distance(of body: CelestialBody, toAnchor anchor: ARAnchor ) -> Float {
+        return simd_distance(body.node.simdTransform.columns.3, anchor.transform.columns.3)
+    }
     
-    func generateOrbitalPath() {
-        
+    
+    //NOT WORKINGGGGG ---------------------------------
+    func generateOrbitalPaths() {
+        guard let anchor = sunAnchor else { return }
+        planets.forEach { (planet) in
+            let torus = SCNTorus(ringRadius: CGFloat(distance(of: planet, toAnchor: anchor)), pipeRadius: 0.001)
+            let pathNode = SCNNode(geometry: torus)
+            orbitalPaths.append(pathNode)
+            rootNode.addChildNode(pathNode)
+        }
+    }
+    
+    func removeOrbitalPaths() {
+        orbitalPaths.forEach{$0.removeFromParentNode()}
+        orbitalPaths = []
     }
 
 }
@@ -151,12 +174,19 @@ class SolarSystem: SCNScene {
 extension SolarSystem: ARSCNViewDelegate{
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         if let sun = sun {
+            sunAnchor = anchor
             allPlanetsOrbitating(at: anchor)
             return sun.node
         }
         
         return SCNNode()
     }
+    
+//    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+//        sunAnchor = anchor
+//        removeOrbitalPaths()
+//        generateOrbitalPaths()
+//    }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
