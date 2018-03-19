@@ -8,7 +8,7 @@
 
 import SceneKit
 
-enum PlanetName: String{
+enum BodyName: String{
     case sun
     case mercury
     case venus
@@ -22,17 +22,17 @@ enum PlanetName: String{
     static var allcases = [sun,mercury, venus, earth, mars, jupiter, saturn, uranus, neptune]
 }
 
-class Planet{
-    var planetName: PlanetName
+class CelestialBody{
+    var bodyName: BodyName
     var yearDuration: TimeInterval?
     var node: SCNNode
     
-    init(planetName: PlanetName, sphere: SCNSphere) {
-        self.planetName = planetName
+    init(planetName: BodyName, sphere: SCNSphere) {
+        self.bodyName = planetName
         self.node = SCNNode(geometry: sphere)
     }
     
-    convenience init(planetName: PlanetName, sphere: SCNSphere, position: SCNVector3) {
+    convenience init(planetName: BodyName, sphere: SCNSphere, position: SCNVector3) {
         self.init(planetName: planetName, sphere: sphere)
         node.position = position
     }

@@ -10,89 +10,93 @@ import SceneKit
 import ARKit
 
 class SolarSystem: SCNScene {
-    var planets: [Planet]
+    var celestialBodies: [CelestialBody]
     
-    var sun: Planet? {
-        return planets.first(where: { $0.planetName == PlanetName.sun })
+    var planets: [CelestialBody]{
+        return celestialBodies.filter{$0.bodyName != BodyName.sun}
+    }
+    
+    var sun: CelestialBody? {
+        return celestialBodies.first(where: { $0.bodyName == BodyName.sun })
     }
     
     override init() {
-        planets = []
+        celestialBodies = []
         super.init()
-        setupPlanets()
+        setupBodies()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupPlanets(){
-        for planetName in PlanetName.allcases{
-            if planetName == .sun{
-                planets.append(generatePlanet(planetName: planetName))
+    func setupBodies(){
+        for bodyName in BodyName.allcases{
+            if bodyName == .sun{
+                celestialBodies.append(generateCelestialBody(body: bodyName))
             }else{
-                let planet = generatePlanet(planetName: planetName)
-                planets.append(planet)
-                rootNode.addChildNode(planet.node)
+                let body = generateCelestialBody(body: bodyName)
+                celestialBodies.append(body)
+                rootNode.addChildNode(body.node)
             }
         }
     }
     
-    func generatePlanet(planetName: PlanetName) -> Planet{
+    func generateCelestialBody(body: BodyName) -> CelestialBody{
         
         //TO DO: CHANGE THE TEXTURE ACCORDING TO THE PLANET NAME
-        switch planetName {
+        switch body {
         case .sun:
             let sphere = SCNSphere(radius: 0.05)
             sphere.setMaterial(with: UIColor.yellow)
-            let planet = Planet(planetName: planetName, sphere: sphere)
-            return planet
+            let sun = CelestialBody(planetName: body, sphere: sphere)
+            return sun
         case .mercury:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.gray)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.1, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.1, y: 0, z: -0.4))
             planet.yearDuration = 4
             return planet
         case .venus:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/texture.png"))
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.2, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.2, y: 0, z: -0.4))
             planet.yearDuration = 5
             return planet
         case .earth:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.green)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.3, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.3, y: 0, z: -0.4))
             planet.yearDuration = 6.5
             return planet
         case .mars:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.red)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.4, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.4, y: 0, z: -0.4))
             planet.yearDuration = 9
             return planet
         case .jupiter:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.brown)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.5, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.5, y: 0, z: -0.4))
             planet.yearDuration = 13
             return planet
         case .saturn:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.orange)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
             planet.yearDuration = 17
             return planet
         case .uranus:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.cyan)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.7, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.7, y: 0, z: -0.4))
             planet.yearDuration = 22
             return planet
         case .neptune:
             let sphere = SCNSphere(radius: 0.025)
             sphere.setMaterial(with: UIColor.blue)
-            let planet = Planet(planetName: planetName, sphere: sphere, position: SCNVector3(x: 0.8, y: 0, z: -0.4))
+            let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.8, y: 0, z: -0.4))
             planet.yearDuration = 30
             return planet
         }
@@ -100,13 +104,13 @@ class SolarSystem: SCNScene {
     
     func allPlanetsOrbitating(at anchor: ARAnchor) {
         planets.forEach { (planet) in
-            if let yearDuration = planet.yearDuration, planet.planetName != .sun{
+            if let yearDuration = planet.yearDuration{
                 orbitalAnimate(planet: planet, centeredAnchor: anchor, time: yearDuration)
             }
         }
     }
     
-    func orbitalAnimate(planet: Planet, centeredAnchor: ARAnchor, time: TimeInterval) {
+    func orbitalAnimate(planet: CelestialBody, centeredAnchor: ARAnchor, time: TimeInterval) {
         let node = planet.node
         var actions: [SCNAction] = []
         let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
@@ -132,8 +136,14 @@ class SolarSystem: SCNScene {
         node.runAction(repeatSequence)
     }
     
+    //GENERATE A FLOAT EXTENSION TO DO THATTTT
     func degreesToRadians(degrees: Float) -> Float {
         return degrees * Float(Double.pi) / 180
+    }
+    
+    
+    func generateOrbitalPath() {
+        
     }
 
 }
