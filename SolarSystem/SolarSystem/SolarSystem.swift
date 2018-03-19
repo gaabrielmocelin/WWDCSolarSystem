@@ -91,7 +91,7 @@ class SolarSystem: SCNScene {
             sphere.setMaterial(with: UIImage(named: "art.scnassets/saturn.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere, position: SCNVector3(x: 0.6, y: 0, z: -0.4))
             planet.yearDuration = 60
-            planet.node.eulerAngles = SCNVector3(-0.7, -0.7, 0)
+//            planet.node.eulerAngles = SCNVector3(-0.7, -0.7, 0)
             
             //saturn ring
             let tube = SCNTube(innerRadius: 0.03, outerRadius: 0.05, height: 0.0005)
@@ -170,7 +170,7 @@ class SolarSystem: SCNScene {
         guard let anchor = sunAnchor else { return }
         planets.forEach { (planet) in
             let torus = SCNTorus(ringRadius: CGFloat(distance(of: planet, toAnchor: anchor)), pipeRadius: 0.0007)
-            torus.setMaterial(with: UIColor.lightGray)
+            torus.setMaterial(with: UIColor.init(white: 0.7, alpha: 0.4))
             let pathNode = SCNNode(geometry: torus)
             
             let x = anchor.transform.columns.3.x
