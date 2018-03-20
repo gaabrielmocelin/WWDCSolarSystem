@@ -51,9 +51,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         //creating sun on a fixed point
         //SHOULD GET A UPDATED POINT --------------------------------
-        
         var translation = matrix_identity_float4x4
         translation.columns.3.z = -0.4
+        
+//        var translation = sceneView.session.currentFrame!.camera.transform
+//        translation.columns.3.z = -0.4
         sceneView.session.add(anchor: ARAnchor(transform: translation))
         
         // Set the scene to the view
