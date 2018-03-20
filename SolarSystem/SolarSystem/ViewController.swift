@@ -14,7 +14,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     
-    var welcomeView: WelcomeView?
+    var welcomeView: WelcomeView!
     
     var sunAnchor: ARAnchor!
     
@@ -24,10 +24,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        sceneView = ARSCNView(frame: UIScreen.main.bounds)
+        sceneView = ARSCNView()
+        self.view.addSubview(sceneView)
+        sceneView.translatesAutoresizingMaskIntoConstraints = false
+        sceneView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        sceneView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        sceneView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        sceneView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         
-        welcomeView = WelcomeView(frame: self.sceneView.bounds)
+        welcomeView = WelcomeView()
         self.view.addSubview(welcomeView!)
-        welcomeView?.delegate = self
+        welcomeView.translatesAutoresizingMaskIntoConstraints = false
+        welcomeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
+        welcomeView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        welcomeView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
+        welcomeView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        welcomeView.delegate = self
        
 //        presentSolarSystem()
 //        setupButton()
