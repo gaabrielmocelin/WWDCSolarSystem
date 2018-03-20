@@ -11,6 +11,7 @@
 		E1264E04206188D3004E5C14 /* OverLayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1264E03206188D3004E5C14 /* OverLayProtocol.swift */; };
 		E13DE55E205D952100FADF11 /* CelestialBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DE55D205D952100FADF11 /* CelestialBody.swift */; };
 		E13DE560205DA44400FADF11 /* SolarSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DE55F205DA44400FADF11 /* SolarSystem.swift */; };
+		E14B894F2061A24200A2F095 /* IntroduceSolarSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14B894E2061A24200A2F095 /* IntroduceSolarSystemView.swift */; };
 		E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570A205C307400F962E9 /* AppDelegate.swift */; };
 		E1EF570D205C307400F962E9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF570C205C307400F962E9 /* art.scnassets */; };
 		E1EF570F205C307400F962E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570E205C307400F962E9 /* ViewController.swift */; };
@@ -23,6 +24,7 @@
 		E1264E03206188D3004E5C14 /* OverLayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverLayProtocol.swift; sourceTree = "<group>"; };
 		E13DE55D205D952100FADF11 /* CelestialBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelestialBody.swift; sourceTree = "<group>"; };
 		E13DE55F205DA44400FADF11 /* SolarSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystem.swift; sourceTree = "<group>"; };
+		E14B894E2061A24200A2F095 /* IntroduceSolarSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroduceSolarSystemView.swift; sourceTree = "<group>"; };
 		E1EF5707205C307400F962E9 /* SolarSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EF570A205C307400F962E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1EF570C205C307400F962E9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -43,6 +45,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E14B894A2061A12A00A2F095 /* Overlay Views */ = {
+			isa = PBXGroup;
+			children = (
+				E1264E0120617FE8004E5C14 /* WelcomeView.swift */,
+				E14B894E2061A24200A2F095 /* IntroduceSolarSystemView.swift */,
+			);
+			path = "Overlay Views";
+			sourceTree = "<group>";
+		};
+		E14B894B2061A14E00A2F095 /* ARScenes */ = {
+			isa = PBXGroup;
+			children = (
+				E13DE55F205DA44400FADF11 /* SolarSystem.swift */,
+			);
+			path = ARScenes;
+			sourceTree = "<group>";
+		};
+		E14B894D2061A18200A2F095 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E1EF570A205C307400F962E9 /* AppDelegate.swift */,
+				E1264E03206188D3004E5C14 /* OverLayProtocol.swift */,
+				E13DE55D205D952100FADF11 /* CelestialBody.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		E1EF56FE205C307400F962E9 = {
 			isa = PBXGroup;
 			children = (
@@ -62,16 +91,14 @@
 		E1EF5709205C307400F962E9 /* SolarSystem */ = {
 			isa = PBXGroup;
 			children = (
-				E1EF570A205C307400F962E9 /* AppDelegate.swift */,
-				E1EF570C205C307400F962E9 /* art.scnassets */,
+				E14B894D2061A18200A2F095 /* Helpers */,
+				E14B894B2061A14E00A2F095 /* ARScenes */,
+				E14B894A2061A12A00A2F095 /* Overlay Views */,
 				E1EF570E205C307400F962E9 /* ViewController.swift */,
+				E1EF570C205C307400F962E9 /* art.scnassets */,
 				E1EF5713205C307400F962E9 /* Assets.xcassets */,
 				E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */,
 				E1EF5718205C307400F962E9 /* Info.plist */,
-				E13DE55D205D952100FADF11 /* CelestialBody.swift */,
-				E13DE55F205DA44400FADF11 /* SolarSystem.swift */,
-				E1264E0120617FE8004E5C14 /* WelcomeView.swift */,
-				E1264E03206188D3004E5C14 /* OverLayProtocol.swift */,
 			);
 			path = SolarSystem;
 			sourceTree = "<group>";
@@ -151,6 +178,7 @@
 				E13DE55E205D952100FADF11 /* CelestialBody.swift in Sources */,
 				E1264E0220617FE8004E5C14 /* WelcomeView.swift in Sources */,
 				E1264E04206188D3004E5C14 /* OverLayProtocol.swift in Sources */,
+				E14B894F2061A24200A2F095 /* IntroduceSolarSystemView.swift in Sources */,
 				E1EF570F205C307400F962E9 /* ViewController.swift in Sources */,
 				E13DE560205DA44400FADF11 /* SolarSystem.swift in Sources */,
 				E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */,

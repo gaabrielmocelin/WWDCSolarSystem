@@ -17,14 +17,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
      var currentState: ControlState?
     
-    //this is gonna be out of here
-    var sunAnchor: ARAnchor!
-    
-//    var nextButton = UIButton()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        sceneView = ARSCNView(frame: UIScreen.main.bounds)
+
         sceneView = ARSCNView(frame: CGRect())
         self.view.addSubview(sceneView)
         sceneView.translatesAutoresizingMaskIntoConstraints = false
@@ -42,30 +37,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         welcomeView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
         welcomeView.delegate = self
        
-//        presentSolarSystem()
-//        setupButton()
-    }
-    
-//    func setupButton() {
-//        nextButton = UIButton(frame: CGRect())
-//        nextButton.setTitle("Next", for: .normal)
-//        nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
-//        nextButton.backgroundColor = #colorLiteral(red: 0.9860219359, green: 0.4115800261, blue: 0.3854584694, alpha: 1)
-//        nextButton.layer.cornerRadius = 20
-//        nextButton.clipsToBounds = true
-//
-//        self.sceneView.addSubview(nextButton)
-//        nextButton.translatesAutoresizingMaskIntoConstraints = false
-//        nextButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
-//        nextButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-//        nextButton.bottomAnchor.constraint(equalTo: self.sceneView.bottomAnchor, constant: 0).isActive = true
-//        nextButton.rightAnchor.constraint(equalTo: self.sceneView.rightAnchor, constant: 0).isActive = true
-//
-//    }
-    
-    @objc func handleNextButton(sender: UIButton) {
-        print(sender)
-        print("clicked")
     }
     
     func presentSolarSystem()  {
@@ -79,10 +50,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = scene
         
         //creating sun on a fixed point
+        //SHOULD GET A UPDATED POINT --------------------------------
+        
         var translation = matrix_identity_float4x4
         translation.columns.3.z = -0.4
-        sunAnchor = ARAnchor(transform: translation)
-        sceneView.session.add(anchor: sunAnchor)
+        sceneView.session.add(anchor: ARAnchor(transform: translation))
         
         // Set the scene to the view
         sceneView.scene = scene
