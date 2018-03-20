@@ -14,35 +14,41 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet var sceneView: ARSCNView!
     
-    var earth: SCNNode?
+    var welcomeView: WelcomeView?
     
     var sunAnchor: ARAnchor!
     
-    var nextButton = UIButton()
+//    var nextButton = UIButton()
+    
+    var currentState: ControlState?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        welcomeView = WelcomeView(frame: self.sceneView.bounds)
+        self.view.addSubview(welcomeView!)
+        welcomeView?.delegate = self
        
-        presentSolarSystem()
-        setupButton()
+//        presentSolarSystem()
+//        setupButton()
     }
     
-    func setupButton() {
-        nextButton = UIButton(frame: CGRect())
-        nextButton.setTitle("Next", for: .normal)
-        nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
-        nextButton.backgroundColor = #colorLiteral(red: 0.9860219359, green: 0.4115800261, blue: 0.3854584694, alpha: 1)
-        nextButton.layer.cornerRadius = 20
-        nextButton.clipsToBounds = true
-        
-        self.sceneView.addSubview(nextButton)
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        nextButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: self.sceneView.bottomAnchor, constant: 0).isActive = true
-        nextButton.rightAnchor.constraint(equalTo: self.sceneView.rightAnchor, constant: 0).isActive = true
-        
-    }
+//    func setupButton() {
+//        nextButton = UIButton(frame: CGRect())
+//        nextButton.setTitle("Next", for: .normal)
+//        nextButton.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
+//        nextButton.backgroundColor = #colorLiteral(red: 0.9860219359, green: 0.4115800261, blue: 0.3854584694, alpha: 1)
+//        nextButton.layer.cornerRadius = 20
+//        nextButton.clipsToBounds = true
+//
+//        self.sceneView.addSubview(nextButton)
+//        nextButton.translatesAutoresizingMaskIntoConstraints = false
+//        nextButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//        nextButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+//        nextButton.bottomAnchor.constraint(equalTo: self.sceneView.bottomAnchor, constant: 0).isActive = true
+//        nextButton.rightAnchor.constraint(equalTo: self.sceneView.rightAnchor, constant: 0).isActive = true
+//
+//    }
     
     @objc func handleNextButton(sender: UIButton) {
         print(sender)
@@ -85,6 +91,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+}
+
+extension ViewController: StateManager{
+    func nextState(currentState: ControlState) {
+        if currentState == .welcome{
+            welcomeView?.removeFromSuperview()
+            
+            self.currentState = ControlState.solarSystem
+            presentSolarSystem()
+        }
     }
 }
 
