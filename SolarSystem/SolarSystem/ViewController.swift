@@ -12,20 +12,20 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
-    @IBOutlet var sceneView: ARSCNView!
-    
+    var sceneView: ARSCNView!
     var welcomeView: WelcomeView!
     
+     var currentState: ControlState?
+    
+    //this is gonna be out of here
     var sunAnchor: ARAnchor!
     
 //    var nextButton = UIButton()
     
-    var currentState: ControlState?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 //        sceneView = ARSCNView(frame: UIScreen.main.bounds)
-        sceneView = ARSCNView()
+        sceneView = ARSCNView(frame: CGRect())
         self.view.addSubview(sceneView)
         sceneView.translatesAutoresizingMaskIntoConstraints = false
         sceneView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
