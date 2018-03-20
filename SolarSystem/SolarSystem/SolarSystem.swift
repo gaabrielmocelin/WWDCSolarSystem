@@ -49,7 +49,6 @@ class SolarSystem: SCNScene {
     
     func generateCelestialBody(body: BodyName) -> CelestialBody{
         
-        //TO DO: CHANGE THE TEXTURE ACCORDING TO THE PLANET NAME
         switch body {
         case .sun:
             let sphere = SCNSphere(radius: 0.05)
