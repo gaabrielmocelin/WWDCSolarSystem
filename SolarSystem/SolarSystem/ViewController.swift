@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController{
     
     var currentState: ControlState?
     var sceneView: ARSCNView!
@@ -58,7 +58,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let scene = SolarSystem()
         
         // Set the view's delegate
-        sceneView.delegate = scene
+        sceneView.delegate = self
     
         //SHOULD GET A UPDATED POINT --------------------------------
         //maybe there is another option ********
@@ -97,6 +97,30 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+}
+
+extension ViewController: ARSCNViewDelegate{
+    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        if let scene = sceneView.scene as? SolarSystem, let sun = scene.sun{
+            scene.sunAnchor = anchor
+            scene.updatePlanetsPositions(at: anchor)
+            scene.allPlanetsOrbitating(at: anchor)
+            return sun.node
+        }
+        return SCNNode()
+    }
+    
+    func session(_ session: ARSession, didFailWithError error: Error) {
+        // Present an error message to the user
+    }
+    
+    func sessionWasInterrupted(_ session: ARSession) {
+        // Inform the user that the session has been interrupted, for example, by presenting an overlay
+    }
+    
+    func sessionInterruptionEnded(_ session: ARSession) {
+        // Reset tracking and/or remove existing anchors if consistent tracking is required
     }
 }
 
