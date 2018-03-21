@@ -103,7 +103,7 @@ class SolarSystem: SCNScene {
             
             //saturn ring
             let tube = SCNTube(innerRadius: 0.03, outerRadius: 0.05, height: 0.0005)
-            tube.setMaterial(with: UIImage(named: "art.scnassets/saturnRing.png"))
+            tube.setMaterial(with: UIImage(named: "art.scnassets/SaturnRing2.png"))
             let tubeNode = SCNNode(geometry: tube)
             planet.node.addChildNode(tubeNode)
             
