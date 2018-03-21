@@ -62,10 +62,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
         //SHOULD GET A UPDATED POINT --------------------------------
         //maybe there is another option ********
-        resetSession()
+//        resetSession()
         
+        let userVector = getUserVector()
+        print(userVector)
         var translation = matrix_identity_float4x4
-        translation.columns.3.z = -0.4
+        translation.columns.3.x += userVector.0.x
+        translation.columns.3.y += userVector.0.y < abs(userVector.0.y) ? userVector.0.y : userVector.0.y / 2
+        translation.columns.3.z += 0.4 * userVector.0.z
         
         sceneView.session.add(anchor: ARAnchor(transform: translation))
         
@@ -97,6 +101,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    func getUserVector() -> (SCNVector3, SCNVector3) { // (direction, position)
+        if let frame = self.sceneView.session.currentFrame {
+            let mat = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
+            let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33) // orientation of camera in world space
+            let pos = SCNVector3(mat.m41, mat.m42, mat.m43) // location of camera in world space
+            
+            return (dir, pos)
+        }
+        return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
     }
 }
 
