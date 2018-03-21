@@ -25,6 +25,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             overLayView?.stateDelegate = self
         }
     }
+    
+    var screenCenter: CGPoint {
+        let bounds = sceneView.bounds
+        return CGPoint(x: bounds.midX, y: bounds.midY)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
