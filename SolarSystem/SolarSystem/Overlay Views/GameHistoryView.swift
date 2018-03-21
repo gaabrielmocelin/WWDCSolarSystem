@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameHistory: UIView {
+class GameHistoryView: UIView {
     var myState: ControlState
     var stateDelegate: StateManager?
     
@@ -40,7 +40,7 @@ class GameHistory: UIView {
     }
 }
 
-extension GameHistory: OverLay{
+extension GameHistoryView: OverLay{
     func hide() {
         fadeOut()
     }

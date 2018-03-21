@@ -9,7 +9,7 @@
 import SceneKit
 import ARKit
 
-class SolarSystem: SCNScene {
+class SolarSystemScene: SCNScene {
     var celestialBodies: [CelestialBody]
     
     var planets: [CelestialBody]{
@@ -198,7 +198,7 @@ class SolarSystem: SCNScene {
     }
 }
 
-extension SolarSystem: ARSCNViewDelegate{
+extension SolarSystemScene: ARSCNViewDelegate{
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         if let sun = sun {
             sunAnchor = anchor

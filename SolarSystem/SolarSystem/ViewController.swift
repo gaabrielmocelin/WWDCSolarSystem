@@ -55,7 +55,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SolarSystem()
+        let scene = SolarSystemScene()
         
         // Set the view's delegate
         sceneView.delegate = scene
@@ -122,7 +122,7 @@ extension ViewController: StateManager{
             presentSolarSystem()
         case .solarSystem:
             self.currentState = ControlState.gameHistory
-            overLayView = GameHistory()
+            overLayView = GameHistoryView()
         case .gameHistory:
             self.overLayView = nil
             sceneView.scene = SCNScene()
