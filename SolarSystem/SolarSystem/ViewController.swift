@@ -12,31 +12,37 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
+    var currentState: ControlState?
     var sceneView: ARSCNView!
-    var welcomeView: WelcomeView!
-    
-     var currentState: ControlState?
-    
+    var overLayView: (UIView & OverLay)?{
+        willSet{
+            overLayView?.hide()
+            overLayView?.removeFromSuperview()
+        }
+        didSet{
+            self.view.addSubviewWithSameAnchors(overLayView!)
+            overLayView?.show()
+            overLayView?.stateDelegate = self
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        sceneView = ARSCNView(frame: CGRect())
-        self.view.addSubview(sceneView)
-        sceneView.translatesAutoresizingMaskIntoConstraints = false
-        sceneView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        sceneView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
-        sceneView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
-        sceneView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
+        setupSceneView()
+        setupInitialState()
+    }
+    
+    func setupInitialState() {
+        self.currentState = ControlState.welcome
         
-        welcomeView = WelcomeView()
-        self.view.addSubview(welcomeView!)
-        welcomeView.translatesAutoresizingMaskIntoConstraints = false
-        welcomeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        welcomeView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
-        welcomeView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
-        welcomeView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        welcomeView.delegate = self
-       
+        let welcomeView = WelcomeView()
+        overLayView = welcomeView
+    }
+    
+    func setupSceneView() {
+        sceneView = ARSCNView(frame: CGRect())
+        self.view.addSubviewWithSameAnchors(sceneView)
     }
     
     func presentSolarSystem()  {
@@ -97,10 +103,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 extension ViewController: StateManager{
     func nextState(currentState: ControlState) {
         if currentState == .welcome{
-            welcomeView?.removeFromSuperview()
-            
             self.currentState = ControlState.solarSystem
+            self.overLayView = IntroduceSolarSystemView()
             presentSolarSystem()
+        }else if currentState == .solarSystem {
+            self.currentState = ControlState.gameHistory
+            self.overLayView = GameHistory()
+            sceneView.scene = SCNScene()
         }
     }
 }

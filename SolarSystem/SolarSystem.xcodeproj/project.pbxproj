@@ -17,6 +17,7 @@
 		E1EF570F205C307400F962E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570E205C307400F962E9 /* ViewController.swift */; };
 		E1EF5714205C307400F962E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF5713205C307400F962E9 /* Assets.xcassets */; };
 		E1EF5717205C307400F962E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */; };
+		E1F4319520628D09000A7E67 /* GameHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F4319420628D09000A7E67 /* GameHistory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E1EF5713205C307400F962E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1EF5716205C307400F962E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E1EF5718205C307400F962E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E1F4319420628D09000A7E67 /* GameHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHistory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 			children = (
 				E1264E0120617FE8004E5C14 /* WelcomeView.swift */,
 				E14B894E2061A24200A2F095 /* IntroduceSolarSystemView.swift */,
+				E1F4319420628D09000A7E67 /* GameHistory.swift */,
 			);
 			path = "Overlay Views";
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F4319520628D09000A7E67 /* GameHistory.swift in Sources */,
 				E13DE55E205D952100FADF11 /* CelestialBody.swift in Sources */,
 				E1264E0220617FE8004E5C14 /* WelcomeView.swift in Sources */,
 				E1264E04206188D3004E5C14 /* OverLayProtocol.swift in Sources */,

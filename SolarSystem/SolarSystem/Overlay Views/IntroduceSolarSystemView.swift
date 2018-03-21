@@ -9,13 +9,19 @@
 import UIKit
 
 class IntroduceSolarSystemView: UIView {
-
+    var myState: ControlState
+    
+    var stateDelegate: StateManager?
+    
     var nextButton = UIButton()
     
     override init(frame: CGRect) {
+        myState = .solarSystem
+
         super.init(frame: frame)
         
         setupButton()
+        alpha = 0
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,8 +46,18 @@ class IntroduceSolarSystemView: UIView {
     }
     
     @objc func handleNextButton(sender: UIButton) {
-        print(sender)
-        print("clicked")
+        stateDelegate?.nextState(currentState: myState)
     }
         
+}
+
+extension IntroduceSolarSystemView: OverLay {
+    
+    func hide() {
+        fadeOut()
+    }
+    
+    func show() {
+        fadeIn()
+    }
 }

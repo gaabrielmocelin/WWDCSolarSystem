@@ -14,7 +14,7 @@ class WelcomeView: UIView {
     var text: UITextView!
     var readyButton: UIButton!
     
-    var delegate: StateManager?
+    var stateDelegate: StateManager?
 
     override init(frame: CGRect) {
         self.myState = .welcome
@@ -69,7 +69,7 @@ class WelcomeView: UIView {
     
     @objc func handleReadyButton() {
         fadeOut { (bool) in
-            self.delegate?.nextState(currentState: self.myState)
+            self.stateDelegate?.nextState(currentState: self.myState)
         }
     }
 }

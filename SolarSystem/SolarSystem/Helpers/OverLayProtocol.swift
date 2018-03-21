@@ -8,8 +8,9 @@
 
 import UIKit
 
-protocol OverLay {
+protocol OverLay: class {
     var myState: ControlState { get }
+    var stateDelegate: StateManager? { get set }
     
     func hide()
     func show()
@@ -18,6 +19,7 @@ protocol OverLay {
 enum ControlState: String{
     case welcome
     case solarSystem
+    case gameHistory
 }
 
 extension UIView {
@@ -31,6 +33,15 @@ extension UIView {
         UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.alpha = 0.0
         }, completion: completion)
+    }
+    
+    func addSubviewWithSameAnchors(_ view: UIView) {
+        self.addSubview(view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
+        view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        view.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
     }
 }
 
