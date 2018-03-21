@@ -59,29 +59,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the view's delegate
         sceneView.delegate = scene
-        
-        //creating sun on a fixed point
+    
         //SHOULD GET A UPDATED POINT --------------------------------
-        //THIS IS NOT A GOOD IDEA ***********************************************
+        //maybe there is another option ********
         resetSession()
         
         var translation = matrix_identity_float4x4
         translation.columns.3.z = -0.4
-        
-
-//        let position = sceneView.pointOfView!.position
-//        var translation = matrix_identity_float4x4
-//        translation.columns.3.x = position.x
-//        translation.columns.3.y = position.y
-//        translation.columns.3.z = position.z - 0.4
-        
-        //WE DONT KNOW WHERE THE CAMERA IS FOCUSING TO SET THE RIGHT AXIS
-        //        var translation = sceneView.session.currentFrame!.camera.transform
-//        translation.columns.3.z =
-        
-        
-//        var rotate = simd_float4x4(SCNMatrix4MakeRotation(sceneView.session.currentFrame!.camera.eulerAngles.y, 0, 1, 0))
-//        rotate.columns.3.z -= 0.3
         
         sceneView.session.add(anchor: ARAnchor(transform: translation))
         
@@ -90,14 +74,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func resetSession() {
-        if let configuration = sceneView.session.configuration{
+            let configuration = ARWorldTrackingConfiguration()
             sceneView.session.pause()
             sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
                 node.removeFromParentNode()
             }
-            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-        }
-        
+            sceneView.session.run(configuration, options: [.resetTracking])
     }
     
     override func viewWillAppear(_ animated: Bool) {
