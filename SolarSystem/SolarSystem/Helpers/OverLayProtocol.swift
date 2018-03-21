@@ -35,7 +35,8 @@ extension UIView {
         }, completion: completion)
     }
     
-    func addSubviewWithSameAnchors(_ view: UIView) {
+    func addSubviewWithSameAnchors(_ view: UIView?) {
+        guard let view = view else { return }
         self.addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true

@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             overLayView?.removeFromSuperview()
         }
         didSet{
-            self.view.addSubviewWithSameAnchors(overLayView!)
+            self.view.addSubviewWithSameAnchors(overLayView)
             overLayView?.show()
             overLayView?.stateDelegate = self
         }
@@ -59,11 +59,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Set the view's delegate
         sceneView.delegate = scene
-    
-        //SHOULD GET A UPDATED POINT --------------------------------
-        //maybe there is another option ********
-//        resetSession()
         
+        //set the solar system based on camera direction
         let userVector = getUserVector()
         print(userVector)
         var translation = matrix_identity_float4x4
@@ -117,13 +114,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
 extension ViewController: StateManager{
     func nextState(currentState: ControlState) {
-        if currentState == .welcome{
+        
+        switch currentState {
+        case .welcome:
             self.currentState = ControlState.solarSystem
-            self.overLayView = IntroduceSolarSystemView()
+            overLayView = IntroduceSolarSystemView()
             presentSolarSystem()
-        }else if currentState == .solarSystem {
+        case .solarSystem:
             self.currentState = ControlState.gameHistory
-            self.overLayView = GameHistory()
+            overLayView = GameHistory()
+        case .gameHistory:
+            self.overLayView = nil
             sceneView.scene = SCNScene()
         }
     }
