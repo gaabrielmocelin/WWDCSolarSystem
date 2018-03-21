@@ -57,6 +57,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         //creating sun on a fixed point
         //SHOULD GET A UPDATED POINT --------------------------------
+        //THIS IS NOT A GOOD IDEA ***********************************************
+        resetSession()
+        
         var translation = matrix_identity_float4x4
         translation.columns.3.z = -0.4
         
@@ -81,6 +84,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene = scene
     }
     
+    func resetSession() {
+        if let configuration = sceneView.session.configuration{
+            sceneView.session.pause()
+            sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+                node.removeFromParentNode()
+            }
+            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        }
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
