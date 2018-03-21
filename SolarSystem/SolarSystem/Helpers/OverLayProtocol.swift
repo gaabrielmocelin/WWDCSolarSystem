@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol OverLay where Self: UIView {
+protocol OverLay {
     var myState: ControlState { get }
     
     func hide()

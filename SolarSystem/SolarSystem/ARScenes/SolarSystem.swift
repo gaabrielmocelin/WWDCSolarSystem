@@ -36,6 +36,13 @@ class SolarSystem: SCNScene {
     }
     
     func setupBodies(){
+        let ambientLight = SCNLight()
+        ambientLight.type = .ambient
+        let node = SCNNode()
+        node.light = ambientLight
+        node.light?.intensity = 100
+        rootNode.addChildNode(node)
+        
         for bodyName in BodyName.allcases{
             if bodyName == .sun{
                 celestialBodies.append(generateCelestialBody(body: bodyName))
@@ -54,8 +61,8 @@ class SolarSystem: SCNScene {
             let sphere = SCNSphere(radius: 0.05)
             sphere.setMaterial(with: UIImage(named: "art.scnassets/sun.jpg"), constant: true)
             let sun = CelestialBody(planetName: body, sphere: sphere)
-//            sun.node.light = SCNLight()
-//            sun.node.light?.type = .omni
+            sun.node.light = SCNLight()
+            sun.node.light?.type = .omni
             return sun
         case .mercury:
             let sphere = SCNSphere(radius: 0.025)
