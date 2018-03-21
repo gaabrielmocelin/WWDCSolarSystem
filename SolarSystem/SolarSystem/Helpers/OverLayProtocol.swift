@@ -20,6 +20,8 @@ enum ControlState: String{
     case welcome
     case solarSystem
     case gameHistory
+    case game
+    case gameOver
 }
 
 protocol StateManager{

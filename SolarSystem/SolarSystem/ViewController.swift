@@ -124,8 +124,14 @@ extension ViewController: StateManager{
             self.currentState = ControlState.gameHistory
             overLayView = GameHistoryView()
         case .gameHistory:
-            self.overLayView = nil
-            sceneView.scene = SCNScene()
+            self.overLayView = GameView()
+            sceneView.scene = GameScene()
+        case .game:
+            self.overLayView = GameOverView()
+        case .gameOver:
+            self.overLayView = GameView()
+            let scene = sceneView.scene as! GameScene
+            scene.restartGame()
         }
     }
 }
