@@ -68,7 +68,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         print(userVector)
         var translation = matrix_identity_float4x4
         translation.columns.3.x += userVector.0.x
-        translation.columns.3.y += userVector.0.y < abs(userVector.0.y) ? userVector.0.y : userVector.0.y / 2
+        translation.columns.3.y += (userVector.0.y - userVector.1.y) / 2
         translation.columns.3.z += 0.4 * userVector.0.z
         
         sceneView.session.add(anchor: ARAnchor(transform: translation))
