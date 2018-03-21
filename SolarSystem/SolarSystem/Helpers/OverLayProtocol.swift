@@ -22,30 +22,6 @@ enum ControlState: String{
     case gameHistory
 }
 
-extension UIView {
-    func fadeIn(completion: ((Bool) ->Void)? = nil) {
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-            self.alpha = 1.0
-        }, completion: completion)
-    }
-    
-    func fadeOut(completion: ((Bool) ->Void)? = nil) {
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-            self.alpha = 0.0
-        }, completion: completion)
-    }
-    
-    func addSubviewWithSameAnchors(_ view: UIView?) {
-        guard let view = view else { return }
-        self.addSubview(view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-        view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
-        view.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-    }
-}
-
 protocol StateManager{
     func nextState(currentState: ControlState)
 }

@@ -190,11 +190,8 @@ class SolarSystem: SCNScene {
             torus.setMaterial(with: UIColor.init(white: 0.7, alpha: 0.4))
             let pathNode = SCNNode(geometry: torus)
             
-            let x = anchor.transform.columns.3.x
-            let y = anchor.transform.columns.3.y
-            let z = anchor.transform.columns.3.z
-            
-            pathNode.position = SCNVector3(x,y,z)
+            let axes = anchor.transform.translation
+            pathNode.position = SCNVector3(axes)
             orbitalPaths.append(pathNode)
             rootNode.addChildNode(pathNode)
         }
