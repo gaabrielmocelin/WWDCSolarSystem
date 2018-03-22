@@ -25,14 +25,16 @@ class GameView: UIView {
     func setupLabel()  {
         label = UILabel()
         label.text = "The Game is RUNNING"
+        label.textAlignment = .center
         label.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 100).isActive = true
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+//        label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -47,8 +49,8 @@ extension GameView: OverLay{
     
     func show() {
         fadeIn()
-        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
-            self.stateDelegate?.nextState(currentState: self.myState)
-        }
+//        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
+//            self.stateDelegate?.nextState(currentState: self.myState)
+//        }
     }
 }

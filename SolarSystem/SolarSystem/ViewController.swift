@@ -26,11 +26,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    var screenCenter: CGPoint {
-        let bounds = sceneView.bounds
-        return CGPoint(x: bounds.midX, y: bounds.midY)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,30 +43,41 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func setupSceneView() {
         sceneView = ARSCNView(frame: CGRect())
         self.view.addSubviewWithSameAnchors(sceneView)
+        
+        // Show statistics such as fps and timing information
+        sceneView.showsStatistics = true
     }
     
     func presentSolarSystem()  {
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
-        // Create a new scene
         let scene = SolarSystemScene()
-        
-        // Set the view's delegate
-        sceneView.delegate = scene
-        
-        //set the solar system based on camera direction
-        let userVector = getUserVector()
-        print(userVector)
-        var translation = matrix_identity_float4x4
-        translation.columns.3.x += userVector.0.x
-        translation.columns.3.y += (userVector.0.y - userVector.1.y) / 2
-        translation.columns.3.z += 0.4 * userVector.0.z
-        
-        sceneView.session.add(anchor: ARAnchor(transform: translation))
         
         // Set the scene to the view
         sceneView.scene = scene
+        
+        // the solar system will handle the sceneview delegate
+        sceneView.delegate = scene
+        
+        //set the solar system based on camera direction
+        let camera = getCameraAngleAndAxes()
+        print(camera)
+        var translation = matrix_identity_float4x4
+        translation.columns.3.x += camera.0.x
+        translation.columns.3.y += (camera.0.y - camera.1.y) / 2
+        translation.columns.3.z += 0.4 * camera.0.z
+        
+        sceneView.session.add(anchor: ARAnchor(transform: translation))
+    }
+    
+    func presentGame()  {
+        let scene = GameScene()
+        sceneView.scene = scene
+        sceneView.delegate = scene
+        
+        let camera = getCameraAngleAndAxes()
+        
+        for anchor in scene.generateAnchors(withCameraPosition: camera){
+            sceneView.session.add(anchor: anchor)
+        }
     }
     
     func resetSession() {
@@ -100,7 +106,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
-    func getUserVector() -> (SCNVector3, SCNVector3) { // (direction, position)
+    // Credit to https://github.com/farice/ARShooter to help me get the point where the user is looking for
+    func getCameraAngleAndAxes() -> (SCNVector3, SCNVector3) { // (direction, position)
         if let frame = self.sceneView.session.currentFrame {
             let mat = SCNMatrix4(frame.camera.transform) // 4x4 transform matrix describing camera in world space
             let dir = SCNVector3(-1 * mat.m31, -1 * mat.m32, -1 * mat.m33) // orientation of camera in world space
@@ -125,7 +132,7 @@ extension ViewController: StateManager{
             overLayView = GameHistoryView()
         case .gameHistory:
             self.overLayView = GameView()
-            sceneView.scene = GameScene()
+            presentGame()
         case .game:
             self.overLayView = GameOverView()
         case .gameOver:
