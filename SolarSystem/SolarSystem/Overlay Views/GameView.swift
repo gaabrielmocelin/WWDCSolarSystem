@@ -16,10 +16,9 @@ class GameView: UIView {
     
     override init(frame: CGRect) {
         myState = .game
-        
         super.init(frame: frame)
-        
         setupLabel()
+        setupSwipes()
     }
     
     func setupLabel()  {
@@ -35,6 +34,32 @@ class GameView: UIView {
         label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
 //        label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+    }
+    
+    func setupSwipes() {
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(swipe:)))
+        swipeLeft.direction = .left
+        self.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(swipe:)))
+        swipeRight.direction = .right
+        self.addGestureRecognizer(swipeRight)
+        
+        //will we get swipe up?
+//        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(swipe:)))
+//        swipeUp.direction = .up
+//        self.addGestureRecognizer(swipeUp)
+    }
+    
+    @objc func handleSwipe(swipe: UISwipeGestureRecognizer) {
+        switch swipe.direction {
+        case .left:
+            print("left")
+        case .right:
+            print("right")
+        default:
+            break
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

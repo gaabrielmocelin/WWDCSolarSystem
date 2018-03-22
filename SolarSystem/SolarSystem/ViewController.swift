@@ -132,7 +132,7 @@ extension ViewController: StateManager{
             overLayView = GameHistoryView()
         case .gameHistory:
             overLayView = GameView()
-            presentGame() 
+            presentGame()
         case .game:
             self.overLayView = GameOverView()
         case .gameOver:
