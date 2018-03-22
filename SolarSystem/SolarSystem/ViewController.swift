@@ -72,10 +72,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let scene = GameScene()
         sceneView.scene = scene
         sceneView.delegate = scene
-
-        for anchor in scene.generateAnchors(withAnchor: anchor){
-            sceneView.session.add(anchor: anchor)
-        }
+        sceneView.session.add(anchor: anchor)
     }
     
     func resetSession() {

@@ -11,9 +11,14 @@ import SceneKit
 
 class GameScene: SCNScene {
     var spaceShip: SCNNode
+    var originalSpaceshipPositon: SCNVector3
+    
+    var spawnBarrierPositions: [SCNVector3]
     
     override init() {
-        spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.1, length: 0.12))
+        originalSpaceshipPositon = SCNVector3()
+        spawnBarrierPositions = []
+        spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
         super.init()
     }
     
@@ -32,40 +37,22 @@ class GameScene: SCNScene {
 }
 
 extension GameScene: ARSCNViewDelegate{
-    func generateAnchors(withAnchor anchor: ARAnchor) -> [GameAnchor] {
-        var anchors: [GameAnchor] = []
-    
-        var cameraOriginalTranslation = anchor.transform
-        cameraOriginalTranslation.columns.3.x += -0.2
-    
-        var translation = cameraOriginalTranslation
-    
-        //spaceship or barriers size
-        for side in 0..<2{
-        //left, center or right
-            for position in 0..<3{
-                if let position = AnchorPosition(rawValue: position), let side = AnchorSide(rawValue: side){
-                    let anchor = GameAnchor(transform: translation, anchorPosition: position, anchorSide: side)
-                    anchors.append(anchor)
-                }
-                translation.columns.3.x += 0.2
-            }
-            translation = cameraOriginalTranslation
-            translation.columns.3.x += -0.2
-            translation.columns.3.z += -1.1
-        }
-        
-        return anchors
+    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+        let translation = anchor.transform.translation
+        originalSpaceshipPositon = SCNVector3(translation)
+        spaceShip.position = originalSpaceshipPositon
+        rootNode.addChildNode(spaceShip)
+        return SCNNode(geometry: SCNBox(width: 0.01, height: 0.01, length: 0.01, chamferRadius: 0.01))
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        guard let gameAnchor = anchor as? GameAnchor else { return SCNNode() }
-       
-        switch gameAnchor.anchorSide {
-        case .spaceship:
-            return SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.1))
-        case .barriers:
-            return SCNNode(geometry: SCNCone(topRadius: 0.02, bottomRadius: 0.05, height: 0.05))
+    func generateSpawnPositions(withAnchor anchor: ARAnchor) {
+        var translation = anchor.transform.translation
+        translation.x += -0.2
+        translation.z += -1
+        
+        for _ in 0..<3 {
+            spawnBarrierPositions.append(SCNVector3(translation))
+            translation.x += 0.2
         }
     }
 }
