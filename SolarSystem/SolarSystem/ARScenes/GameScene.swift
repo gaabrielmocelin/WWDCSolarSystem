@@ -34,12 +34,18 @@ class GameScene: SCNScene {
     func restartGame()  {
 
     }
+    
+    func placeSpaceship(atPosition position: SCNVector3) {
+        originalSpaceshipPositon = position
+        spaceShip.position = originalSpaceshipPositon
+        rootNode.addChildNode(spaceShip)
+    }
 }
 
 extension GameScene: ARSCNViewDelegate{
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         placeSpaceship(atAnchor: anchor)
-//        generateSpawnPositions(withAnchor: anchor)
+        generateSpawnPositions(withAnchor: anchor)
         return SCNNode(geometry: SCNBox(width: 0.01, height: 0.01, length: 0.01, chamferRadius: 0.01))
     }
     

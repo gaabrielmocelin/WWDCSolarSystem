@@ -12,6 +12,8 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
+    var startPosition: SCNVector3?
+    
     var currentState: ControlState?
     var sceneView: ARSCNView!
     var overLayView: (UIView & OverLay)?{
@@ -60,19 +62,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         //set the solar system based on camera direction
         let camera = getCameraAngleAndAxes()
         print(camera)
-        var translation = matrix_identity_float4x4
-        translation.columns.3.x += camera.0.x
-        translation.columns.3.y += (camera.0.y - camera.1.y) / 2
-        translation.columns.3.z += 0.4 * camera.0.z
+        var transform = matrix_identity_float4x4
+        transform.columns.3.x += camera.0.x
+        transform.columns.3.y += (camera.0.y - camera.1.y) / 2
+        transform.columns.3.z += 0.4 * camera.0.z
         
-        sceneView.session.add(anchor: ARAnchor(transform: translation))
+        startPosition = SCNVector3(transform.translation)
+        sceneView.session.add(anchor: ARAnchor(transform: transform))
     }
     
-    func presentGame(atParentAnchor anchor: ARAnchor)  {
+    func presentGame()  {
         let scene = GameScene()
         sceneView.scene = scene
         sceneView.delegate = scene
-        sceneView.session.add(anchor: anchor)
+        if let position = startPosition{
+            scene.placeSpaceship(atPosition: position)
+        }
     }
     
     func resetSession() {
@@ -126,11 +131,8 @@ extension ViewController: StateManager{
             self.currentState = ControlState.gameHistory
             overLayView = GameHistoryView()
         case .gameHistory:
-            if let scene = sceneView.scene as? SolarSystemScene, let sun = scene.sun, let anchor = sceneView.anchor(for: sun.node){
-                sceneView.session.remove(anchor: anchor)
-                self.overLayView = GameView()
-                presentGame(atParentAnchor: anchor)
-            }
+            overLayView = GameView()
+            presentGame() 
         case .game:
             self.overLayView = GameOverView()
         case .gameOver:
