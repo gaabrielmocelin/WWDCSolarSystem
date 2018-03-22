@@ -68,14 +68,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.add(anchor: ARAnchor(transform: translation))
     }
     
-    func presentGame()  {
+    func presentGame(atParentAnchor anchor: ARAnchor)  {
         let scene = GameScene()
         sceneView.scene = scene
         sceneView.delegate = scene
-        
-        let camera = getCameraAngleAndAxes()
-        
-        for anchor in scene.generateAnchors(withCameraPosition: camera){
+
+        for anchor in scene.generateAnchors(withAnchor: anchor){
             sceneView.session.add(anchor: anchor)
         }
     }
@@ -131,8 +129,11 @@ extension ViewController: StateManager{
             self.currentState = ControlState.gameHistory
             overLayView = GameHistoryView()
         case .gameHistory:
-            self.overLayView = GameView()
-            presentGame()
+            if let scene = sceneView.scene as? SolarSystemScene, let sun = scene.sun, let anchor = sceneView.anchor(for: sun.node){
+                sceneView.session.remove(anchor: anchor)
+                self.overLayView = GameView()
+                presentGame(atParentAnchor: anchor)
+            }
         case .game:
             self.overLayView = GameOverView()
         case .gameOver:

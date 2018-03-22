@@ -32,19 +32,17 @@ class GameScene: SCNScene {
 }
 
 extension GameScene: ARSCNViewDelegate{
-    func generateAnchors(withCameraPosition camera: (SCNVector3, SCNVector3)) -> [GameAnchor] {
+    func generateAnchors(withAnchor anchor: ARAnchor) -> [GameAnchor] {
         var anchors: [GameAnchor] = []
-        
-        var cameraOriginalTranslation = matrix_identity_float4x4
-        cameraOriginalTranslation.columns.3.x += -0.2 * camera.1.x
-        cameraOriginalTranslation.columns.3.y += (camera.0.y - camera.1.y) / 2
-        cameraOriginalTranslation.columns.3.z += 0.25 * camera.0.z
-        
+    
+        var cameraOriginalTranslation = anchor.transform
+        cameraOriginalTranslation.columns.3.x += -0.2
+    
         var translation = cameraOriginalTranslation
-        
+    
         //spaceship or barriers size
         for side in 0..<2{
-            //left, center or right
+        //left, center or right
             for position in 0..<3{
                 if let position = AnchorPosition(rawValue: position), let side = AnchorSide(rawValue: side){
                     let anchor = GameAnchor(transform: translation, anchorPosition: position, anchorSide: side)
@@ -53,8 +51,8 @@ extension GameScene: ARSCNViewDelegate{
                 translation.columns.3.x += 0.2
             }
             translation = cameraOriginalTranslation
-            translation.columns.3.x += -0.2 * camera.1.x
-            translation.columns.3.z += 1.1 * camera.0.z
+            translation.columns.3.x += -0.2
+            translation.columns.3.z += -1.1
         }
         
         return anchors
