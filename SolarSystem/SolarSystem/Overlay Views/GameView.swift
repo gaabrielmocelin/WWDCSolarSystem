@@ -19,12 +19,35 @@ class GameView: UIView {
     var gameDelegate: GamePerformer?
     
     var label: UILabel!
+    var startButton: UIButton!
     
     override init(frame: CGRect) {
         myState = .game
         super.init(frame: frame)
         setupLabel()
+        setupButton()
         setupSwipes()
+    }
+    
+    func setupButton() {
+        startButton = UIButton(frame: CGRect())
+        startButton.setTitle("Start", for: .normal)
+        startButton.addTarget(self, action: #selector(handleStartButton), for: .touchUpInside)
+        startButton.backgroundColor = #colorLiteral(red: 0.9860219359, green: 0.4115800261, blue: 0.3854584694, alpha: 1)
+        startButton.layer.cornerRadius = 20
+        startButton.clipsToBounds = true
+        
+        self.addSubview(startButton)
+        startButton.translatesAutoresizingMaskIntoConstraints = false
+        startButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        startButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        startButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        startButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+    }
+    
+    @objc func handleStartButton(sender: UIButton) {
+        gameDelegate?.startGame()
+        startButton.isHidden = true
     }
     
     func setupLabel()  {

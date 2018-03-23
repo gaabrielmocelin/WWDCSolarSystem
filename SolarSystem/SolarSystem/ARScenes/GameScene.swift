@@ -34,9 +34,10 @@ class GameScene: SCNScene {
     //for now
     private var spaceshipRow: SpaceshipRow
     
-    //algorythm timer
-    private var barrierVelocityTimer: Timer?
-    private var spawnTimer: Timer?
+    var isGameRunning: Bool
+    //algorythm time
+    var lastUpdate: TimeInterval
+    var lastUpdateConstants: TimeInterval
     //algorythm constants
     private var timeToSpawn: TimeInterval
     private var barrierVelocity: TimeInterval
@@ -47,6 +48,9 @@ class GameScene: SCNScene {
         spawnBarrierPositions = []
         timeToSpawn = 3
         barrierVelocity = 3
+        lastUpdate = 0
+        lastUpdateConstants = 0
+        isGameRunning = false
         spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
         spaceshipRow = .center
         super.init()
@@ -100,10 +104,6 @@ class GameScene: SCNScene {
             rootNode.addChildNode(node)
             mutablePosition.x += 0.2
         }
-        
-        
-        //SHOULD BE CALLED ON START GAME DELEGATE *************
-        spawnBarriers(withTime: timeToSpawn)
     }
     
     private func moveSpaceshipLeft() {
@@ -121,27 +121,7 @@ class GameScene: SCNScene {
         spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
     }
     
-    func spawnBarriers(withTime time: TimeInterval) {
-        barrierVelocityTimer?.invalidate()
-        spawnTimer?.invalidate()
-        spawnTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(randomlySpawnBarriers), userInfo: nil, repeats: true)
-        barrierVelocityTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (_) in
-            if self.barrierVelocity > 0.7 {
-                self.barrierVelocity -= 0.3
-                if self.barrierVelocity.truncatingRemainder(dividingBy: 2) == 0 {
-                    self.timeToSpawn -= 0.3
-                    print("time to spawn \(self.timeToSpawn) -- barriervelocity \(self.barrierVelocity)")
-                    self.spawnBarriers(withTime: self.timeToSpawn)
-                }
-            }else if self.barrierVelocity <= 0.7, self.timeToSpawn > 0.7{
-                print("print 2 time to spawn \(self.timeToSpawn) -- barriervelocity \(self.barrierVelocity)")
-                self.timeToSpawn -= 0.3
-            }
-        }
-    }
-    
-    
-    @objc func randomlySpawnBarriers() {
+    func randomlySpawnBarriers() {
         guard let difficulty = Difficulty(rawValue: Int(arc4random_uniform(2))) else { return }
         
         switch difficulty {
@@ -187,13 +167,34 @@ extension GameScene: GamePerformer{
     }
     
     func startGame() {
-        
+        isGameRunning = true
     }
 }
 
 extension GameScene: SCNPhysicsContactDelegate{
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         print("CONTACT CARAAAIIII")
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        let deltaTime = time - lastUpdate
+        if isGameRunning, deltaTime > timeToSpawn {
+            randomlySpawnBarriers()
+            lastUpdate = time
+        }
+        
+        let deltaConstantsTime = time - lastUpdateConstants
+        if isGameRunning, deltaConstantsTime > 5{
+            if timeToSpawn > 0.7{
+                timeToSpawn -= 0.3
+            }
+            if barrierVelocity > 1{
+                barrierVelocity -= 0.2
+            }
+            
+            print("timespawn \(timeToSpawn) --- barriervelocity \(barrierVelocity)")
+            lastUpdateConstants = time
+        }
     }
     
 }
