@@ -29,10 +29,19 @@ class GameScene: SCNScene {
     //for now
     private var spaceshipRow: SpaceshipRow
     
+    //algorythm timer
+    private var barrierVelocityTimer: Timer?
+    private var spawnTimer: Timer?
+    //algorythm constants
+    private var timeToSpawn: TimeInterval
+    private var barrierVelocity: TimeInterval
+    
     override init() {
         originalSpaceshipPositon = SCNVector3()
         spaceshipPositions = []
         spawnBarrierPositions = []
+        timeToSpawn = 3
+        barrierVelocity = 3
         spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
         spaceshipRow = .center
         super.init()
@@ -72,10 +81,6 @@ class GameScene: SCNScene {
             mutablePosition.x += 0.2
         }
         rootNode.addChildNode(spaceShip)
-        
-        
-        //SHOULD BE CALLED ON STARTGAME DELEGATE
-        generateBarriers()
     }
     
     func generateSpawnPositions(withPosition position: SCNVector3) {
@@ -90,6 +95,10 @@ class GameScene: SCNScene {
             rootNode.addChildNode(node)
             mutablePosition.x += 0.2
         }
+        
+        
+        //SHOULD BE CALLED ON START GAME DELEGATE *************
+        spawnBarriers(withTime: timeToSpawn)
     }
     
     private func moveSpaceshipLeft() {
@@ -107,26 +116,41 @@ class GameScene: SCNScene {
         spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
     }
     
-    
-    func generateBarriers() {
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
-            let row = Int(arc4random_uniform(3))
-            
-            let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
-            barrier.position = self.spawnBarrierPositions[row]
-            barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-            barrier.physicsBody?.isAffectedByGravity = false
-            barrier.physicsBody?.categoryBitMask = CategoryBitMask.barrier
-            barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
-            barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
-            var moveToPosition = self.spaceshipPositions[row]
-            moveToPosition.z += 0.3
-            
-            self.rootNode.addChildNode(barrier)
-            barrier.runAction(SCNAction.move(to: moveToPosition, duration: 1), completionHandler: {
-                barrier.removeFromParentNode()
-            })
+    func spawnBarriers(withTime time: TimeInterval) {
+        barrierVelocityTimer?.invalidate()
+        spawnTimer?.invalidate()
+        spawnTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(generateBarriers), userInfo: nil, repeats: true)
+        barrierVelocityTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (_) in
+            if self.barrierVelocity > 0.7 {
+                self.barrierVelocity -= 0.3
+                if self.barrierVelocity.truncatingRemainder(dividingBy: 2) == 0 {
+                    self.timeToSpawn -= 0.3
+                    self.spawnBarriers(withTime: self.timeToSpawn)
+                }
+            }else if self.barrierVelocity <= 0.7, self.timeToSpawn > 0.7{
+                self.timeToSpawn -= 0.3
+            }
         }
+    }
+    
+    
+    @objc func generateBarriers() {
+        let row = Int(arc4random_uniform(3))
+        
+        let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
+        barrier.position = self.spawnBarrierPositions[row]
+        barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        barrier.physicsBody?.isAffectedByGravity = false
+        barrier.physicsBody?.categoryBitMask = CategoryBitMask.barrier
+        barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
+        barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
+        var moveToPosition = self.spaceshipPositions[row]
+        moveToPosition.z += 0.3
+        
+        self.rootNode.addChildNode(barrier)
+        barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
+            barrier.removeFromParentNode()
+        })
     }
 }
 
