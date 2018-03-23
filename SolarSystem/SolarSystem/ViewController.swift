@@ -77,6 +77,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = scene
         if let position = startPosition{
             scene.placeSpaceship(atPosition: position)
+            scene.generateSpawnPositions(withPosition: position)
         }
     }
     

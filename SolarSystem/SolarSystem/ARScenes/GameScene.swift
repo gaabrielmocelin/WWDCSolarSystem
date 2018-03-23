@@ -40,30 +40,22 @@ class GameScene: SCNScene {
         spaceShip.position = originalSpaceshipPositon
         rootNode.addChildNode(spaceShip)
     }
+    
+    func generateSpawnPositions(withPosition position: SCNVector3) {
+        var mutablePosition = position
+        mutablePosition.x += -0.2
+        mutablePosition.z += -1
+        
+        for _ in 0..<3 {
+            spawnBarrierPositions.append(mutablePosition)
+            let node = SCNNode(geometry: SCNCone(topRadius: 0.01, bottomRadius: 0.01, height: 0.01))
+            node.position = mutablePosition
+            rootNode.addChildNode(node)
+            mutablePosition.x += 0.2
+        }
+    }
 }
 
 extension GameScene: ARSCNViewDelegate{
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        placeSpaceship(atAnchor: anchor)
-        generateSpawnPositions(withAnchor: anchor)
-        return SCNNode(geometry: SCNBox(width: 0.01, height: 0.01, length: 0.01, chamferRadius: 0.01))
-    }
-    
-    func placeSpaceship(atAnchor anchor: ARAnchor) {
-        let translation = anchor.transform.translation
-        originalSpaceshipPositon = SCNVector3(translation)
-        spaceShip.position = originalSpaceshipPositon
-        rootNode.addChildNode(spaceShip)
-    }
-    
-    func generateSpawnPositions(withAnchor anchor: ARAnchor) {
-        var translation = anchor.transform.translation
-        translation.x += -0.2
-        translation.z += -1
-        
-        for _ in 0..<3 {
-            spawnBarrierPositions.append(SCNVector3(translation))
-            translation.x += 0.2
-        }
-    }
+  
 }
