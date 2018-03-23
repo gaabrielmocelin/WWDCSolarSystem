@@ -15,6 +15,11 @@ enum SpaceshipRow: Int {
     case right
 }
 
+struct CategoryBitMask {
+    static let spaceship: Int = 0b0001
+    static let barrier: Int = 0b0010
+}
+
 class GameScene: SCNScene {
     var spaceShip: SCNNode
     var spaceshipPositions: [SCNVector3]
@@ -31,6 +36,17 @@ class GameScene: SCNScene {
         spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
         spaceshipRow = .center
         super.init()
+        
+        physicsWorld.contactDelegate = self
+        setupSpaceshipPhysicsBody()
+    }
+    
+    func setupSpaceshipPhysicsBody() {
+        spaceShip.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        spaceShip.physicsBody?.isAffectedByGravity = false
+        spaceShip.physicsBody?.categoryBitMask = CategoryBitMask.spaceship
+        spaceShip.physicsBody?.collisionBitMask = CategoryBitMask.barrier
+        spaceShip.physicsBody?.contactTestBitMask = CategoryBitMask.barrier
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,9 +110,15 @@ class GameScene: SCNScene {
     
     func generateBarriers() {
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
-            let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
             let row = Int(arc4random_uniform(3))
+            
+            let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
             barrier.position = self.spawnBarrierPositions[row]
+            barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+            barrier.physicsBody?.isAffectedByGravity = false
+            barrier.physicsBody?.categoryBitMask = CategoryBitMask.barrier
+            barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
+            barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
             var moveToPosition = self.spaceshipPositions[row]
             moveToPosition.z += 0.3
             
@@ -120,6 +142,13 @@ extension GameScene: GamePerformer{
     func startGame() {
         
     }
+}
+
+extension GameScene: SCNPhysicsContactDelegate{
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        print("CONTACT CARAAAIIII")
+    }
+    
 }
 
 extension GameScene: ARSCNViewDelegate{
