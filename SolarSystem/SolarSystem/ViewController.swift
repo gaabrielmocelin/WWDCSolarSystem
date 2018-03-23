@@ -72,13 +72,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func presentGame()  {
+        guard let position = startPosition, let overLayGame = overLayView as? GameView else {
+            print("something went wrong on present game")
+            return
+        }
+        
         let scene = GameScene()
         sceneView.scene = scene
         sceneView.delegate = scene
-        if let position = startPosition{
-            scene.placeSpaceship(atPosition: position)
-            scene.generateSpawnPositions(withPosition: position)
-        }
+        overLayGame.gameDelegate = scene
+        scene.placeSpaceship(atPosition: position)
+        scene.generateSpawnPositions(withPosition: position)
     }
     
     func resetSession() {

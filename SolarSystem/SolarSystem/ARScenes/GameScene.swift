@@ -26,10 +26,6 @@ class GameScene: SCNScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func startGame() {
-        
-    }
 
     func restartGame()  {
 
@@ -53,6 +49,16 @@ class GameScene: SCNScene {
             rootNode.addChildNode(node)
             mutablePosition.x += 0.2
         }
+    }
+}
+
+extension GameScene: GamePerformer{
+    func didSwipe(_ direction: UISwipeGestureRecognizerDirection) {
+        print(direction)
+    }
+    
+    func startGame() {
+        
     }
 }
 

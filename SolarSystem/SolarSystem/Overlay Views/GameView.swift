@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol GamePerformer {
+    func didSwipe(_ direction: UISwipeGestureRecognizerDirection)
+    func startGame()
+}
+
 class GameView: UIView {
     var myState: ControlState
     var stateDelegate: StateManager?
+    var gameDelegate: GamePerformer?
     
     var label: UILabel!
     
@@ -52,14 +58,7 @@ class GameView: UIView {
     }
     
     @objc func handleSwipe(swipe: UISwipeGestureRecognizer) {
-        switch swipe.direction {
-        case .left:
-            print("left")
-        case .right:
-            print("right")
-        default:
-            break
-        }
+        gameDelegate?.didSwipe(swipe.direction)
     }
     
     required init?(coder aDecoder: NSCoder) {
