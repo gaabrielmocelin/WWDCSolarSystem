@@ -42,7 +42,7 @@ class GameScene: SCNScene {
     }
     
     func setupSpaceshipPhysicsBody() {
-        spaceShip.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        spaceShip.physicsBody = SCNPhysicsBody(type: .kinematic, shape: nil)
         spaceShip.physicsBody?.isAffectedByGravity = false
         spaceShip.physicsBody?.categoryBitMask = CategoryBitMask.spaceship
         spaceShip.physicsBody?.collisionBitMask = CategoryBitMask.barrier
