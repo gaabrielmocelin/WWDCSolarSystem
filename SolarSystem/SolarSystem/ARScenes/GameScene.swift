@@ -15,6 +15,11 @@ enum SpaceshipRow: Int {
     case right
 }
 
+enum Difficulty: Int {
+    case easy
+    case hard
+}
+
 struct CategoryBitMask {
     static let spaceship: Int = 0b0001
     static let barrier: Int = 0b0010
@@ -119,24 +124,42 @@ class GameScene: SCNScene {
     func spawnBarriers(withTime time: TimeInterval) {
         barrierVelocityTimer?.invalidate()
         spawnTimer?.invalidate()
-        spawnTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(generateBarriers), userInfo: nil, repeats: true)
+        spawnTimer = Timer.scheduledTimer(timeInterval: time, target: self, selector: #selector(randomlySpawnBarriers), userInfo: nil, repeats: true)
         barrierVelocityTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (_) in
             if self.barrierVelocity > 0.7 {
                 self.barrierVelocity -= 0.3
                 if self.barrierVelocity.truncatingRemainder(dividingBy: 2) == 0 {
                     self.timeToSpawn -= 0.3
+                    print("time to spawn \(self.timeToSpawn) -- barriervelocity \(self.barrierVelocity)")
                     self.spawnBarriers(withTime: self.timeToSpawn)
                 }
             }else if self.barrierVelocity <= 0.7, self.timeToSpawn > 0.7{
+                print("print 2 time to spawn \(self.timeToSpawn) -- barriervelocity \(self.barrierVelocity)")
                 self.timeToSpawn -= 0.3
             }
         }
     }
     
     
-    @objc func generateBarriers() {
-        let row = Int(arc4random_uniform(3))
+    @objc func randomlySpawnBarriers() {
+        guard let difficulty = Difficulty(rawValue: Int(arc4random_uniform(2))) else { return }
         
+        switch difficulty {
+        case .easy:
+            let row = Int(arc4random_uniform(3))
+            generateBarrier(atRow: row)
+        case .hard:
+            let firstRow = Int(arc4random_uniform(3))
+            var secondRow = Int(arc4random_uniform(3))
+            while secondRow == firstRow {
+                secondRow = Int(arc4random_uniform(3))
+            }
+            generateBarrier(atRow: firstRow)
+            generateBarrier(atRow: secondRow)
+        }
+    }
+    
+    func generateBarrier(atRow row: Int) {
         let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
         barrier.position = self.spawnBarrierPositions[row]
         barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
