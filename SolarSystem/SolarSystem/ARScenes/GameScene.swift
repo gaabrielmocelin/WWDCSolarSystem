@@ -9,6 +9,12 @@
 import ARKit
 import SceneKit
 
+private enum SpaceshipPosition: Int {
+    case left
+    case center
+    case right
+}
+
 class GameScene: SCNScene {
     var spaceShip: SCNNode
     var originalSpaceshipPositon: SCNVector3

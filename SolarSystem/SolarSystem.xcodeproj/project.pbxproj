@@ -16,7 +16,6 @@
 		E15AAA472063000D00836141 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AAA462063000D00836141 /* GameOverView.swift */; };
 		E15AAA492063002E00836141 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AAA482063002E00836141 /* GameScene.swift */; };
 		E186B2A52062F07A003B728C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E186B2A42062F07A003B728C /* Utilities.swift */; };
-		E1AEBB312064152F008E7D00 /* GameAnchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AEBB302064152F008E7D00 /* GameAnchor.swift */; };
 		E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570A205C307400F962E9 /* AppDelegate.swift */; };
 		E1EF570D205C307400F962E9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF570C205C307400F962E9 /* art.scnassets */; };
 		E1EF570F205C307400F962E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570E205C307400F962E9 /* ViewController.swift */; };
@@ -35,7 +34,6 @@
 		E15AAA462063000D00836141 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		E15AAA482063002E00836141 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		E186B2A42062F07A003B728C /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		E1AEBB302064152F008E7D00 /* GameAnchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAnchor.swift; sourceTree = "<group>"; };
 		E1EF5707205C307400F962E9 /* SolarSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EF570A205C307400F962E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1EF570C205C307400F962E9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 				E1264E03206188D3004E5C14 /* OverLayProtocol.swift */,
 				E13DE55D205D952100FADF11 /* CelestialBody.swift */,
 				E186B2A42062F07A003B728C /* Utilities.swift */,
-				E1AEBB302064152F008E7D00 /* GameAnchor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -210,7 +207,6 @@
 				E15AAA492063002E00836141 /* GameScene.swift in Sources */,
 				E14B894F2061A24200A2F095 /* IntroduceSolarSystemView.swift in Sources */,
 				E1EF570F205C307400F962E9 /* ViewController.swift in Sources */,
-				E1AEBB312064152F008E7D00 /* GameAnchor.swift in Sources */,
 				E186B2A52062F07A003B728C /* Utilities.swift in Sources */,
 				E13DE560205DA44400FADF11 /* SolarSystemScene.swift in Sources */,
 				E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */,
