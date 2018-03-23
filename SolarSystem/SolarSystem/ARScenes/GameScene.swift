@@ -17,6 +17,7 @@ enum SpaceshipRow: Int {
 
 class GameScene: SCNScene {
     var spaceShip: SCNNode
+    var spaceshipPositions: [SCNVector3]
     var originalSpaceshipPositon: SCNVector3
     var spawnBarrierPositions: [SCNVector3]
     
@@ -25,6 +26,7 @@ class GameScene: SCNScene {
     
     override init() {
         originalSpaceshipPositon = SCNVector3()
+        spaceshipPositions = []
         spawnBarrierPositions = []
         spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
         spaceshipRow = .center
@@ -40,10 +42,19 @@ class GameScene: SCNScene {
 
     }
     
+    //generate the three posible positions and place the spaceship at the centered one
     func placeSpaceship(atPosition position: SCNVector3) {
-        originalSpaceshipPositon = position
-        spaceShip.position = originalSpaceshipPositon
-        spaceshipRow = .center
+        var mutablePosition = position
+        mutablePosition.x += -0.2
+        
+        for index in 0..<3 {
+            if index == 1{
+                spaceShip.position = mutablePosition
+                spaceshipRow = .center
+            }
+            spaceshipPositions.append(mutablePosition)
+            mutablePosition.x += 0.2
+        }
         rootNode.addChildNode(spaceShip)
     }
     
@@ -65,9 +76,7 @@ class GameScene: SCNScene {
         guard let row = SpaceshipRow(rawValue: spaceshipRow.rawValue - 1) else { return }
         
         spaceshipRow = row
-        var position = originalSpaceshipPositon
-        position.x += -0.2
-        spaceShip.runAction(SCNAction.move(to: position, duration: 0.5))
+        spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
         
     }
     
@@ -75,9 +84,7 @@ class GameScene: SCNScene {
         guard let row = SpaceshipRow(rawValue: spaceshipRow.rawValue + 1) else { return }
         
         spaceshipRow = row
-        var position = originalSpaceshipPositon
-        position.x += 0.2
-        spaceShip.runAction(SCNAction.move(to: position, duration: 0.3))
+        spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
     }
 }
 
