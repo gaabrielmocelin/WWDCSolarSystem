@@ -56,6 +56,10 @@ class GameScene: SCNScene {
             mutablePosition.x += 0.2
         }
         rootNode.addChildNode(spaceShip)
+        
+        
+        //SHOULD BE CALLED ON STARTGAME DELEGATE
+        generateBarriers()
     }
     
     func generateSpawnPositions(withPosition position: SCNVector3) {
@@ -85,6 +89,22 @@ class GameScene: SCNScene {
         
         spaceshipRow = row
         spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
+    }
+    
+    
+    func generateBarriers() {
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (timer) in
+            let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
+            let row = Int(arc4random_uniform(3))
+            barrier.position = self.spawnBarrierPositions[row]
+            var moveToPosition = self.spaceshipPositions[row]
+            moveToPosition.z += 0.3
+            
+            self.rootNode.addChildNode(barrier)
+            barrier.runAction(SCNAction.move(to: moveToPosition, duration: 0.7), completionHandler: {
+                barrier.removeFromParentNode()
+            })
+        }
     }
 }
 
