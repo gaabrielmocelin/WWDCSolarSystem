@@ -123,7 +123,7 @@ class GameScene: SCNScene {
             moveToPosition.z += 0.3
             
             self.rootNode.addChildNode(barrier)
-            barrier.runAction(SCNAction.move(to: moveToPosition, duration: 0.7), completionHandler: {
+            barrier.runAction(SCNAction.move(to: moveToPosition, duration: 1), completionHandler: {
                 barrier.removeFromParentNode()
             })
         }
