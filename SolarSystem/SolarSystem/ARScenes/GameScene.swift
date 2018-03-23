@@ -9,7 +9,7 @@
 import ARKit
 import SceneKit
 
-private enum SpaceshipPosition: Int {
+enum SpaceshipRow: Int {
     case left
     case center
     case right
@@ -18,13 +18,16 @@ private enum SpaceshipPosition: Int {
 class GameScene: SCNScene {
     var spaceShip: SCNNode
     var originalSpaceshipPositon: SCNVector3
-    
     var spawnBarrierPositions: [SCNVector3]
+    
+    //for now
+    private var spaceshipRow: SpaceshipRow
     
     override init() {
         originalSpaceshipPositon = SCNVector3()
         spawnBarrierPositions = []
         spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
+        spaceshipRow = .center
         super.init()
     }
     
@@ -40,6 +43,7 @@ class GameScene: SCNScene {
     func placeSpaceship(atPosition position: SCNVector3) {
         originalSpaceshipPositon = position
         spaceShip.position = originalSpaceshipPositon
+        spaceshipRow = .center
         rootNode.addChildNode(spaceShip)
     }
     
@@ -56,11 +60,34 @@ class GameScene: SCNScene {
             mutablePosition.x += 0.2
         }
     }
+    
+    private func moveSpaceshipLeft() {
+        guard let row = SpaceshipRow(rawValue: spaceshipRow.rawValue - 1) else { return }
+        
+        spaceshipRow = row
+        var position = originalSpaceshipPositon
+        position.x += -0.2
+        spaceShip.runAction(SCNAction.move(to: position, duration: 0.5))
+        
+    }
+    
+    private func moveSpaceshipRight() {
+        guard let row = SpaceshipRow(rawValue: spaceshipRow.rawValue + 1) else { return }
+        
+        spaceshipRow = row
+        var position = originalSpaceshipPositon
+        position.x += 0.2
+        spaceShip.runAction(SCNAction.move(to: position, duration: 0.3))
+    }
 }
 
 extension GameScene: GamePerformer{
     func didSwipe(_ direction: UISwipeGestureRecognizerDirection) {
-        print(direction)
+        if direction == .left, !(spaceshipRow == .left){
+            moveSpaceshipLeft()
+        }else if direction == .right, !(spaceshipRow == .right){
+            moveSpaceshipRight()
+        }
     }
     
     func startGame() {
