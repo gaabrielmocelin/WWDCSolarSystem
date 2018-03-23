@@ -95,7 +95,7 @@ class GameScene: SCNScene {
     func generateSpawnPositions(withPosition position: SCNVector3) {
         var mutablePosition = position
         mutablePosition.x += -0.2
-        mutablePosition.z += -1
+        mutablePosition.z += -1.5
         
         for _ in 0..<3 {
             spawnBarrierPositions.append(mutablePosition)
@@ -148,7 +148,7 @@ class GameScene: SCNScene {
         barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
         barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
         var moveToPosition = self.spaceshipPositions[row]
-        moveToPosition.z += 0.3
+        moveToPosition.z += 0.7
         
         self.rootNode.addChildNode(barrier)
         barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
