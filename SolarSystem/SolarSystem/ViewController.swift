@@ -83,6 +83,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         overLayGame.gameDelegate = scene
         scene.placeSpaceship(atPosition: position)
         scene.generateSpawnPositions(withPosition: position)
+        scene.generateRowLines(withPosition: position)
     }
     
     func resetSession() {

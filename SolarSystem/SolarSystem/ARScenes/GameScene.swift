@@ -155,6 +155,22 @@ class GameScene: SCNScene {
             barrier.removeFromParentNode()
         })
     }
+    
+    func generateRowLines(withPosition position: SCNVector3) {
+        guard let barrierPosition = spawnBarrierPositions.first, let spaceshipPosition = spaceshipPositions.first else { return }
+        let height = spaceshipPosition.z - barrierPosition.z
+        var linePosition = spaceshipPosition
+        linePosition.x -= 0.2
+        linePosition.z += (height / 2) * -1
+        linePosition.y -= 0.05
+        
+        let material = SCNMaterial()
+        
+        let rowLine = SCNNode(geometry: SCNCapsule(capRadius: 0.01, height: CGFloat(height)))
+        rowLine.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(90), y: 0, z: 0)
+        rowLine.position = linePosition
+        rootNode.addChildNode(rowLine)
+    }
 }
 
 extension GameScene: GamePerformer{
