@@ -21,8 +21,12 @@ class GameView: UIView {
     var label: UILabel!
     var startButton: UIButton!
     
+    var score: Int
+    var scoreTimer: Timer?
+    
     override init(frame: CGRect) {
         myState = .game
+        score = 0
         super.init(frame: frame)
         setupLabel()
         setupButton()
@@ -48,11 +52,23 @@ class GameView: UIView {
     @objc func handleStartButton(sender: UIButton) {
         gameDelegate?.startGame()
         startButton.isHidden = true
+        triggerTimer()
+    }
+    
+    func triggerTimer() {
+        scoreTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(updateScore), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateScore() {
+        score += 1
+        DispatchQueue.main.async {
+            self.label.text = "\(self.score)"
+        }
     }
     
     func setupLabel()  {
         label = UILabel()
-        label.text = "The Game is RUNNING"
+        label.text = "0"
         label.textAlignment = .center
         label.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         
@@ -91,6 +107,7 @@ class GameView: UIView {
 
 extension GameView: GameOverDelegate{
     func gameIsOver() {
+        scoreTimer?.invalidate()
         stateDelegate?.nextState(currentState: myState)
     }
 }
