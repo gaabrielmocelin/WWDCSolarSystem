@@ -36,6 +36,8 @@ class SolarSystemScene: SCNScene {
     }
     
     func setupBodies(){
+        
+        //PLEASE REFACTOR ME
         let ambientLight = SCNLight()
         ambientLight.type = .ambient
         let node = SCNNode()

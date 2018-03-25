@@ -25,6 +25,11 @@ struct CategoryBitMask {
     static let barrier: Int = 0b0010
 }
 
+struct LightType {
+    static let light1: Int = 0x1 << 1
+    static let light2: Int = 0x1 << 2
+}
+
 class GameScene: SCNScene {
     var spaceShip: SCNNode
     var spaceshipPositions: [SCNVector3]
@@ -52,6 +57,7 @@ class GameScene: SCNScene {
         lastUpdateConstants = 0
         isGameRunning = false
         spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
+        spaceShip.categoryBitMask = LightType.light1
         spaceshipRow = .center
         super.init()
         
@@ -164,12 +170,32 @@ class GameScene: SCNScene {
         linePosition.z += (height / 2) * -1
         linePosition.y -= 0.05
         
-        let material = SCNMaterial()
-        
-        let rowLine = SCNNode(geometry: SCNCapsule(capRadius: 0.01, height: CGFloat(height)))
+        let capsule = SCNCapsule(capRadius: 0.01, height: CGFloat(height))
+        let rowLine = SCNNode(geometry: capsule)
         rowLine.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(90), y: 0, z: 0)
         rowLine.position = linePosition
         rootNode.addChildNode(rowLine)
+        
+//        let material = SCNMaterial()
+//        material.emission.contents = UIColor(red: 57/255, green: 255/255, blue: 20/255, alpha: 1)
+//        capsule.materials = [material]
+//
+//        let light = SCNLight()
+//        light.categoryBitMask = LightType.light2
+//        light.type = .omni
+//        light.color = UIColor.green
+//        light.intensity = 5000
+//        rowLine.light = light
+        
+        
+//        //PLEASE REFACTOR ME
+//        let ambientLight = SCNLight()
+//        ambientLight.type = .ambient
+//        ambientLight.categoryBitMask = LightType.light1
+//        let node = SCNNode()
+//        node.light = ambientLight
+//        node.light?.intensity = 500
+//        rootNode.addChildNode(node)
     }
 }
 
