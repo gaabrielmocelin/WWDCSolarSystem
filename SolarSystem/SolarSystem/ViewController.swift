@@ -145,7 +145,12 @@ extension ViewController: StateManager{
             presentGame()
         case .game:
             DispatchQueue.main.async {
-                self.overLayView = GameOverView()
+                if let gameOverlay = self.overLayView as? GameView{
+                    let score = gameOverlay.score
+                    let gameOverView = GameOverView()
+                    gameOverView.score = score
+                    self.overLayView = gameOverView
+                }
             }
         case .gameOver:
             self.overLayView = GameView()

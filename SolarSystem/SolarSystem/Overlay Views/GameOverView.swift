@@ -12,8 +12,15 @@ class GameOverView: UIView {
     var myState: ControlState
     var stateDelegate: StateManager?
     
+    var scoreLabel: UILabel!
     var label: UILabel!
     var restartButton: UIButton!
+    
+    var score: Int?{
+        didSet{
+            setupScoreLabel()
+        }
+    }
     
     override init(frame: CGRect) {
         myState = .gameOver
@@ -55,6 +62,21 @@ class GameOverView: UIView {
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+    }
+    
+    func setupScoreLabel()  {
+        guard let score = score else { return }
+        
+        label = UILabel()
+        label.text = "your score was: \(score)"
+        label.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        
+        self.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
     }
     
     required init?(coder aDecoder: NSCoder) {
