@@ -89,6 +89,12 @@ class GameView: UIView {
     }
 }
 
+extension GameView: GameOverDelegate{
+    func gameIsOver() {
+        stateDelegate?.nextState(currentState: myState)
+    }
+}
+
 extension GameView: OverLay{
     func hide() {
         fadeOut()

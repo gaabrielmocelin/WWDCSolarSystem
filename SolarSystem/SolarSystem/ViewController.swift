@@ -79,8 +79,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let scene = GameScene()
         sceneView.scene = scene
+        
+        //delegates
         sceneView.delegate = scene
         overLayGame.gameDelegate = scene
+        scene.gameOverDelegate = overLayGame
+        
         scene.placeSpaceship(atPosition: position)
         scene.generateSpawnPositions(withPosition: position)
         scene.generateRowLines(withPosition: position)
@@ -140,11 +144,12 @@ extension ViewController: StateManager{
             overLayView = GameView()
             presentGame()
         case .game:
-            self.overLayView = GameOverView()
+            DispatchQueue.main.async {
+                self.overLayView = GameOverView()
+            }
         case .gameOver:
             self.overLayView = GameView()
-            let scene = sceneView.scene as! GameScene
-            scene.restartGame()
+            presentGame()
         }
     }
 }

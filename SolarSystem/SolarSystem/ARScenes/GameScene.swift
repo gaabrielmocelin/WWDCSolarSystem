@@ -30,6 +30,10 @@ struct LightType {
     static let light2: Int = 0x1 << 2
 }
 
+protocol GameOverDelegate {
+    func gameIsOver()
+}
+
 class GameScene: SCNScene {
     var spaceShip: SCNNode
     var spaceshipPositions: [SCNVector3]
@@ -46,6 +50,9 @@ class GameScene: SCNScene {
     //algorythm constants
     private var timeToSpawn: TimeInterval
     private var barrierVelocity: TimeInterval
+    
+    //gameover delegate
+    var gameOverDelegate: GameOverDelegate?
     
     override init() {
         originalSpaceshipPositon = SCNVector3()
@@ -75,11 +82,6 @@ class GameScene: SCNScene {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-
-    func restartGame()  {
-
     }
     
     //generate the three posible positions and place the spaceship at the centered one
@@ -204,10 +206,12 @@ class GameScene: SCNScene {
 
 extension GameScene: GamePerformer{
     func didSwipe(_ direction: UISwipeGestureRecognizerDirection) {
-        if direction == .left, !(spaceshipRow == .left){
-            moveSpaceshipLeft()
-        }else if direction == .right, !(spaceshipRow == .right){
-            moveSpaceshipRight()
+        if isGameRunning{
+            if direction == .left, !(spaceshipRow == .left){
+                moveSpaceshipLeft()
+            }else if direction == .right, !(spaceshipRow == .right){
+                moveSpaceshipRight()
+            }
         }
     }
     
@@ -218,7 +222,10 @@ extension GameScene: GamePerformer{
 
 extension GameScene: SCNPhysicsContactDelegate{
     func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        print("CONTACT CARAAAIIII")
+        spaceShip.removeFromParentNode()
+        
+        isGameRunning = false
+        gameOverDelegate?.gameIsOver()
     }
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {

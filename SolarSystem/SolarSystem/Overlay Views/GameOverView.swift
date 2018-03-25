@@ -13,6 +13,7 @@ class GameOverView: UIView {
     var stateDelegate: StateManager?
     
     var label: UILabel!
+    var restartButton: UIButton!
     
     override init(frame: CGRect) {
         myState = .gameOver
@@ -20,6 +21,27 @@ class GameOverView: UIView {
         super.init(frame: frame)
         
         setupLabel()
+        setupButton()
+    }
+    
+    func setupButton() {
+        restartButton = UIButton(frame: CGRect())
+        restartButton.setTitle("Start", for: .normal)
+        restartButton.addTarget(self, action: #selector(handleRestartButton), for: .touchUpInside)
+        restartButton.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
+        restartButton.layer.cornerRadius = 20
+        restartButton.clipsToBounds = true
+        
+        self.addSubview(restartButton)
+        restartButton.translatesAutoresizingMaskIntoConstraints = false
+        restartButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        restartButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        restartButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        restartButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+    }
+    
+    @objc func handleRestartButton(sender: UIButton) {
+        stateDelegate?.nextState(currentState: myState)
     }
     
     func setupLabel()  {
