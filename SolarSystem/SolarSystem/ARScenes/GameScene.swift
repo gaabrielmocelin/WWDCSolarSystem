@@ -166,15 +166,18 @@ class GameScene: SCNScene {
         guard let barrierPosition = spawnBarrierPositions.first, let spaceshipPosition = spaceshipPositions.first else { return }
         let height = spaceshipPosition.z - barrierPosition.z
         var linePosition = spaceshipPosition
-        linePosition.x -= 0.2
+        linePosition.x -= 0.1
         linePosition.z += (height / 2) * -1
         linePosition.y -= 0.05
         
-        let capsule = SCNCapsule(capRadius: 0.01, height: CGFloat(height))
-        let rowLine = SCNNode(geometry: capsule)
-        rowLine.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(90), y: 0, z: 0)
-        rowLine.position = linePosition
-        rootNode.addChildNode(rowLine)
+        for _ in 0..<4 {
+            let capsule = SCNCapsule(capRadius: 0.005, height: CGFloat(height))
+            let rowLine = SCNNode(geometry: capsule)
+            rowLine.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(90), y: 0, z: 0)
+            rowLine.position = linePosition
+            rootNode.addChildNode(rowLine)
+            linePosition.x += 0.2
+        }
         
 //        let material = SCNMaterial()
 //        material.emission.contents = UIColor(red: 57/255, green: 255/255, blue: 20/255, alpha: 1)
