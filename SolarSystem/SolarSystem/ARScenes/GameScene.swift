@@ -154,7 +154,7 @@ class GameScene: SCNScene {
     }
     
     func generateBarrier(atRow row: Int) {
-        let barrier = SCNNode(geometry: SCNSphere(radius: 0.2))
+        let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
         barrier.position = self.spawnBarrierPositions[row]
         barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         barrier.physicsBody?.isAffectedByGravity = false
@@ -185,28 +185,29 @@ class GameScene: SCNScene {
             rowLine.position = linePosition
             rootNode.addChild(rowLine)
             linePosition.x += 0.3
+            
+            let material = SCNMaterial()
+            material.diffuse.contents = UIColor(red: 57/255, green: 255/255, blue: 20/255, alpha: 1)
+            capsule.materials = [material]
+            
+            let light = SCNLight()
+            light.categoryBitMask = LightType.light2
+            light.type = .omni
+            light.color = UIColor.green
+            light.intensity = 5000
+            rowLine.light = light
         }
         
-//        let material = SCNMaterial()
-//        material.emission.contents = UIColor(red: 57/255, green: 255/255, blue: 20/255, alpha: 1)
-//        capsule.materials = [material]
-//
-//        let light = SCNLight()
-//        light.categoryBitMask = LightType.light2
-//        light.type = .omni
-//        light.color = UIColor.green
-//        light.intensity = 5000
-//        rowLine.light = light
         
         
-//        //PLEASE REFACTOR ME
-//        let ambientLight = SCNLight()
-//        ambientLight.type = .ambient
-//        ambientLight.categoryBitMask = LightType.light1
-//        let node = SCNNode()
-//        node.light = ambientLight
-//        node.light?.intensity = 500
-//        rootNode.addChildNode(node)
+        //PLEASE REFACTOR ME
+        let ambientLight = SCNLight()
+        ambientLight.type = .ambient
+        ambientLight.categoryBitMask = LightType.light1
+        let node = SCNNode()
+        node.light = ambientLight
+        node.light?.intensity = 500
+        rootNode.addChildNode(node)
     }
 }
 
