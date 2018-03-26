@@ -75,15 +75,7 @@ class GameScene: SCNScene {
     
     func setupSpaceship() {
         let subNodeScene = SCNScene(named: "art.scnassets/SpaceshipModel3d.scn")!
-        
-        
-        
-        subNodeScene.rootNode.childNodes.map {
-            print($0.name, $0.geometry)
-        }
-        
         spaceShip = subNodeScene.rootNode.childNode(withName: "spaceship", recursively: true)!
-        spaceShip.removeFromParentNode()
     }
     
     func setupSpaceshipPhysicsBody() {
