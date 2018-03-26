@@ -93,7 +93,7 @@ class GameScene: SCNScene {
     //generate the three posible positions and place the spaceship at the centered one
     func placeSpaceship(atPosition position: SCNVector3) {
         var mutablePosition = position
-        mutablePosition.x += -0.2
+        mutablePosition.x += -0.3
         
         for index in 0..<3 {
             if index == 1{
@@ -101,14 +101,14 @@ class GameScene: SCNScene {
                 spaceshipRow = .center
             }
             spaceshipPositions.append(mutablePosition)
-            mutablePosition.x += 0.2
+            mutablePosition.x += 0.3
         }
         rootNode.addChild(spaceShip)
     }
     
     func generateSpawnPositions(withPosition position: SCNVector3) {
         var mutablePosition = position
-        mutablePosition.x += -0.2
+        mutablePosition.x += -0.3
         mutablePosition.z += -1.5
         
         for _ in 0..<3 {
@@ -116,7 +116,7 @@ class GameScene: SCNScene {
             let node = SCNNode(geometry: SCNCone(topRadius: 0.01, bottomRadius: 0.01, height: 0.01))
             node.position = mutablePosition
             rootNode.addChild(node)
-            mutablePosition.x += 0.2
+            mutablePosition.x += 0.3
         }
     }
     
@@ -154,7 +154,7 @@ class GameScene: SCNScene {
     }
     
     func generateBarrier(atRow row: Int) {
-        let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
+        let barrier = SCNNode(geometry: SCNSphere(radius: 0.2))
         barrier.position = self.spawnBarrierPositions[row]
         barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         barrier.physicsBody?.isAffectedByGravity = false
@@ -174,7 +174,7 @@ class GameScene: SCNScene {
         guard let barrierPosition = spawnBarrierPositions.first, let spaceshipPosition = spaceshipPositions.first else { return }
         let height = spaceshipPosition.z - barrierPosition.z
         var linePosition = spaceshipPosition
-        linePosition.x -= 0.1
+        linePosition.x -= 0.15
         linePosition.z += (height / 2) * -1
         linePosition.y -= 0.05
         
@@ -184,7 +184,7 @@ class GameScene: SCNScene {
             rowLine.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(90), y: 0, z: 0)
             rowLine.position = linePosition
             rootNode.addChild(rowLine)
-            linePosition.x += 0.2
+            linePosition.x += 0.3
         }
         
 //        let material = SCNMaterial()
