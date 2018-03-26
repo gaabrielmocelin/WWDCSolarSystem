@@ -43,7 +43,7 @@ class SolarSystemScene: SCNScene {
         let node = SCNNode()
         node.light = ambientLight
         node.light?.intensity = 100
-        rootNode.addChildNode(node)
+        rootNode.addChild(node)
         
         for bodyName in BodyName.allcases{
             if bodyName == .sun{
@@ -51,7 +51,7 @@ class SolarSystemScene: SCNScene {
             }else{
                 let body = generateCelestialBody(body: bodyName)
                 celestialBodies.append(body)
-                rootNode.addChildNode(body.node)
+                rootNode.addChild(body.node)
             }
         }
     }
@@ -107,7 +107,7 @@ class SolarSystemScene: SCNScene {
             let tube = SCNTube(innerRadius: 0.03, outerRadius: 0.05, height: 0.0005)
             tube.setMaterial(with: UIImage(named: "art.scnassets/SaturnRing2.png"))
             let tubeNode = SCNNode(geometry: tube)
-            planet.node.addChildNode(tubeNode)
+            planet.node.addChild(tubeNode)
             
             return planet
         case .uranus:
@@ -195,7 +195,7 @@ class SolarSystemScene: SCNScene {
             let axes = anchor.transform.translation
             pathNode.position = SCNVector3(axes)
             orbitalPaths.append(pathNode)
-            rootNode.addChildNode(pathNode)
+            rootNode.addChild(pathNode)
         }
     }
 }

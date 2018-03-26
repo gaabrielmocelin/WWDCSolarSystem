@@ -78,6 +78,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         let scene = GameScene()
+        
+        
+        
         sceneView.scene = scene
         
         //delegates

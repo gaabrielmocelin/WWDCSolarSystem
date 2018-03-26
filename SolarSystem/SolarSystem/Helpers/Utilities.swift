@@ -8,6 +8,7 @@
 
 import UIKit
 import ARKit
+import SceneKit
 
 extension UIView {
     func fadeIn(completion: ((Bool) ->Void)? = nil) {
@@ -59,4 +60,19 @@ extension float4x4 {
         columns.1.y = scale
         columns.2.z = scale
     }
+}
+
+extension SCNNode {
+    
+    
+    func addChild(_ node: SCNNode) {
+        
+        if node.parent != nil {
+            node.removeFromParentNode()
+        }
+        
+        self.addChildNode(node)
+        
+    }
+    
 }

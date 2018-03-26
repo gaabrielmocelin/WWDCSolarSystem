@@ -69,7 +69,21 @@ class GameScene: SCNScene {
         super.init()
         
         physicsWorld.contactDelegate = self
+        setupSpaceship()
         setupSpaceshipPhysicsBody()
+    }
+    
+    func setupSpaceship() {
+        let subNodeScene = SCNScene(named: "art.scnassets/SpaceshipModel3d.scn")!
+        
+        
+        
+        subNodeScene.rootNode.childNodes.map {
+            print($0.name, $0.geometry)
+        }
+        
+        spaceShip = subNodeScene.rootNode.childNode(withName: "spaceship", recursively: true)!
+        spaceShip.removeFromParentNode()
     }
     
     func setupSpaceshipPhysicsBody() {
@@ -97,7 +111,7 @@ class GameScene: SCNScene {
             spaceshipPositions.append(mutablePosition)
             mutablePosition.x += 0.2
         }
-        rootNode.addChildNode(spaceShip)
+        rootNode.addChild(spaceShip)
     }
     
     func generateSpawnPositions(withPosition position: SCNVector3) {
@@ -109,7 +123,7 @@ class GameScene: SCNScene {
             spawnBarrierPositions.append(mutablePosition)
             let node = SCNNode(geometry: SCNCone(topRadius: 0.01, bottomRadius: 0.01, height: 0.01))
             node.position = mutablePosition
-            rootNode.addChildNode(node)
+            rootNode.addChild(node)
             mutablePosition.x += 0.2
         }
     }
@@ -158,7 +172,7 @@ class GameScene: SCNScene {
         var moveToPosition = self.spaceshipPositions[row]
         moveToPosition.z += 0.7
         
-        self.rootNode.addChildNode(barrier)
+        self.rootNode.addChild(barrier)
         barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
             barrier.removeFromParentNode()
         })
@@ -177,7 +191,7 @@ class GameScene: SCNScene {
             let rowLine = SCNNode(geometry: capsule)
             rowLine.eulerAngles = SCNVector3(x: GLKMathDegreesToRadians(90), y: 0, z: 0)
             rowLine.position = linePosition
-            rootNode.addChildNode(rowLine)
+            rootNode.addChild(rowLine)
             linePosition.x += 0.2
         }
         
