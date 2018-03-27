@@ -146,6 +146,7 @@ extension ViewController: StateManager{
                 self.currentState = ControlState.gameHistory
                 let gameHistory = GameHistoryView()
                 solarSystem.endOfTheSystemDelegate = gameHistory
+                
                 solarSystem.endOfTheSystem(atCameraPointOfView: getCameraAngleAndAxes())
                 overLayView = gameHistory
             }

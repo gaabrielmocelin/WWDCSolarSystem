@@ -247,11 +247,12 @@ extension SolarSystemScene{
     func insertBlackHole(atCameraPointOfView camera: (SCNVector3, SCNVector3)) -> SCNVector3 {
         let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, (0.7 * camera.0.z))
         
-        let cylinder = SCNCylinder(radius: 1, height: 0.02)
+        let cylinder = SCNCylinder(radius: 0.2, height: 0.02)
         cylinder.setMaterial(with: UIColor.black)
         let blackHole = SCNNode(geometry: cylinder)
         blackHole.position = position
-        blackHole.eulerAngles.x += 90
+        blackHole.eulerAngles.x = Float(90).radians
+//        blackHole.eulerAngles.z =
         
         rootNode.addChild(blackHole)
         
