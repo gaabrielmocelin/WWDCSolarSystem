@@ -18,6 +18,12 @@ class GameView: UIView {
     var stateDelegate: StateManager?
     var gameDelegate: GamePerformer?
     
+    var scoreView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+        return view
+    }()
+    
     var label: UILabel!
     var startButton: UIButton!
     
@@ -28,7 +34,7 @@ class GameView: UIView {
         myState = .game
         score = 0
         super.init(frame: frame)
-        setupLabel()
+        setupScoreView()
         setupButton()
         setupSwipes()
     }
@@ -66,19 +72,24 @@ class GameView: UIView {
         }
     }
     
-    func setupLabel()  {
+    func setupScoreView()  {
+        self.addSubview(scoreView)
+        scoreView.translatesAutoresizingMaskIntoConstraints = false
+        scoreView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        scoreView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        scoreView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        scoreView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
         label = UILabel()
         label.text = "0"
         label.textAlignment = .center
-        label.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
         
-        self.addSubview(label)
+        scoreView.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        label.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-//        label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: scoreView.leadingAnchor).isActive = true
+        label.trailingAnchor.constraint(equalTo: scoreView.trailingAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: -5).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
     func setupSwipes() {
@@ -89,11 +100,6 @@ class GameView: UIView {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(swipe:)))
         swipeRight.direction = .right
         self.addGestureRecognizer(swipeRight)
-        
-        //will we get swipe up?
-//        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(swipe:)))
-//        swipeUp.direction = .up
-//        self.addGestureRecognizer(swipeUp)
     }
     
     @objc func handleSwipe(swipe: UISwipeGestureRecognizer) {
