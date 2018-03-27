@@ -118,12 +118,12 @@ class GameScene: SCNScene {
         spaceShip.addChild(particleEmitter)
         particleEmitter.position.x += -1.5
         particleEmitter.position.y += 2
-        particleEmitter.position.z += 2.5
+        particleEmitter.position.z += 3.5
         
         spaceShip.addChild(particleEmitter2)
         particleEmitter2.position.x += 1.5
         particleEmitter2.position.y += 2
-        particleEmitter2.position.z += 2.5
+        particleEmitter2.position.z += 3.3
     }
     
     func generateSpawnPositions(withPosition position: SCNVector3) {
