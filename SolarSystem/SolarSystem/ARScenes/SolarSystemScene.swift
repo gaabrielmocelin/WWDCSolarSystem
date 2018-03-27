@@ -9,7 +9,14 @@
 import SceneKit
 import ARKit
 
+protocol EndOfTheSystemDelegate {
+    func didBeginTheEndOfSystem()
+}
+
 class SolarSystemScene: SCNScene {
+    
+    var endOfTheSystemDelegate: EndOfTheSystemDelegate?
+    
     var celestialBodies: [CelestialBody]
     
     var planets: [CelestialBody]{
@@ -216,7 +223,7 @@ extension SolarSystemScene{
                     node.removeFromParentNode()
                     self.planetsRemoved += 1
                     if self.planetsRemoved == 9{
-                        print("all died")
+                        self.endOfTheSystemDelegate?.didBeginTheEndOfSystem()
                     }
                 })
             })

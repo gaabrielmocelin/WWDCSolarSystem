@@ -33,10 +33,37 @@ class GameHistoryView: UIView {
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        label.isHidden = true
+    }
+    
+    func tellHistory()  {
+        print("SHOULD TELL HISTORY")
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension GameHistoryView: EndOfTheSystemDelegate{
+    func didBeginTheEndOfSystem() {
+        DispatchQueue.main.async {
+            self.label.text = "ACABO TUDO SE FUDEMO"
+            self.label.isHidden = false
+            
+            UIView.animate(withDuration: 2, animations: {
+                self.backgroundColor = UIColor.black
+            }, completion: { (bool) in
+                if bool{
+                    self.tellHistory()
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+                        self.stateDelegate?.nextState(currentState: self.myState)
+                    }
+                }
+            })
+            
+        }
     }
 }
 
@@ -47,8 +74,5 @@ extension GameHistoryView: OverLay{
     
     func show() {
         fadeIn()
-//        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
-//            self.stateDelegate?.nextState(currentState: self.myState)
-//        }
     }
 }
