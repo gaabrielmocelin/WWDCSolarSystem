@@ -141,8 +141,11 @@ extension ViewController: StateManager{
             overLayView = IntroduceSolarSystemView()
             presentSolarSystem()
         case .solarSystem:
-            self.currentState = ControlState.gameHistory
-            overLayView = GameHistoryView()
+            if let solarSystem = sceneView.scene as? SolarSystemScene{
+                self.currentState = ControlState.gameHistory
+                overLayView = GameHistoryView()
+                solarSystem.endOfTheSystem()
+            }
         case .gameHistory:
             overLayView = GameView()
             presentGame()

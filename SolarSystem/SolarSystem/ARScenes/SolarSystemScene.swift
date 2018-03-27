@@ -24,7 +24,10 @@ class SolarSystemScene: SCNScene {
     
     var sunAnchor: ARAnchor?
     
+    var planetsRemoved: Int
+    
     override init() {
+        planetsRemoved = 0
         celestialBodies = []
         orbitalPaths = []
         super.init()
@@ -193,6 +196,39 @@ class SolarSystemScene: SCNScene {
             rootNode.addChild(pathNode)
         }
     }
+    
+    
+}
+
+extension SolarSystemScene{
+    //end of the world
+    
+    func endOfTheSystem()  {
+        let blackHolePosition = insertBlackHole()
+        
+        celestialBodies.forEach { (body) in
+            let node = body.node
+            let time = arc4random_uniform(4) + 1
+
+            Timer.scheduledTimer(withTimeInterval: TimeInterval(time), repeats: false, block: { (_) in
+                node.removeAllActions()
+                node.runAction(SCNAction.move(to: blackHolePosition, duration: TimeInterval(time)), completionHandler: {
+                    node.removeFromParentNode()
+                    self.planetsRemoved += 1
+                    if self.planetsRemoved == 9{
+                        print("all died")
+                    }
+                })
+            })
+        }
+    }
+    
+    func insertBlackHole() -> SCNVector3 {
+        
+        
+        //return the blackhole position
+        return SCNVector3(0, 0, 0)
+    }
 }
 
 extension SolarSystemScene: ARSCNViewDelegate{
@@ -217,23 +253,5 @@ extension SolarSystemScene: ARSCNViewDelegate{
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-    }
-}
-
-extension SCNGeometry{
-    func setMaterial(with content: Any?, constant: Bool = false) {
-        let material = SCNMaterial()
-        
-        if constant{
-            material.lightingModel = .constant
-        }
-        
-        if let content = content as? UIImage{
-            material.diffuse.contents = content
-            self.firstMaterial = material
-        }else if let content = content as? UIColor{
-            material.diffuse.contents = content
-            self.firstMaterial = material
-        }
     }
 }

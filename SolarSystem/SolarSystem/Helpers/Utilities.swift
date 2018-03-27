@@ -49,6 +49,24 @@ extension Float{
     }
 }
 
+extension SCNGeometry{
+    func setMaterial(with content: Any?, constant: Bool = false) {
+        let material = SCNMaterial()
+        
+        if constant{
+            material.lightingModel = .constant
+        }
+        
+        if let content = content as? UIImage{
+            material.diffuse.contents = content
+            self.firstMaterial = material
+        }else if let content = content as? UIColor{
+            material.diffuse.contents = content
+            self.firstMaterial = material
+        }
+    }
+}
+
 // MARK: - float4x4 extensions
 
 extension float4x4 {

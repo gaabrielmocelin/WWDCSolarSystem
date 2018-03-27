@@ -47,8 +47,8 @@ extension GameHistoryView: OverLay{
     
     func show() {
         fadeIn()
-        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
-            self.stateDelegate?.nextState(currentState: self.myState)
-        }
+//        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+//            self.stateDelegate?.nextState(currentState: self.myState)
+//        }
     }
 }
