@@ -63,22 +63,31 @@ class GameScene: SCNScene {
         lastUpdate = 0
         lastUpdateConstants = 0
         isGameRunning = false
-        spaceShip = SCNNode(geometry: SCNPyramid(width: 0.05, height: 0.03, length: 0.12))
-        spaceShip.categoryBitMask = LightType.light1
+        spaceShip = SCNNode()
         spaceshipRow = .center
         super.init()
         
         physicsWorld.contactDelegate = self
+        setupAmbientLight()
         setupSpaceship()
-        setupSpaceshipPhysicsBody()
+    }
+    
+    func setupAmbientLight() {
+        let ambientLight = SCNLight()
+        ambientLight.type = .ambient
+        ambientLight.categoryBitMask = LightType.light1
+        let node = SCNNode()
+        node.light = ambientLight
+        node.light?.intensity = 500
+        rootNode.addChildNode(node)
     }
     
     func setupSpaceship() {
-        let subNodeScene = SCNScene(named: "art.scnassets/SpaceshipModel3d.scn")!
-        spaceShip = subNodeScene.rootNode.childNode(withName: "spaceship", recursively: true)!
-    }
-    
-    func setupSpaceshipPhysicsBody() {
+        guard let model3D = SCNScene(named: "art.scnassets/SpaceshipModel3d.scn"), let spaceshipNode = model3D.rootNode.childNode(withName: "spaceship", recursively: true) else { return }
+        
+        spaceShip = spaceshipNode
+        spaceShip.categoryBitMask = LightType.light1
+        
         spaceShip.physicsBody = SCNPhysicsBody(type: .kinematic, shape: nil)
         spaceShip.physicsBody?.isAffectedByGravity = false
         spaceShip.physicsBody?.categoryBitMask = CategoryBitMask.spaceship
@@ -207,6 +216,8 @@ class GameScene: SCNScene {
             linePosition.x += 0.3
             
             let material = SCNMaterial()
+            
+            //CHANGE COLORRR *****************
             material.diffuse.contents = UIColor(red: 57/255, green: 255/255, blue: 20/255, alpha: 1)
             capsule.materials = [material]
             
@@ -217,17 +228,6 @@ class GameScene: SCNScene {
             light.intensity = 5000
             rowLine.light = light
         }
-        
-        
-        
-        //PLEASE REFACTOR ME
-        let ambientLight = SCNLight()
-        ambientLight.type = .ambient
-        ambientLight.categoryBitMask = LightType.light1
-        let node = SCNNode()
-        node.light = ambientLight
-        node.light?.intensity = 500
-        rootNode.addChildNode(node)
     }
 }
 
