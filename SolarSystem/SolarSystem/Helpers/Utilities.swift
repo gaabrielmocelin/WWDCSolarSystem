@@ -10,6 +10,15 @@ import UIKit
 import ARKit
 import SceneKit
 
+extension SCNNode {
+    func addChild(_ node: SCNNode) {
+        if node.parent != nil {
+            node.removeFromParentNode()
+        }
+        self.addChildNode(node)
+    }
+}
+
 extension UIView {
     func fadeIn(completion: ((Bool) ->Void)? = nil) {
         UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
@@ -31,6 +40,12 @@ extension UIView {
         view.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
         view.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
         view.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+    }
+}
+
+extension Float{
+    var radians: Float{
+        return self * Float(Double.pi) / 180
     }
 }
 
@@ -60,19 +75,4 @@ extension float4x4 {
         columns.1.y = scale
         columns.2.z = scale
     }
-}
-
-extension SCNNode {
-    
-    
-    func addChild(_ node: SCNNode) {
-        
-        if node.parent != nil {
-            node.removeFromParentNode()
-        }
-        
-        self.addChildNode(node)
-        
-    }
-    
 }

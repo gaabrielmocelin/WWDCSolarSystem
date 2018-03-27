@@ -28,6 +28,7 @@ class SolarSystemScene: SCNScene {
         celestialBodies = []
         orbitalPaths = []
         super.init()
+        setupAmbientLight()
         setupBodies()
     }
     
@@ -36,15 +37,6 @@ class SolarSystemScene: SCNScene {
     }
     
     func setupBodies(){
-        
-        //PLEASE REFACTOR ME
-        let ambientLight = SCNLight()
-        ambientLight.type = .ambient
-        let node = SCNNode()
-        node.light = ambientLight
-        node.light?.intensity = 100
-        rootNode.addChild(node)
-        
         for bodyName in BodyName.allcases{
             if bodyName == .sun{
                 celestialBodies.append(generateCelestialBody(body: bodyName))
@@ -54,6 +46,15 @@ class SolarSystemScene: SCNScene {
                 rootNode.addChild(body.node)
             }
         }
+    }
+    
+    func setupAmbientLight() {
+        let ambientLight = SCNLight()
+        ambientLight.type = .ambient
+        let node = SCNNode()
+        node.light = ambientLight
+        node.light?.intensity = 100
+        rootNode.addChild(node)
     }
     
     func generateCelestialBody(body: BodyName) -> CelestialBody{
@@ -101,9 +102,8 @@ class SolarSystemScene: SCNScene {
             sphere.setMaterial(with: UIImage(named: "art.scnassets/saturn.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 60
-//            planet.node.eulerAngles = SCNVector3(-0.7, -0.7, 0)
             
-            //saturn ring
+            // PLEASE REFACTOR **************  saturn ring
             let tube = SCNTube(innerRadius: 0.03, outerRadius: 0.05, height: 0.0005)
             tube.setMaterial(with: UIImage(named: "art.scnassets/SaturnRing2.png"))
             let tubeNode = SCNNode(geometry: tube)
@@ -156,7 +156,7 @@ class SolarSystemScene: SCNScene {
             let originX = centeredAnchor.transform.columns.3.x
             let originZ = centeredAnchor.transform.columns.3.z
             
-            let radianAngle = degreesToRadians(degrees: Float(angle))
+            let radianAngle = Float(angle).radians
             
             let x = originX + cos(radianAngle) * radius
             let z = (originZ + sin(radianAngle) * radius)
@@ -174,11 +174,6 @@ class SolarSystemScene: SCNScene {
         let groupAction = SCNAction.group([repeatRotateAction, repeatOrbitalAction])
         
         node.runAction(groupAction)
-    }
-    
-    //GENERATE A FLOAT EXTENSION TO DO THATTTT
-    func degreesToRadians(degrees: Float) -> Float {
-        return degrees * Float(Double.pi) / 180
     }
     
     func distance(of body: CelestialBody, toAnchor anchor: ARAnchor ) -> Float {
