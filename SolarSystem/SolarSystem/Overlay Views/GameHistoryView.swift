@@ -13,6 +13,7 @@ class GameHistoryView: UIView {
     var stateDelegate: StateManager?
     
     var label: UILabel!
+    var labelBottomAnchor: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         myState = .gameHistory
@@ -24,21 +25,28 @@ class GameHistoryView: UIView {
     
     func setupLabel()  {
         label = UILabel()
-        label.text = "this is where i tell the game history"
-        label.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        label.text = """
+        this is where i tell the game history,
+        bkabalbak blabla bla blablablabla bla blablabla
+        blabla bla blabla bla bla "
+        """
+        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.heightAnchor.constraint(equalToConstant: 200).isActive = true
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        
-        label.isHidden = true
+        labelBottomAnchor =  label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 300)
+        labelBottomAnchor!.isActive  = true
     }
     
     func tellHistory()  {
-        print("SHOULD TELL HISTORY")
+        UIView.animate(withDuration: 10, animations: {
+            self.labelBottomAnchor?.constant = -500
+        }) { (bool) in
+            print("acabou")
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,9 +57,6 @@ class GameHistoryView: UIView {
 extension GameHistoryView: EndOfTheSystemDelegate{
     func didBeginTheEndOfSystem() {
         DispatchQueue.main.async {
-            self.label.text = "ACABO TUDO SE FUDEMO"
-            self.label.isHidden = false
-            
             UIView.animate(withDuration: 2, animations: {
                 self.backgroundColor = UIColor.black
             }, completion: { (bool) in
