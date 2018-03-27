@@ -29,7 +29,11 @@ class SolarSystemScene: SCNScene {
     
     var orbitalPaths: [SCNNode]
     
-    var sunAnchor: ARAnchor?
+    var sunAnchor: ARAnchor?{
+        didSet{
+            setupStars()
+        }
+    }
     
     var planetsRemoved: Int
     
@@ -44,6 +48,16 @@ class SolarSystemScene: SCNScene {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupStars() {
+        guard let sunPosition = sunAnchor?.transform.translation else { return }
+        
+        let particleSystem = SCNParticleSystem(named: "Stars", inDirectory: "art.scnassets")!
+        let particleEmitter = SCNNode()
+        particleEmitter.position = SCNVector3(sunPosition)
+        particleEmitter.addParticleSystem(particleSystem)
+        rootNode.addChild(particleEmitter)
     }
     
     func setupBodies(){
