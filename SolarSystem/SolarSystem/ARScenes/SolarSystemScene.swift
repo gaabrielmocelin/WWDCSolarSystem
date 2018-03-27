@@ -251,8 +251,8 @@ extension SolarSystemScene{
         cylinder.setMaterial(with: UIColor.black)
         let blackHole = SCNNode(geometry: cylinder)
         blackHole.position = position
+        blackHole.look(at: camera.1)
         blackHole.eulerAngles.x = Float(90).radians
-//        blackHole.eulerAngles.z =
         
         rootNode.addChild(blackHole)
         
