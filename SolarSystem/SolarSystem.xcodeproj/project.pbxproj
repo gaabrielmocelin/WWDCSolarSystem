@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1032891206A5DEA00ED2A96 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = E103288F206A5DEA00ED2A96 /* spark.png */; };
+		E1032892206A5DEA00ED2A96 /* Reactor.scnp in Resources */ = {isa = PBXBuildFile; fileRef = E1032890206A5DEA00ED2A96 /* Reactor.scnp */; };
 		E1264E0220617FE8004E5C14 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1264E0120617FE8004E5C14 /* WelcomeView.swift */; };
 		E1264E04206188D3004E5C14 /* OverLayProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1264E03206188D3004E5C14 /* OverLayProtocol.swift */; };
 		E13DE55E205D952100FADF11 /* CelestialBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DE55D205D952100FADF11 /* CelestialBody.swift */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E103288F206A5DEA00ED2A96 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = spark.png; path = art.scnassets/spark.png; sourceTree = "<group>"; };
+		E1032890206A5DEA00ED2A96 /* Reactor.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; name = Reactor.scnp; path = art.scnassets/Reactor.scnp; sourceTree = "<group>"; };
 		E1264E0120617FE8004E5C14 /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		E1264E03206188D3004E5C14 /* OverLayProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverLayProtocol.swift; sourceTree = "<group>"; };
 		E13DE55D205D952100FADF11 /* CelestialBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelestialBody.swift; sourceTree = "<group>"; };
@@ -93,6 +97,8 @@
 				E1EF5713205C307400F962E9 /* Assets.xcassets */,
 				E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */,
 				E1EF570C205C307400F962E9 /* art.scnassets */,
+				E103288F206A5DEA00ED2A96 /* spark.png */,
+				E1032890206A5DEA00ED2A96 /* Reactor.scnp */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -186,6 +192,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1EF570D205C307400F962E9 /* art.scnassets in Resources */,
+				E1032892206A5DEA00ED2A96 /* Reactor.scnp in Resources */,
+				E1032891206A5DEA00ED2A96 /* spark.png in Resources */,
 				E1EF5717205C307400F962E9 /* LaunchScreen.storyboard in Resources */,
 				E1EF5714205C307400F962E9 /* Assets.xcassets in Resources */,
 			);

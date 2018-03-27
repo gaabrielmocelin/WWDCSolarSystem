@@ -104,6 +104,26 @@ class GameScene: SCNScene {
             mutablePosition.x += 0.3
         }
         rootNode.addChild(spaceShip)
+        
+        
+        //REFACTORRR *******************
+        
+        let particleSystem = SCNParticleSystem(named: "Reactor", inDirectory: "art.scnassets")!
+        let particleEmitter = SCNNode()
+        particleEmitter.addParticleSystem(particleSystem)
+        
+        let particleEmitter2 = SCNNode()
+        particleEmitter2.addParticleSystem(particleSystem)
+        
+        spaceShip.addChild(particleEmitter)
+        particleEmitter.position.x += -1.5
+        particleEmitter.position.y += 2
+        particleEmitter.position.z += 2.5
+        
+        spaceShip.addChild(particleEmitter2)
+        particleEmitter2.position.x += 1.5
+        particleEmitter2.position.y += 2
+        particleEmitter2.position.z += 2.5
     }
     
     func generateSpawnPositions(withPosition position: SCNVector3) {
