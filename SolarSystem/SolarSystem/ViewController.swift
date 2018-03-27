@@ -60,6 +60,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = scene
         
         //set the solar system based on camera direction
+        //REFACTOR *********************
         let camera = getCameraAngleAndAxes()
         print(camera)
         var transform = matrix_identity_float4x4
@@ -145,7 +146,7 @@ extension ViewController: StateManager{
                 self.currentState = ControlState.gameHistory
                 let gameHistory = GameHistoryView()
                 solarSystem.endOfTheSystemDelegate = gameHistory
-                solarSystem.endOfTheSystem()
+                solarSystem.endOfTheSystem(atCameraPointOfView: getCameraAngleAndAxes())
                 overLayView = gameHistory
             }
         case .gameHistory:

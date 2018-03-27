@@ -224,8 +224,8 @@ class SolarSystemScene: SCNScene {
 extension SolarSystemScene{
     //end of the world
     
-    func endOfTheSystem()  {
-        let blackHolePosition = insertBlackHole()
+    func endOfTheSystem(atCameraPointOfView camera: (SCNVector3, SCNVector3))  {
+        let blackHolePosition = insertBlackHole(atCameraPointOfView: camera)
         
         celestialBodies.forEach { (body) in
             let node = body.node
@@ -244,11 +244,19 @@ extension SolarSystemScene{
         }
     }
     
-    func insertBlackHole() -> SCNVector3 {
+    func insertBlackHole(atCameraPointOfView camera: (SCNVector3, SCNVector3)) -> SCNVector3 {
+        let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, (0.7 * camera.0.z))
         
+        let cylinder = SCNCylinder(radius: 1, height: 0.02)
+        cylinder.setMaterial(with: UIColor.black)
+        let blackHole = SCNNode(geometry: cylinder)
+        blackHole.position = position
+        blackHole.eulerAngles.x += 90
+        
+        rootNode.addChild(blackHole)
         
         //return the blackhole position
-        return SCNVector3(0, 0, 0)
+        return position
     }
 }
 
