@@ -147,6 +147,19 @@ class GameScene: SCNScene {
             rootNode.addChild(node)
             mutablePosition.x += 0.3
         }
+        
+        setupGameFloor()
+    }
+    
+    func setupGameFloor() {
+        var position = spawnBarrierPositions[1]
+        position.y -= 0.2
+        
+        let particleSystem = SCNParticleSystem(named: "GameFloor", inDirectory: "art.scnassets")!
+        let particleEmitter = SCNNode()
+        particleEmitter.position = position
+        particleEmitter.addParticleSystem(particleSystem)
+        rootNode.addChild(particleEmitter)
     }
     
     private func moveSpaceshipLeft() {

@@ -43,7 +43,7 @@ class GameHistoryView: UIView {
     }
     
     func tellHistory()  {
-        UIView.animate(withDuration: 30, delay: 0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 10, delay: 0, options: .curveLinear, animations: {
             self.labelCenterYAnchor?.isActive = false
             self.label.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
             self.layoutIfNeeded()
