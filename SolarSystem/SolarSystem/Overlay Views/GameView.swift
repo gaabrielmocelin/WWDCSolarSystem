@@ -18,14 +18,21 @@ public class GameView: UIView {
     public var stateDelegate: StateManager?
     public var gameDelegate: GamePerformer?
     
-    var scoreView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+    var scoreView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art.scnassets/ScoreView.png")
         return view
     }()
     
-    var label: UILabel!
-    var startButton: UIButton!
+    var scoreLabel: UILabel!
+    
+    var startLabel: UILabel = {
+        var label = UILabel()
+        label.text = "Tap to play"
+        label.textAlignment = .center
+        label.textColor = UIColor(red: 34/255, green: 136/255, blue: 221/255, alpha: 1)
+        return label
+    }()
     
     var score: Int
     var scoreTimer: Timer?
@@ -40,24 +47,23 @@ public class GameView: UIView {
     }
     
     func setupButton() {
-        startButton = UIButton(frame: CGRect())
-        startButton.setTitle("Start", for: .normal)
-        startButton.addTarget(self, action: #selector(handleStartButton), for: .touchUpInside)
-        startButton.backgroundColor = #colorLiteral(red: 0.9860219359, green: 0.4115800261, blue: 0.3854584694, alpha: 1)
-        startButton.layer.cornerRadius = 20
-        startButton.clipsToBounds = true
+        self.addSubview(startLabel)
+        startLabel.translatesAutoresizingMaskIntoConstraints = false
+        startLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        startLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+        startLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+        startLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
         
-        self.addSubview(startButton)
-        startButton.translatesAutoresizingMaskIntoConstraints = false
-        startButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        startButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        startButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        startButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse], animations: {
+            self.startLabel.alpha = 0
+        }, completion: nil)
     }
     
-    @objc func handleStartButton(sender: UIButton) {
+    
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         gameDelegate?.startGame()
-        startButton.isHidden = true
+        startLabel.isHidden = true
         triggerTimer()
     }
     
@@ -68,7 +74,7 @@ public class GameView: UIView {
     @objc func updateScore() {
         score += 1
         DispatchQueue.main.async {
-            self.label.text = "\(self.score)"
+            self.scoreLabel.text = "\(self.score)"
         }
     }
     
@@ -76,20 +82,21 @@ public class GameView: UIView {
         self.addSubview(scoreView)
         scoreView.translatesAutoresizingMaskIntoConstraints = false
         scoreView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        scoreView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        scoreView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         scoreView.heightAnchor.constraint(equalToConstant: 50).isActive = true
         scoreView.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
-        label = UILabel()
-        label.text = "0"
-        label.textAlignment = .center
+        scoreLabel = UILabel()
+        scoreLabel.textColor = UIColor.white
+        scoreLabel.text = "0"
+        scoreLabel.textAlignment = .center
         
-        scoreView.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.leadingAnchor.constraint(equalTo: scoreView.leadingAnchor).isActive = true
-        label.trailingAnchor.constraint(equalTo: scoreView.trailingAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: -5).isActive = true
-        label.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        scoreView.addSubview(scoreLabel)
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.leadingAnchor.constraint(equalTo: scoreView.leadingAnchor).isActive = true
+        scoreLabel.trailingAnchor.constraint(equalTo: scoreView.trailingAnchor).isActive = true
+        scoreLabel.bottomAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: -5).isActive = true
+        scoreLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
     func setupSwipes() {
