@@ -24,6 +24,7 @@ class IntroduceSolarSystemView: UIView {
     var exploreView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "art.scnassets/BackgroundExplore.png")
+        view.contentMode = .scaleAspectFit
         return view
     }()
     
