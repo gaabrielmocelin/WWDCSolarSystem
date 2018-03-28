@@ -35,20 +35,20 @@ class GameHistoryView: UIView {
         
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        label.heightAnchor.constraint(equalToConstant: 100).isActive = true
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         labelCenterYAnchor =  label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 200)
-        labelCenterYAnchor!.isActive  = true
+        labelCenterYAnchor!.isActive = true
     }
     
     func tellHistory()  {
-        UIView.animate(withDuration: 30, animations: {
+        UIView.animate(withDuration: 30, delay: 0, options: .curveLinear, animations: {
             self.labelCenterYAnchor?.isActive = false
             self.label.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
             self.layoutIfNeeded()
-        }) { (bool) in
-            print("acabou")
+        }) { (_) in
+            self.stateDelegate?.nextState(currentState: self.myState)
         }
     }
     
@@ -60,17 +60,11 @@ class GameHistoryView: UIView {
 extension GameHistoryView: EndOfTheSystemDelegate{
     func didBeginTheEndOfSystem() {
         DispatchQueue.main.async {
+            
+            self.tellHistory()
             UIView.animate(withDuration: 2, animations: {
                 self.backgroundColor = UIColor.black
-            }, completion: { (bool) in
-                if bool{
-                    self.tellHistory()
-//                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
-//                        self.stateDelegate?.nextState(currentState: self.myState)
-//                    }
-                }
             })
-            
         }
     }
 }
