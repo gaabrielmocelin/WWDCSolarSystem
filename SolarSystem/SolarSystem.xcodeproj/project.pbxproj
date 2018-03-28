@@ -16,8 +16,8 @@
 		E15AAA472063000D00836141 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AAA462063000D00836141 /* GameOverView.swift */; };
 		E15AAA492063002E00836141 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15AAA482063002E00836141 /* GameScene.swift */; };
 		E186B2A52062F07A003B728C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E186B2A42062F07A003B728C /* Utilities.swift */; };
-		E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570A205C307400F962E9 /* AppDelegate.swift */; };
-		E1EF570D205C307400F962E9 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF570C205C307400F962E9 /* art.scnassets */; };
+		E1E253F1206C1AA900C865F2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E253F0206C1AA900C865F2 /* art.scnassets */; };
+		E1E253F3206C1ABE00C865F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E253F2206C1ABE00C865F2 /* AppDelegate.swift */; };
 		E1EF570F205C307400F962E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570E205C307400F962E9 /* ViewController.swift */; };
 		E1EF5714205C307400F962E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF5713205C307400F962E9 /* Assets.xcassets */; };
 		E1EF5717205C307400F962E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */; };
@@ -35,9 +35,9 @@
 		E15AAA482063002E00836141 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		E17C72FF206BCD5600206A7D /* GalaxyGameSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GalaxyGameSound.mp3; sourceTree = "<group>"; };
 		E186B2A42062F07A003B728C /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		E1E253F0206C1AA900C865F2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		E1E253F2206C1ABE00C865F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1EF5707205C307400F962E9 /* SolarSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1EF570A205C307400F962E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E1EF570C205C307400F962E9 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		E1EF570E205C307400F962E9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E1EF5713205C307400F962E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1EF5716205C307400F962E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -80,10 +80,10 @@
 		E14B894D2061A18200A2F095 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E1EF570A205C307400F962E9 /* AppDelegate.swift */,
 				E1264E03206188D3004E5C14 /* OverLayProtocol.swift */,
 				E13DE55D205D952100FADF11 /* CelestialBody.swift */,
 				E186B2A42062F07A003B728C /* Utilities.swift */,
+				E1E253F2206C1ABE00C865F2 /* AppDelegate.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -91,9 +91,9 @@
 		E186B2A32062F017003B728C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E1E253F0206C1AA900C865F2 /* art.scnassets */,
 				E1EF5713205C307400F962E9 /* Assets.xcassets */,
 				E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */,
-				E1EF570C205C307400F962E9 /* art.scnassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -187,8 +187,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1EF570D205C307400F962E9 /* art.scnassets in Resources */,
 				E1EF5717205C307400F962E9 /* LaunchScreen.storyboard in Resources */,
+				E1E253F1206C1AA900C865F2 /* art.scnassets in Resources */,
 				E1EF5714205C307400F962E9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1E253F3206C1ABE00C865F2 /* AppDelegate.swift in Sources */,
 				E1F4319520628D09000A7E67 /* GameHistoryView.swift in Sources */,
 				E15AAA472063000D00836141 /* GameOverView.swift in Sources */,
 				E13DE55E205D952100FADF11 /* CelestialBody.swift in Sources */,
@@ -211,7 +212,6 @@
 				E1EF570F205C307400F962E9 /* ViewController.swift in Sources */,
 				E186B2A52062F07A003B728C /* Utilities.swift in Sources */,
 				E13DE560205DA44400FADF11 /* SolarSystemScene.swift in Sources */,
-				E1EF570B205C307400F962E9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
