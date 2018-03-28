@@ -12,8 +12,8 @@ class GameHistoryView: UIView {
     var myState: ControlState
     var stateDelegate: StateManager?
     
-    var label: UILabel!
-    var labelBottomAnchor: NSLayoutConstraint?
+    var label: UITextView!
+    var labelCenterYAnchor: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         myState = .gameHistory
@@ -24,26 +24,28 @@ class GameHistoryView: UIView {
     }
     
     func setupLabel()  {
-        label = UILabel()
+        label = UITextView()
         label.text = """
         this is where i tell the game history,
         bkabalbak blabla bla blablablabla bla blablabla
         blabla bla blabla bla bla "
         """
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        label.backgroundColor = UIColor.clear
         
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.heightAnchor.constraint(equalToConstant: 200).isActive = true
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        labelBottomAnchor =  label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 300)
-        labelBottomAnchor!.isActive  = true
+        labelCenterYAnchor =  label.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: 100)
+        labelCenterYAnchor!.isActive  = true
     }
     
     func tellHistory()  {
-        UIView.animate(withDuration: 10, animations: {
-            self.labelBottomAnchor?.constant = -500
+        UIView.animate(withDuration: 30, animations: {
+            self.labelCenterYAnchor?.constant = -500
+            self.layoutIfNeeded()
         }) { (bool) in
             print("acabou")
         }
@@ -62,9 +64,9 @@ extension GameHistoryView: EndOfTheSystemDelegate{
             }, completion: { (bool) in
                 if bool{
                     self.tellHistory()
-                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
-                        self.stateDelegate?.nextState(currentState: self.myState)
-                    }
+//                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (_) in
+//                        self.stateDelegate?.nextState(currentState: self.myState)
+//                    }
                 }
             })
             
