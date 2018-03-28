@@ -1,10 +1,3 @@
-//
-//  GameHistory.swift
-//  SolarSystem
-//
-//  Created by Gabriel Mocelin on 21/03/18.
-//  Copyright © 2018 Gabriel Mocelin. All rights reserved.
-//
 
 import UIKit
 
@@ -12,10 +5,20 @@ class GameHistoryView: UIView {
     public var myState: ControlState
     public var stateDelegate: StateManager?
     
-    var label: UITextView!
+    var historyText: UITextView = {
+        var textView = UITextView()
+        textView.text = """
+        this is where i tell the game history,
+        bkabalbak blabla bla blablablabla bla blablabla
+        blabla bla blabla bla bla "
+        """
+        textView.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        textView.backgroundColor = UIColor.clear
+        return textView
+    }()
     var labelCenterYAnchor: NSLayoutConstraint?
     
-   public  override init(frame: CGRect) {
+    public  override init(frame: CGRect) {
         myState = .gameHistory
         
         super.init(frame: frame)
@@ -24,28 +27,21 @@ class GameHistoryView: UIView {
     }
     
     func setupLabel()  {
-        label = UITextView()
-        label.text = """
-        this is where i tell the game history,
-        bkabalbak blabla bla blablablabla bla blablabla
-        blabla bla blabla bla bla "
-        """
-        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        label.backgroundColor = UIColor.clear
         
-        self.addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        label.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        labelCenterYAnchor =  label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 200)
+        
+        self.addSubview(historyText)
+        historyText.translatesAutoresizingMaskIntoConstraints = false
+        historyText.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        historyText.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        historyText.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 200)
         labelCenterYAnchor!.isActive = true
     }
     
     func tellHistory()  {
         UIView.animate(withDuration: 10, delay: 0, options: .curveLinear, animations: {
             self.labelCenterYAnchor?.isActive = false
-            self.label.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
+            self.historyText.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
             self.layoutIfNeeded()
         }) { (_) in
             self.stateDelegate?.nextState(currentState: self.myState)
@@ -63,7 +59,7 @@ extension GameHistoryView: EndOfTheSystemDelegate{
             
             self.tellHistory()
             UIView.animate(withDuration: 2, animations: {
-                self.backgroundColor = UIColor.black
+                self.backgroundColor = UIColor(red: 17/255, green: 34/255, blue: 51/255, alpha: 1)
             })
         }
     }
@@ -78,3 +74,4 @@ extension GameHistoryView: OverLay{
         fadeIn()
     }
 }
+
