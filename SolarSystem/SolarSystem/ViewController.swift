@@ -12,6 +12,8 @@ import ARKit
 
 class ViewController: UIViewController, ARSCNViewDelegate {
     
+    var backgroundMusic = AVAudioPlayer()
+    
     var startPosition: SCNVector3?
     
     var currentState: ControlState?
@@ -133,13 +135,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func playSound() {
-        guard let url = Bundle.main.url(forResource: "GalaxyGameSound", withExtension: "mp3"), let player = try? AVAudioPlayer.init(contentsOf: url) else {
+        guard let url = Bundle.main.url(forResource: "GalaxyGameSound", withExtension: "mp3"), let player = try? AVAudioPlayer(contentsOf: url) else {
             print("error sound")
             return
         }
-        player.numberOfLoops = -1
-        player.prepareToPlay()
-        player.play()
+        backgroundMusic = player
+        backgroundMusic.numberOfLoops = -1
+        backgroundMusic.prepareToPlay()
+        backgroundMusic.play()
     }
 }
 

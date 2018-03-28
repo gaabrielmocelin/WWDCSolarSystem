@@ -91,7 +91,6 @@
 		E186B2A32062F017003B728C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E17C72FF206BCD5600206A7D /* GalaxyGameSound.mp3 */,
 				E1EF5713205C307400F962E9 /* Assets.xcassets */,
 				E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */,
 				E1EF570C205C307400F962E9 /* art.scnassets */,
@@ -118,6 +117,7 @@
 		E1EF5709205C307400F962E9 /* SolarSystem */ = {
 			isa = PBXGroup;
 			children = (
+				E17C72FF206BCD5600206A7D /* GalaxyGameSound.mp3 */,
 				E186B2A32062F017003B728C /* Resources */,
 				E14B894D2061A18200A2F095 /* Helpers */,
 				E14B894B2061A14E00A2F095 /* ARScenes */,
