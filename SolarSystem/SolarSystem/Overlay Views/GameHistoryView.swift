@@ -63,7 +63,7 @@ extension GameHistoryView: EndOfTheSystemDelegate{
             
             self.tellHistory()
             UIView.animate(withDuration: 2, animations: {
-                self.backgroundColor = UIColor.black
+                self.backgroundColor = UIColor(red: 17/255, green: 34/255, blue: 51/255, alpha: 1)
             })
         }
     }
