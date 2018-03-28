@@ -38,13 +38,14 @@ class GameHistoryView: UIView {
         label.heightAnchor.constraint(equalToConstant: 200).isActive = true
         label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        labelCenterYAnchor =  label.centerYAnchor.constraint(equalTo: self.bottomAnchor, constant: 100)
+        labelCenterYAnchor =  label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 200)
         labelCenterYAnchor!.isActive  = true
     }
     
     func tellHistory()  {
         UIView.animate(withDuration: 30, animations: {
-            self.labelCenterYAnchor?.constant = -500
+            self.labelCenterYAnchor?.isActive = false
+            self.label.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
             self.layoutIfNeeded()
         }) { (bool) in
             print("acabou")
