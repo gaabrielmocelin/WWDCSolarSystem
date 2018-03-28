@@ -9,52 +9,52 @@
 import ARKit
 import SceneKit
 
-enum SpaceshipRow: Int {
+public enum SpaceshipRow: Int {
     case left
     case center
     case right
 }
 
-enum Difficulty: Int {
+public enum Difficulty: Int {
     case easy
     case hard
 }
 
-struct CategoryBitMask {
-    static let spaceship: Int = 0b0001
+public struct CategoryBitMask {
+    public static let spaceship: Int = 0b0001
     static let barrier: Int = 0b0010
 }
 
-struct LightType {
-    static let light1: Int = 0x1 << 1
-    static let light2: Int = 0x1 << 2
+public struct LightType {
+    public static let light1: Int = 0x1 << 1
+    public static let light2: Int = 0x1 << 2
 }
 
-protocol GameOverDelegate {
+public protocol GameOverDelegate {
     func gameIsOver()
 }
 
-class GameScene: SCNScene {
-    var spaceShip: SCNNode
-    var spaceshipPositions: [SCNVector3]
-    var originalSpaceshipPositon: SCNVector3
-    var spawnBarrierPositions: [SCNVector3]
+public class GameScene: SCNScene {
+    public  var spaceShip: SCNNode
+    public var spaceshipPositions: [SCNVector3]
+    public var originalSpaceshipPositon: SCNVector3
+    public var spawnBarrierPositions: [SCNVector3]
     
     //for now
-    private var spaceshipRow: SpaceshipRow
+    public var spaceshipRow: SpaceshipRow
     
-    var isGameRunning: Bool
+    public var isGameRunning: Bool
     //algorythm time
-    var lastUpdate: TimeInterval
-    var lastUpdateConstants: TimeInterval
+    public var lastUpdate: TimeInterval
+    public var lastUpdateConstants: TimeInterval
     //algorythm constants
-    private var timeToSpawn: TimeInterval
-    private var barrierVelocity: TimeInterval
+    public var timeToSpawn: TimeInterval
+    public  var barrierVelocity: TimeInterval
     
     //gameover delegate
-    var gameOverDelegate: GameOverDelegate?
+    public var gameOverDelegate: GameOverDelegate?
     
-    override init() {
+    public override init() {
         originalSpaceshipPositon = SCNVector3()
         spaceshipPositions = []
         spawnBarrierPositions = []
@@ -95,12 +95,12 @@ class GameScene: SCNScene {
         spaceShip.physicsBody?.contactTestBitMask = CategoryBitMask.barrier
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     //generate the three posible positions and place the spaceship at the centered one
-    func placeSpaceship(atPosition position: SCNVector3) {
+    public func placeSpaceship(atPosition position: SCNVector3) {
         var mutablePosition = position
         mutablePosition.x += -0.3
         
@@ -135,7 +135,7 @@ class GameScene: SCNScene {
         particleEmitter2.position.z += 3.3
     }
     
-    func generateSpawnPositions(withPosition position: SCNVector3) {
+    public func generateSpawnPositions(withPosition position: SCNVector3) {
         var mutablePosition = position
         mutablePosition.x += -0.3
         mutablePosition.z += -1.5
@@ -162,7 +162,7 @@ class GameScene: SCNScene {
         rootNode.addChild(particleEmitter)
     }
     
-    private func moveSpaceshipLeft() {
+    func moveSpaceshipLeft() {
         guard let row = SpaceshipRow(rawValue: spaceshipRow.rawValue - 1) else { return }
         
         spaceshipRow = row
@@ -170,7 +170,7 @@ class GameScene: SCNScene {
         
     }
     
-    private func moveSpaceshipRight() {
+    func moveSpaceshipRight() {
         guard let row = SpaceshipRow(rawValue: spaceshipRow.rawValue + 1) else { return }
         
         spaceshipRow = row
@@ -212,7 +212,7 @@ class GameScene: SCNScene {
         })
     }
     
-    func generateRowLines(withPosition position: SCNVector3) {
+    public func generateRowLines(withPosition position: SCNVector3) {
         guard let barrierPosition = spawnBarrierPositions.first, let spaceshipPosition = spaceshipPositions.first else { return }
         let height = spaceshipPosition.z - barrierPosition.z
         var linePosition = spaceshipPosition
@@ -245,7 +245,7 @@ class GameScene: SCNScene {
 }
 
 extension GameScene: GamePerformer{
-    func didSwipe(_ direction: UISwipeGestureRecognizerDirection) {
+    public func didSwipe(_ direction: UISwipeGestureRecognizerDirection) {
         if isGameRunning{
             if direction == .left, !(spaceshipRow == .left){
                 moveSpaceshipLeft()
@@ -255,20 +255,20 @@ extension GameScene: GamePerformer{
         }
     }
     
-    func startGame() {
+    public func startGame() {
         isGameRunning = true
     }
 }
 
 extension GameScene: SCNPhysicsContactDelegate{
-    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+    public func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         spaceShip.removeFromParentNode()
         
         isGameRunning = false
         gameOverDelegate?.gameIsOver()
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+    public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         let deltaTime = time - lastUpdate
         if isGameRunning, deltaTime > timeToSpawn {
             randomlySpawnBarriers()

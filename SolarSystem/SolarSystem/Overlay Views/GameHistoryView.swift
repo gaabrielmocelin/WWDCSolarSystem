@@ -9,13 +9,13 @@
 import UIKit
 
 class GameHistoryView: UIView {
-    var myState: ControlState
-    var stateDelegate: StateManager?
+    public var myState: ControlState
+    public var stateDelegate: StateManager?
     
     var label: UITextView!
     var labelCenterYAnchor: NSLayoutConstraint?
     
-    override init(frame: CGRect) {
+   public  override init(frame: CGRect) {
         myState = .gameHistory
         
         super.init(frame: frame)
@@ -52,13 +52,13 @@ class GameHistoryView: UIView {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension GameHistoryView: EndOfTheSystemDelegate{
-    func didBeginTheEndOfSystem() {
+    public func didBeginTheEndOfSystem() {
         DispatchQueue.main.async {
             
             self.tellHistory()
@@ -70,11 +70,11 @@ extension GameHistoryView: EndOfTheSystemDelegate{
 }
 
 extension GameHistoryView: OverLay{
-    func hide() {
+    public func hide() {
         fadeOut()
     }
     
-    func show() {
+    public func show() {
         fadeIn()
     }
 }

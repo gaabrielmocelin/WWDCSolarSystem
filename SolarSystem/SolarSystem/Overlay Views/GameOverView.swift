@@ -8,9 +8,9 @@
 
 import UIKit
 
-class GameOverView: UIView {
-    var myState: ControlState
-    var stateDelegate: StateManager?
+public class GameOverView: UIView {
+    public var myState: ControlState
+    public var stateDelegate: StateManager?
     
     var scoreLabel: UILabel!
     var label: UILabel!
@@ -22,7 +22,7 @@ class GameOverView: UIView {
         }
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         myState = .gameOver
         
         super.init(frame: frame)
@@ -79,17 +79,17 @@ class GameOverView: UIView {
         label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension GameOverView: OverLay{
-    func hide() {
+    public func hide() {
         fadeOut()
     }
     
-    func show() {
+    public func show() {
         fadeIn()
 //        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (_) in
 //            self.stateDelegate?.nextState(currentState: self.myState)

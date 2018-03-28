@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol OverLay: class {
+public protocol OverLay: class {
     var myState: ControlState { get }
     var stateDelegate: StateManager? { get set }
     
@@ -16,7 +16,7 @@ protocol OverLay: class {
     func show()
 }
 
-enum ControlState: String{
+public enum ControlState: String{
     case welcome
     case solarSystem
     case gameHistory
@@ -24,6 +24,6 @@ enum ControlState: String{
     case gameOver
 }
 
-protocol StateManager{
+public protocol StateManager{
     func nextState(currentState: ControlState)
 }

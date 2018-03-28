@@ -10,33 +10,33 @@ import UIKit
 import ARKit
 import SceneKit
 
-extension SCNNode {
-    func addChild(_ node: SCNNode) {
+public extension SCNNode {
+    public func addChild(_ node: SCNNode) {
         if node.parent != nil {
             node.removeFromParentNode()
         }
         self.addChildNode(node)
     }
     
-    func distance(ofAnchor anchor: ARAnchor) -> Float {
+    public func distance(ofAnchor anchor: ARAnchor) -> Float {
         return simd_distance(self.simdTransform.columns.3, anchor.transform.columns.3)
     }
 }
 
-extension UIView {
-    func fadeIn(completion: ((Bool) ->Void)? = nil) {
+public extension UIView {
+    public func fadeIn(completion: ((Bool) ->Void)? = nil) {
         UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.alpha = 1.0
         }, completion: completion)
     }
     
-    func fadeOut(completion: ((Bool) ->Void)? = nil) {
+    public func fadeOut(completion: ((Bool) ->Void)? = nil) {
         UIView.animate(withDuration: 1.0, delay: 0.0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.alpha = 0.0
         }, completion: completion)
     }
     
-    func addSubviewWithSameAnchors(_ view: UIView?) {
+   public  func addSubviewWithSameAnchors(_ view: UIView?) {
         guard let view = view else { return }
         self.addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -47,14 +47,14 @@ extension UIView {
     }
 }
 
-extension Float{
-    var radians: Float{
+public extension Float{
+    public var radians: Float{
         return self * Float(Double.pi) / 180
     }
 }
 
-extension SCNGeometry{
-    func setMaterial(with content: Any?, constant: Bool = false) {
+public extension SCNGeometry{
+   public  func setMaterial(with content: Any?, constant: Bool = false) {
         let material = SCNMaterial()
         
         if constant{
@@ -73,12 +73,12 @@ extension SCNGeometry{
 
 // MARK: - float4x4 extensions
 
-extension float4x4 {
+public extension float4x4 {
     /**
      Treats matrix as a (right-hand column-major convention) transform matrix
      and factors out the translation component of the transform.
      */
-    var translation: float3 {
+    public var translation: float3 {
         get {
             let translation = columns.3
             return float3(translation.x, translation.y, translation.z)
@@ -91,7 +91,7 @@ extension float4x4 {
     /**
      Creates a transform matrix with a uniform scale factor in all directions.
      */
-    init(uniformScale scale: Float) {
+    public init(uniformScale scale: Float) {
         self = matrix_identity_float4x4
         columns.0.x = scale
         columns.1.y = scale

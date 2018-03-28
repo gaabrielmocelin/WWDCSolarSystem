@@ -9,35 +9,35 @@
 import SceneKit
 import ARKit
 
-protocol EndOfTheSystemDelegate {
+public protocol EndOfTheSystemDelegate {
     func didBeginTheEndOfSystem()
 }
 
-class SolarSystemScene: SCNScene {
+public class SolarSystemScene: SCNScene {
     
-    var endOfTheSystemDelegate: EndOfTheSystemDelegate?
+    public var endOfTheSystemDelegate: EndOfTheSystemDelegate?
     
-    var celestialBodies: [CelestialBody]
+    public var celestialBodies: [CelestialBody]
     
-    var planets: [CelestialBody]{
+    public var planets: [CelestialBody]{
         return celestialBodies.filter{$0.bodyName != BodyName.sun}
     }
     
-    var sun: CelestialBody? {
+    public var sun: CelestialBody? {
         return celestialBodies.first(where: { $0.bodyName == BodyName.sun })
     }
     
-    var orbitalPaths: [SCNNode]
+    public var orbitalPaths: [SCNNode]
     
-    var sunAnchor: ARAnchor?{
+    public var sunAnchor: ARAnchor?{
         didSet{
             setupStars()
         }
     }
     
-    var planetsRemoved: Int
+    public var planetsRemoved: Int
     
-    override init() {
+   public  override init() {
         planetsRemoved = 0
         celestialBodies = []
         orbitalPaths = []
@@ -46,7 +46,7 @@ class SolarSystemScene: SCNScene {
         setupBodies()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -168,7 +168,7 @@ class SolarSystemScene: SCNScene {
         }
     }
     
-    func orbitalAnimate(planet: CelestialBody, centeredAnchor: ARAnchor, time: TimeInterval) {
+   func orbitalAnimate(planet: CelestialBody, centeredAnchor: ARAnchor, time: TimeInterval) {
         let node = planet.node
         var actions: [SCNAction] = []
         let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
@@ -200,7 +200,7 @@ class SolarSystemScene: SCNScene {
         node.runAction(groupAction)
     }
     
-    func distance(of body: CelestialBody, toAnchor anchor: ARAnchor ) -> Float {
+   func distance(of body: CelestialBody, toAnchor anchor: ARAnchor ) -> Float {
         return simd_distance(body.node.simdTransform.columns.3, anchor.transform.columns.3)
     }
     
@@ -221,10 +221,10 @@ class SolarSystemScene: SCNScene {
     
 }
 
-extension SolarSystemScene{
+public extension SolarSystemScene{
     //end of the world
     
-    func endOfTheSystem(atCameraPointOfView camera: (SCNVector3, SCNVector3))  {
+    public func endOfTheSystem(atCameraPointOfView camera: (SCNVector3, SCNVector3))  {
         let blackHolePosition = insertBlackHole(atCameraPointOfView: camera)
         
         celestialBodies.forEach { (body) in
@@ -269,7 +269,7 @@ extension SolarSystemScene{
 }
 
 extension SolarSystemScene: ARSCNViewDelegate{
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
+    public func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
         if let sun = sun {
             sunAnchor = anchor
             updatePlanetsPositions(at: anchor)
@@ -280,15 +280,15 @@ extension SolarSystemScene: ARSCNViewDelegate{
         return SCNNode()
     }
     
-    func session(_ session: ARSession, didFailWithError error: Error) {
+    public func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
     }
     
-    func sessionWasInterrupted(_ session: ARSession) {
+    public func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
     }
     
-    func sessionInterruptionEnded(_ session: ARSession) {
+    public func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
     }
 }

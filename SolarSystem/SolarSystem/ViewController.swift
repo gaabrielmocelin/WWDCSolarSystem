@@ -10,7 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+public class ViewController: UIViewController, ARSCNViewDelegate {
     
     var backgroundMusic = AVAudioPlayer()
     
@@ -30,7 +30,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         setupSceneView()
@@ -105,7 +105,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             sceneView.session.run(configuration, options: [.resetTracking])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Create a session configuration
@@ -115,7 +115,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.run(configuration)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    public override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // Pause the view's session
@@ -147,7 +147,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 }
 
 extension ViewController: StateManager{
-    func nextState(currentState: ControlState) {
+    public func nextState(currentState: ControlState) {
         
         switch currentState {
         case .welcome:

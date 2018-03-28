@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol GamePerformer {
+public protocol GamePerformer {
     func didSwipe(_ direction: UISwipeGestureRecognizerDirection)
     func startGame()
 }
 
-class GameView: UIView {
-    var myState: ControlState
-    var stateDelegate: StateManager?
-    var gameDelegate: GamePerformer?
+public class GameView: UIView {
+    public var myState: ControlState
+    public var stateDelegate: StateManager?
+    public var gameDelegate: GamePerformer?
     
     var scoreView: UIView = {
         let view = UIView()
@@ -30,7 +30,7 @@ class GameView: UIView {
     var score: Int
     var scoreTimer: Timer?
     
-    override init(frame: CGRect) {
+   public  override init(frame: CGRect) {
         myState = .game
         score = 0
         super.init(frame: frame)
@@ -106,24 +106,24 @@ class GameView: UIView {
         gameDelegate?.didSwipe(swipe.direction)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension GameView: GameOverDelegate{
-    func gameIsOver() {
+    public func gameIsOver() {
         scoreTimer?.invalidate()
         stateDelegate?.nextState(currentState: myState)
     }
 }
 
 extension GameView: OverLay{
-    func hide() {
+   public  func hide() {
         fadeOut()
     }
     
-    func show() {
+    public func show() {
         fadeIn()
     }
 }

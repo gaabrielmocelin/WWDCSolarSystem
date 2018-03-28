@@ -8,8 +8,8 @@
 
 import UIKit
 
-class WelcomeView: UIView {
-    var myState: ControlState
+public class WelcomeView: UIView {
+    public var myState: ControlState
     
     var welcomeView: UIView = {
         let view = UIView()
@@ -60,9 +60,9 @@ class WelcomeView: UIView {
         return label
     }()
     
-    var stateDelegate: StateManager?
+    public var stateDelegate: StateManager?
 
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         self.myState = .welcome
         
         super.init(frame: frame)
@@ -71,7 +71,7 @@ class WelcomeView: UIView {
         setupWelcomeView()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -157,11 +157,11 @@ class WelcomeView: UIView {
 }
 
 extension WelcomeView: OverLay{
-    func hide() {
+    public func hide() {
         fadeOut()
     }
     
-    func show() {
+    public func show() {
         fadeIn()
     }
 }

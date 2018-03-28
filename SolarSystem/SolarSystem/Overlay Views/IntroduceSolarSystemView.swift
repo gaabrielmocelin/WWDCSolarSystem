@@ -9,9 +9,9 @@
 import UIKit
 
 class IntroduceSolarSystemView: UIView {
-    var myState: ControlState
+    public var myState: ControlState
     
-    var stateDelegate: StateManager?
+    public var stateDelegate: StateManager?
     
     var nextButton: UIButton = {
         let button = UIButton(frame: CGRect())
@@ -37,7 +37,7 @@ class IntroduceSolarSystemView: UIView {
         return label
     }()
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         myState = .solarSystem
 
         super.init(frame: frame)
@@ -47,7 +47,7 @@ class IntroduceSolarSystemView: UIView {
         alpha = 0
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -84,11 +84,11 @@ class IntroduceSolarSystemView: UIView {
 
 extension IntroduceSolarSystemView: OverLay {
     
-    func hide() {
+    public func hide() {
         fadeOut()
     }
     
-    func show() {
+    public func show() {
         fadeIn()
     }
 }
