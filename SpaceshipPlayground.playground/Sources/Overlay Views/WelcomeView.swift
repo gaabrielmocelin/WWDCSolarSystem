@@ -17,6 +17,7 @@ public class WelcomeView: UIView {
         textView.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         textView.textAlignment = .center
         textView.backgroundColor = UIColor.clear
+        textView.font = Fonts.shared.regularFont(withSize: 24)
         return textView
     }()
     
@@ -25,6 +26,7 @@ public class WelcomeView: UIView {
         label.text = "Welcome to my playground"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .center
+        label.font = Fonts.shared.boldFont(withSize: 36)
         return label
     }()
     
@@ -81,14 +83,14 @@ public class WelcomeView: UIView {
         welcomeLabel.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor).isActive = true
         welcomeLabel.widthAnchor.constraint(equalTo: welcomeView.widthAnchor, constant: 0).isActive = true
         welcomeLabel.topAnchor.constraint(equalTo: welcomeView.topAnchor, constant: 129).isActive = true
-        welcomeLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        welcomeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         welcomeView.addSubview(descriptionText)
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
         descriptionText.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor).isActive = true
         descriptionText.widthAnchor.constraint(equalTo: welcomeView.widthAnchor, constant: 0).isActive = true
         descriptionText.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 39).isActive = true
-        descriptionText.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        descriptionText.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         let separatorLine = UIView()
         separatorLine.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
