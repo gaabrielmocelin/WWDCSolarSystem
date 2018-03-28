@@ -17,13 +17,13 @@ public class WelcomeView: UIView {
         textView.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         textView.textAlignment = .center
         textView.backgroundColor = UIColor.clear
-        textView.font = Fonts.shared.regularFont(withSize: 24)
+        textView.font = Fonts.shared.regularFont(withSize: 20)
         return textView
     }()
     
     var welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Welcome to my playground"
+        label.text = "Welcome to my playground!!"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .center
         label.font = Fonts.shared.boldFont(withSize: 36)
@@ -35,14 +35,16 @@ public class WelcomeView: UIView {
         button.setTitle("I'm Ready", for: .normal)
         button.addTarget(self, action: #selector(handleReadyButton), for: .touchUpInside)
         button.setBackgroundImage(UIImage.init(named: "art.scnassets/Button.png"), for: .normal)
+        button.titleLabel?.font = Fonts.shared.boldFont(withSize: 20)
         return button
     }()
     
     var trackingLabel: UILabel = {
         let label = UILabel()
-        label.text = "Tracking State"
+        label.text = "Tracking State:"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .center
+        label.font = Fonts.shared.regularFont(withSize: 20)
         return label
     }()
     
@@ -51,6 +53,7 @@ public class WelcomeView: UIView {
         label.text = "GOOD"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .center
+        label.font = Fonts.shared.boldFont(withSize: 24)
         return label
     }()
     
@@ -82,15 +85,15 @@ public class WelcomeView: UIView {
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor).isActive = true
         welcomeLabel.widthAnchor.constraint(equalTo: welcomeView.widthAnchor, constant: 0).isActive = true
-        welcomeLabel.topAnchor.constraint(equalTo: welcomeView.topAnchor, constant: 129).isActive = true
+        welcomeLabel.topAnchor.constraint(equalTo: welcomeView.topAnchor, constant: 100).isActive = true
         welcomeLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         welcomeView.addSubview(descriptionText)
         descriptionText.translatesAutoresizingMaskIntoConstraints = false
         descriptionText.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor).isActive = true
         descriptionText.widthAnchor.constraint(equalTo: welcomeView.widthAnchor, constant: 0).isActive = true
-        descriptionText.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 39).isActive = true
-        descriptionText.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        descriptionText.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 15).isActive = true
+        descriptionText.heightAnchor.constraint(equalToConstant: 35).isActive = true
         
         let separatorLine = UIView()
         separatorLine.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -106,14 +109,14 @@ public class WelcomeView: UIView {
         trackingLabel.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor).isActive = true
         trackingLabel.widthAnchor.constraint(equalTo: welcomeView.widthAnchor, constant: 0).isActive = true
         trackingLabel.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: 20).isActive = true
-        trackingLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        trackingLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         welcomeView.addSubview(trackingState)
         trackingState.translatesAutoresizingMaskIntoConstraints = false
         trackingState.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor).isActive = true
         trackingState.widthAnchor.constraint(equalTo: welcomeView.widthAnchor, constant: 0).isActive = true
-        trackingState.topAnchor.constraint(equalTo: trackingLabel.bottomAnchor, constant: 10).isActive = true
-        trackingState.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        trackingState.topAnchor.constraint(equalTo: trackingLabel.bottomAnchor, constant: 5).isActive = true
+        trackingState.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
     
     func setupBackgroundBlur() {
