@@ -17,6 +17,10 @@ extension SCNNode {
         }
         self.addChildNode(node)
     }
+    
+    func distance(ofAnchor anchor: ARAnchor) -> Float {
+        return simd_distance(self.simdTransform.columns.3, anchor.transform.columns.3)
+    }
 }
 
 extension UIView {

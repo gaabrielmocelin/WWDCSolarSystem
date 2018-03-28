@@ -245,7 +245,14 @@ extension SolarSystemScene{
     }
     
     func insertBlackHole(atCameraPointOfView camera: (SCNVector3, SCNVector3)) -> SCNVector3 {
-        let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, (0.7 * camera.0.z))
+        guard let sunAnchor = sunAnchor, let neptune = planets.last else { return SCNVector3() }
+        
+        let cameraNode = SCNNode()
+        cameraNode.position = camera.1
+        let distanceCameraAndSun = cameraNode.distance(ofAnchor: sunAnchor)
+        let distanceNeptuneAndSun = neptune.node.distance(ofAnchor: sunAnchor)
+        
+        let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, ((0.2 + distanceCameraAndSun + distanceNeptuneAndSun) * camera.0.z))
         
         let cylinder = SCNCylinder(radius: 0.2, height: 0.02)
         cylinder.setMaterial(with: UIColor.black)
