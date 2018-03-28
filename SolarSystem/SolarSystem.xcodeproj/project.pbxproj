@@ -18,6 +18,7 @@
 		E186B2A52062F07A003B728C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E186B2A42062F07A003B728C /* Utilities.swift */; };
 		E1E253F1206C1AA900C865F2 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E1E253F0206C1AA900C865F2 /* art.scnassets */; };
 		E1E253F3206C1ABE00C865F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E253F2206C1ABE00C865F2 /* AppDelegate.swift */; };
+		E1E253F5206C420600C865F2 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E253F4206C420600C865F2 /* Font.swift */; };
 		E1EF570F205C307400F962E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EF570E205C307400F962E9 /* ViewController.swift */; };
 		E1EF5714205C307400F962E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EF5713205C307400F962E9 /* Assets.xcassets */; };
 		E1EF5717205C307400F962E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */; };
@@ -37,6 +38,7 @@
 		E186B2A42062F07A003B728C /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		E1E253F0206C1AA900C865F2 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		E1E253F2206C1ABE00C865F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E1E253F4206C420600C865F2 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		E1EF5707205C307400F962E9 /* SolarSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EF570E205C307400F962E9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E1EF5713205C307400F962E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				E13DE55D205D952100FADF11 /* CelestialBody.swift */,
 				E186B2A42062F07A003B728C /* Utilities.swift */,
 				E1E253F2206C1ABE00C865F2 /* AppDelegate.swift */,
+				E1E253F4206C420600C865F2 /* Font.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				E1264E0220617FE8004E5C14 /* WelcomeView.swift in Sources */,
 				E1264E04206188D3004E5C14 /* OverLayProtocol.swift in Sources */,
 				E15AAA452063000100836141 /* GameView.swift in Sources */,
+				E1E253F5206C420600C865F2 /* Font.swift in Sources */,
 				E15AAA492063002E00836141 /* GameScene.swift in Sources */,
 				E14B894F2061A24200A2F095 /* IntroduceSolarSystemView.swift in Sources */,
 				E1EF570F205C307400F962E9 /* ViewController.swift in Sources */,
