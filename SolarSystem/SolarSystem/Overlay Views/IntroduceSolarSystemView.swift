@@ -17,15 +17,13 @@ class IntroduceSolarSystemView: UIView {
         let button = UIButton(frame: CGRect())
         button.setTitle("Next", for: .normal)
         button.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
-        button.backgroundColor = #colorLiteral(red: 0.9860219359, green: 0.4115800261, blue: 0.3854584694, alpha: 1)
-        button.layer.cornerRadius = 30
-        button.clipsToBounds = true
+        button.setBackgroundImage(UIImage(named: "art.scnassets/Button.png"), for: .normal)
         return button
     }()
     
-    var exploreView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+    var exploreView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art.scnassets/BackgroundExplore.png")
         return view
     }()
     
@@ -56,13 +54,13 @@ class IntroduceSolarSystemView: UIView {
         exploreView.translatesAutoresizingMaskIntoConstraints = false
         exploreView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         exploreView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        exploreView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        exploreView.widthAnchor.constraint(equalToConstant: 350).isActive = true
+        exploreView.heightAnchor.constraint(equalToConstant: 123).isActive = true
+        exploreView.widthAnchor.constraint(equalToConstant: 577).isActive = true
         
         exploreView.addSubview(exploreLabel)
         exploreLabel.translatesAutoresizingMaskIntoConstraints = false
         exploreLabel.topAnchor.constraint(equalTo: exploreView.topAnchor).isActive = true
-        exploreLabel.bottomAnchor.constraint(equalTo: exploreView.bottomAnchor).isActive = true
+        exploreLabel.bottomAnchor.constraint(equalTo: exploreView.bottomAnchor, constant: -10).isActive = true
         exploreLabel.leadingAnchor.constraint(equalTo: exploreView.leadingAnchor).isActive = true
         exploreLabel.trailingAnchor.constraint(equalTo: exploreView.trailingAnchor).isActive = true
     }
@@ -70,9 +68,9 @@ class IntroduceSolarSystemView: UIView {
     func setupButton() {
         self.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        nextButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -40).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: 73).isActive = true
+        nextButton.widthAnchor.constraint(equalToConstant: 207).isActive = true
+        nextButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30).isActive = true
         nextButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
     }
     
