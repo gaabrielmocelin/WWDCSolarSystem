@@ -33,6 +33,7 @@
 		E15AAA442063000100836141 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		E15AAA462063000D00836141 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		E15AAA482063002E00836141 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		E17C72FF206BCD5600206A7D /* GalaxyGameSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GalaxyGameSound.mp3; sourceTree = "<group>"; };
 		E186B2A42062F07A003B728C /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		E1EF5707205C307400F962E9 /* SolarSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SolarSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1EF570A205C307400F962E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 		E186B2A32062F017003B728C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E17C72FF206BCD5600206A7D /* GalaxyGameSound.mp3 */,
 				E1EF5713205C307400F962E9 /* Assets.xcassets */,
 				E1EF5715205C307400F962E9 /* LaunchScreen.storyboard */,
 				E1EF570C205C307400F962E9 /* art.scnassets */,

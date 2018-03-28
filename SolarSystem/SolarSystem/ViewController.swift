@@ -131,6 +131,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         return (SCNVector3(0, 0, -1), SCNVector3(0, 0, -0.2))
     }
+    
+    func playSound() {
+        guard let url = Bundle.main.url(forResource: "GalaxyGameSound", withExtension: "mp3"), let player = try? AVAudioPlayer.init(contentsOf: url) else {
+            print("error sound")
+            return
+        }
+        player.numberOfLoops = -1
+        player.prepareToPlay()
+        player.play()
+    }
 }
 
 extension ViewController: StateManager{
@@ -141,6 +151,7 @@ extension ViewController: StateManager{
             self.currentState = ControlState.solarSystem
             overLayView = IntroduceSolarSystemView()
             presentSolarSystem()
+            playSound()
         case .solarSystem:
             if let solarSystem = sceneView.scene as? SolarSystemScene{
                 self.currentState = ControlState.gameHistory
