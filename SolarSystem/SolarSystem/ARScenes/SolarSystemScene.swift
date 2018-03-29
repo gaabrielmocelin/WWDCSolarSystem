@@ -262,8 +262,10 @@ public extension SolarSystemScene{
         blackHole.position = position
         blackHole.look(at: camera.1)
         blackHole.eulerAngles.x = Float(90).radians
-        
+        blackHole.scale = SCNVector3(0.01, 0.01, 0.01)
         rootNode.addChild(blackHole)
+        
+        blackHole.runAction(SCNAction.scale(to: 1, duration: 1))
         
         //return the blackhole position
         return position
