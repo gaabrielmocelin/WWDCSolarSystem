@@ -33,6 +33,7 @@ public class GameOverView: UIView {
         button.setTitle("Play Again", for: .normal)
         button.addTarget(self, action: #selector(handleRestartButton), for: .touchUpInside)
         button.setBackgroundImage(UIImage(named: "Button.png"), for: .normal)
+        button.titleLabel?.font = Fonts.shared.boldFont(withSize: 20)
         return button
     }()
     

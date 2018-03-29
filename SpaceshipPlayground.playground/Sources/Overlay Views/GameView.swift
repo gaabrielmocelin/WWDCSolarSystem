@@ -93,7 +93,7 @@ public class GameView: UIView {
         
         backgroundWarningView.addSubview(warningLabel)
         warningLabel.translatesAutoresizingMaskIntoConstraints = false
-        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 40).isActive = true
+        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 45).isActive = true
         warningLabel.bottomAnchor.constraint(equalTo: backgroundWarningView.bottomAnchor).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: backgroundWarningView.leadingAnchor, constant: 40).isActive = true
         warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: -40).isActive = true

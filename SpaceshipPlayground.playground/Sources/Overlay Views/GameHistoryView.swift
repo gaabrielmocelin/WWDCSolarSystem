@@ -25,14 +25,12 @@ class GameHistoryView: UIView {
     }
     
     func setupLabel()  {
-        
-        
         self.addSubview(historyText)
         historyText.translatesAutoresizingMaskIntoConstraints = false
-        historyText.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        historyText.heightAnchor.constraint(equalToConstant: 550).isActive = true
         historyText.widthAnchor.constraint(equalToConstant: 400).isActive = true
         historyText.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 500)
+        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 550)
         labelCenterYAnchor!.isActive = true
     }
     

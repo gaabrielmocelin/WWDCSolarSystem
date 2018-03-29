@@ -31,7 +31,6 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     var musicPlayer: AVAudioPlayer?
-    var solarSystemScene: SolarSystemScene?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +46,6 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
         musicPlayer?.numberOfLoops = -1
         musicPlayer?.prepareToPlay()
         
-        solarSystemScene = SolarSystemScene()
     }
     
     func setupInitialState() {
@@ -63,7 +61,7 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func presentSolarSystem()  {
-        guard let scene = solarSystemScene else { return }
+        let scene = SolarSystemScene()
         
         // Set the scene to the view
         sceneView.scene = scene
