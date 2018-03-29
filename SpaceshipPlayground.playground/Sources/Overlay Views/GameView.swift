@@ -37,7 +37,7 @@ public class GameView: UIView {
     
     var warningLabel: UITextView = {
         let label = UITextView()
-        label.text = "Look at the ship and when you are read, tap anywhere to play"
+        label.text = "Look at the ship and tap anywhere when you are ready to play"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.backgroundColor = UIColor.clear
         label.textAlignment = .center
