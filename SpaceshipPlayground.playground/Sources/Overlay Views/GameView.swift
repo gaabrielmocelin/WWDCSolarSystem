@@ -35,12 +35,12 @@ public class GameView: UIView {
         return view
     }()
     
-    var warningLabel: UILabel = {
-        let label = UILabel()
+    var warningLabel: UITextView = {
+        let label = UITextView()
         label.text = "Look at the ship and when you are read, tap anywhere to play"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        label.backgroundColor = UIColor.clear
         label.textAlignment = .center
-        label.numberOfLines = 0
         label.font = Fonts.shared.boldFont(withSize: 20)
         return label
     }()
@@ -93,10 +93,10 @@ public class GameView: UIView {
         
         backgroundWarningView.addSubview(warningLabel)
         warningLabel.translatesAutoresizingMaskIntoConstraints = false
-        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 15).isActive = true
+        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 40).isActive = true
         warningLabel.bottomAnchor.constraint(equalTo: backgroundWarningView.bottomAnchor).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: backgroundWarningView.leadingAnchor, constant: 40).isActive = true
-        warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: 40).isActive = true
+        warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: -40).isActive = true
     }
     
     fileprivate func startedGame() {
