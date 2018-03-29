@@ -14,49 +14,16 @@ class IntroduceSolarSystemView: UIView {
         return button
     }()
     
-    var exploreView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "art.scnassets/BackgroundExplore.png")
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
-    var exploreLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Explore the solar system"
-        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        label.textAlignment = .center
-        return label
-    }()
-    
     public override init(frame: CGRect) {
         myState = .solarSystem
         
         super.init(frame: frame)
-        
-        setupExploreView()
         setupButton()
         alpha = 0
     }
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupExploreView() {
-        self.addSubview(exploreView)
-        exploreView.translatesAutoresizingMaskIntoConstraints = false
-        exploreView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        exploreView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        exploreView.heightAnchor.constraint(equalToConstant: 123).isActive = true
-        exploreView.widthAnchor.constraint(equalToConstant: 577).isActive = true
-        
-        exploreView.addSubview(exploreLabel)
-        exploreLabel.translatesAutoresizingMaskIntoConstraints = false
-        exploreLabel.topAnchor.constraint(equalTo: exploreView.topAnchor).isActive = true
-        exploreLabel.bottomAnchor.constraint(equalTo: exploreView.bottomAnchor, constant: -10).isActive = true
-        exploreLabel.leadingAnchor.constraint(equalTo: exploreView.leadingAnchor).isActive = true
-        exploreLabel.trailingAnchor.constraint(equalTo: exploreView.trailingAnchor).isActive = true
     }
     
     func setupButton() {
@@ -84,4 +51,3 @@ extension IntroduceSolarSystemView: OverLay {
         fadeIn()
     }
 }
-

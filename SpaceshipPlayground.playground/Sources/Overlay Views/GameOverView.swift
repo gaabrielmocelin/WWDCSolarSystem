@@ -102,6 +102,13 @@ public class GameOverView: UIView {
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    public func gameCompleted() {
+        DispatchQueue.main.async {
+            self.scoreLabel.text = "You have saved the humanity"
+            self.gameOverLabel.text = "CONGRATULATIONS"
+        }
+    }
 }
 
 extension GameOverView: OverLay{

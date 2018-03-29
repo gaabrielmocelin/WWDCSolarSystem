@@ -47,9 +47,6 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
     func setupSceneView() {
         sceneView = ARSCNView(frame: CGRect())
         self.view.addSubviewWithSameAnchors(sceneView)
-        
-        // Show statistics such as fps and timing information
-//        sceneView.showsStatistics = true
     }
     
     func presentSolarSystem()  {

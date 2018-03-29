@@ -37,7 +37,7 @@ public class SolarSystemScene: SCNScene {
     
     public var planetsRemoved: Int
     
-   public  override init() {
+    public  override init() {
         planetsRemoved = 0
         celestialBodies = []
         orbitalPaths = []
@@ -168,7 +168,7 @@ public class SolarSystemScene: SCNScene {
         }
     }
     
-   func orbitalAnimate(planet: CelestialBody, centeredAnchor: ARAnchor, time: TimeInterval) {
+    func orbitalAnimate(planet: CelestialBody, centeredAnchor: ARAnchor, time: TimeInterval) {
         let node = planet.node
         var actions: [SCNAction] = []
         let radius = simd_distance(node.simdTransform.columns.3, centeredAnchor.transform.columns.3)
@@ -200,7 +200,7 @@ public class SolarSystemScene: SCNScene {
         node.runAction(groupAction)
     }
     
-   func distance(of body: CelestialBody, toAnchor anchor: ARAnchor ) -> Float {
+    func distance(of body: CelestialBody, toAnchor anchor: ARAnchor ) -> Float {
         return simd_distance(body.node.simdTransform.columns.3, anchor.transform.columns.3)
     }
     
@@ -230,10 +230,15 @@ public extension SolarSystemScene{
         celestialBodies.forEach { (body) in
             let node = body.node
             let time = arc4random_uniform(4) + 1
-
+            
             Timer.scheduledTimer(withTimeInterval: TimeInterval(time), repeats: false, block: { (_) in
                 node.removeAllActions()
-                node.runAction(SCNAction.move(to: blackHolePosition, duration: TimeInterval(time)), completionHandler: {
+                
+                let rotateAction = SCNAction.repeatForever(SCNAction.rotateBy(x: CGFloat(blackHolePosition.x), y: CGFloat(blackHolePosition.y), z: CGFloat(blackHolePosition.z), duration: 2))
+                node.runAction(rotateAction)
+                
+                let moveDuration = arc4random_uniform(6) + 2
+                node.runAction(SCNAction.move(to: blackHolePosition, duration: TimeInterval(moveDuration)), completionHandler: {
                     node.removeFromParentNode()
                     self.planetsRemoved += 1
                     if self.planetsRemoved == 9{
@@ -254,14 +259,18 @@ public extension SolarSystemScene{
         
         let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, ((0.2 + distanceCameraAndSun + distanceNeptuneAndSun) * camera.0.z))
         
-        let cylinder = SCNCylinder(radius: 0.2, height: 0.02)
-        cylinder.setMaterial(with: UIColor.black)
+        let cylinder = SCNCylinder(radius: 0.2, height: 0.04)
+        cylinder.setMaterial(with: UIImage(named: "art.scnassets/BlackHole.png"), constant: true)
         let blackHole = SCNNode(geometry: cylinder)
+        blackHole.light = SCNLight()
+        blackHole.light?.type = .omni
         blackHole.position = position
         blackHole.look(at: camera.1)
         blackHole.eulerAngles.x = Float(90).radians
-        
+        blackHole.scale = SCNVector3(0.01, 0.01, 0.01)
         rootNode.addChild(blackHole)
+        
+        blackHole.runAction(SCNAction.scale(to: 1, duration: 1))
         
         //return the blackhole position
         return position
@@ -292,3 +301,4 @@ extension SolarSystemScene: ARSCNViewDelegate{
         // Reset tracking and/or remove existing anchors if consistent tracking is required
     }
 }
+

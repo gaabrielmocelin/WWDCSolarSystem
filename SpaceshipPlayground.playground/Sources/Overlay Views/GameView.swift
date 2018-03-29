@@ -11,6 +11,7 @@ import UIKit
 public protocol GamePerformer {
     func didSwipe(_ direction: UISwipeGestureRecognizerDirection)
     func startGame()
+    func CompleteGame()
 }
 
 public class GameView: UIView {
@@ -18,53 +19,97 @@ public class GameView: UIView {
     public var stateDelegate: StateManager?
     public var gameDelegate: GamePerformer?
     
+    public var gameWasCompleted = false
+    
     var scoreView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "art.scnassets/ScoreView.png")
         return view
     }()
-    
     var scoreLabel: UILabel!
     
-    var startLabel: UILabel = {
-        var label = UILabel()
-        label.text = "Tap to play"
+    var backgroundWarningView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art.scnassets/BackgroundGameView.png")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    var warningLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Look at the ship and when you are read, tap anywhere to play"
+        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .center
-        label.textColor = UIColor(red: 34/255, green: 136/255, blue: 221/255, alpha: 1)
+        label.numberOfLines = 2
         return label
+    }()
+    
+    var swipeTutorialView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art.scnassets/SwipeTutorial.png")
+        view.contentMode = .scaleAspectFit
+        view.alpha = 0
+        return view
     }()
     
     var score: Int
     var scoreTimer: Timer?
+    
+    var isGameRunning = false
     
     public  override init(frame: CGRect) {
         myState = .game
         score = 0
         super.init(frame: frame)
         setupScoreView()
-        setupButton()
         setupSwipes()
+        setupWarningView()
+        setupTutorial()
     }
     
-    func setupButton() {
-        self.addSubview(startLabel)
-        startLabel.translatesAutoresizingMaskIntoConstraints = false
-        startLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        startLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
-        startLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        startLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+    func setupTutorial() {
+        self.addSubview(swipeTutorialView)
+        swipeTutorialView.translatesAutoresizingMaskIntoConstraints = false
+        swipeTutorialView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        swipeTutorialView.topAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: 30).isActive = true
+        swipeTutorialView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        swipeTutorialView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        swipeTutorialView.fadeIn()
         
         UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse], animations: {
-            self.startLabel.alpha = 0
+            self.swipeTutorialView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }, completion: nil)
     }
     
+    func setupWarningView() {
+        self.addSubview(backgroundWarningView)
+        backgroundWarningView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundWarningView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        backgroundWarningView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 5).isActive = true
+        backgroundWarningView.heightAnchor.constraint(equalToConstant: 123).isActive = true
+        backgroundWarningView.widthAnchor.constraint(equalToConstant: 577).isActive = true
+        
+        backgroundWarningView.addSubview(warningLabel)
+        warningLabel.translatesAutoresizingMaskIntoConstraints = false
+        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 10).isActive = true
+        warningLabel.bottomAnchor.constraint(equalTo: backgroundWarningView.bottomAnchor).isActive = true
+        warningLabel.leadingAnchor.constraint(equalTo: backgroundWarningView.leadingAnchor, constant: 40).isActive = true
+        warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: 40).isActive = true
+    }
+    
+    fileprivate func startedGame() {
+        if !isGameRunning{
+            gameDelegate?.startGame()
+            backgroundWarningView.fadeOut()
+            triggerTimer()
+            isGameRunning = true
+        }
+    }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        gameDelegate?.startGame()
-        startLabel.isHidden = true
-        triggerTimer()
+        startedGame()
     }
     
     func triggerTimer() {
@@ -75,6 +120,11 @@ public class GameView: UIView {
         score += 1
         DispatchQueue.main.async {
             self.scoreLabel.text = "\(self.score)"
+        }
+        
+        if score == 200{
+            gameDelegate?.CompleteGame()
+            scoreView.fadeOut()
         }
     }
     
@@ -110,7 +160,15 @@ public class GameView: UIView {
     }
     
     @objc func handleSwipe(swipe: UISwipeGestureRecognizer) {
+        startedGame()
+        
         gameDelegate?.didSwipe(swipe.direction)
+        
+        if swipeTutorialView.alpha == 1{
+            swipeTutorialView.fadeOut(completion: { (_) in
+                self.swipeTutorialView.layer.removeAllAnimations()
+            })
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -118,9 +176,14 @@ public class GameView: UIView {
     }
 }
 
-extension GameView: GameOverDelegate{
+extension GameView: GameFinishedDelegate{
     public func gameIsOver() {
         scoreTimer?.invalidate()
+        stateDelegate?.nextState(currentState: myState)
+    }
+    
+    public func gameIsCompleted() {
+        gameWasCompleted = true
         stateDelegate?.nextState(currentState: myState)
     }
 }
