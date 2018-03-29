@@ -30,11 +30,22 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    var musicPlayer: AVAudioPlayer?
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         setupSceneView()
         setupInitialState()
+        
+        guard let url = Bundle.main.url(forResource: "GalaxyGameSound", withExtension: "mp3"), let player = try? AVAudioPlayer(contentsOf: url) else {
+            print("error sound")
+            return
+        }
+        musicPlayer = player
+        musicPlayer?.numberOfLoops = -1
+        musicPlayer?.prepareToPlay()
+        
     }
     
     func setupInitialState() {
@@ -134,14 +145,9 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func playSound() {
-        guard let url = Bundle.main.url(forResource: "GalaxyGameSound", withExtension: "mp3"), let player = try? AVAudioPlayer(contentsOf: url) else {
-            print("error sound")
-            return
+        if let player = musicPlayer{
+            player.play()
         }
-        backgroundMusic = player
-        backgroundMusic.numberOfLoops = -1
-        backgroundMusic.prepareToPlay()
-        backgroundMusic.play()
     }
 }
 
