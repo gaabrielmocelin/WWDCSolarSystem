@@ -11,6 +11,7 @@ import UIKit
 public protocol GamePerformer {
     func didSwipe(_ direction: UISwipeGestureRecognizerDirection)
     func startGame()
+    func CompleteGame()
 }
 
 public class GameView: UIView {
@@ -118,6 +119,10 @@ public class GameView: UIView {
         DispatchQueue.main.async {
             self.scoreLabel.text = "\(self.score)"
         }
+        
+        if score == 50{
+            gameDelegate?.CompleteGame()
+        }
     }
     
     func setupScoreView()  {
@@ -168,9 +173,13 @@ public class GameView: UIView {
     }
 }
 
-extension GameView: GameOverDelegate{
+extension GameView: GameFinishedDelegate{
     public func gameIsOver() {
         scoreTimer?.invalidate()
+        stateDelegate?.nextState(currentState: myState)
+    }
+    
+    public func gameIsCompleted() {
         stateDelegate?.nextState(currentState: myState)
     }
 }

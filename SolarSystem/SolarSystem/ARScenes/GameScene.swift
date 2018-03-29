@@ -30,8 +30,9 @@ public struct LightType {
     public static let light2: Int = 0x1 << 2
 }
 
-public protocol GameOverDelegate {
+public protocol GameFinishedDelegate {
     func gameIsOver()
+    func gameIsCompleted()
 }
 
 public class GameScene: SCNScene {
@@ -39,11 +40,13 @@ public class GameScene: SCNScene {
     public var spaceshipPositions: [SCNVector3]
     public var originalSpaceshipPositon: SCNVector3
     public var spawnBarrierPositions: [SCNVector3]
+    public var rowLines: [SCNNode] = []
     
     //for now
     public var spaceshipRow: SpaceshipRow
     
     public var isGameRunning: Bool
+    public var gameShouldFinish = false
     //algorythm time
     public var lastUpdate: TimeInterval
     public var lastUpdateConstants: TimeInterval
@@ -52,7 +55,9 @@ public class GameScene: SCNScene {
     public  var barrierVelocity: TimeInterval
     
     //gameover delegate
-    public var gameOverDelegate: GameOverDelegate?
+    public var gameOverDelegate: GameFinishedDelegate?
+    
+    public var blackHole: SCNNode?
     
     public override init() {
         originalSpaceshipPositon = SCNVector3()
@@ -146,6 +151,7 @@ public class GameScene: SCNScene {
         let blackHole = SCNNode(geometry: cylinder)
         blackHole.position = blackHolePosition
         blackHole.eulerAngles.x = Float(90).radians
+        self.blackHole = blackHole
         rootNode.addChild(blackHole)
     }
     
@@ -210,22 +216,29 @@ public class GameScene: SCNScene {
     }
     
     func generateBarrier(atRow row: Int) {
-        let sphere = SCNSphere(radius: 0.1)
-        sphere.setMaterial(with: randomTextureForBarrier())
-        let barrier = SCNNode(geometry: sphere)
-        barrier.position = self.spawnBarrierPositions[row]
-        barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-        barrier.physicsBody?.isAffectedByGravity = false
-        barrier.physicsBody?.categoryBitMask = CategoryBitMask.barrier
-        barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
-        barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
-        var moveToPosition = self.spaceshipPositions[row]
-        moveToPosition.z += 0.7
-        
-        self.rootNode.addChild(barrier)
-        barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
-            barrier.removeFromParentNode()
-        })
+        if !gameShouldFinish{
+            
+            let sphere = SCNSphere(radius: 0.1)
+            sphere.setMaterial(with: randomTextureForBarrier())
+            let barrier = SCNNode(geometry: sphere)
+            barrier.position = self.spawnBarrierPositions[row]
+            barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+            barrier.physicsBody?.isAffectedByGravity = false
+            barrier.physicsBody?.categoryBitMask = CategoryBitMask.barrier
+            barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
+            barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
+            var moveToPosition = self.spaceshipPositions[row]
+            moveToPosition.z += 0.7
+            
+            self.rootNode.addChild(barrier)
+            barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
+                barrier.removeFromParentNode()
+                
+                if self.gameShouldFinish{
+                    self.arriveOnNewPlanet()
+                }
+            })
+        }
     }
     
     func randomTextureForBarrier() -> UIImage?{
@@ -262,6 +275,8 @@ public class GameScene: SCNScene {
             light.color = UIColor.green
             light.intensity = 5000
             rowLine.light = light
+            
+            rowLines.append(rowLine)
         }
     }
 }
@@ -280,6 +295,52 @@ extension GameScene: GamePerformer{
     public func startGame() {
         isGameRunning = true
     }
+    
+    public func CompleteGame() {
+        gameShouldFinish = true
+    }
+}
+
+extension GameScene{
+    func arriveOnNewPlanet()  {
+        guard let blackHole = blackHole else { return }
+        
+        blackHole.runAction(SCNAction.scale(to: 0, duration: 1)) {
+            blackHole.removeFromParentNode()
+        }
+        
+        rowLines.forEach { (row) in
+            row.runAction(SCNAction.scale(to: 0, duration: 1), completionHandler: {
+                row.removeFromParentNode()
+            })
+        }
+        
+        let newPlanetPosition = spawnBarrierPositions[1]
+        let sphere = SCNSphere(radius: 0.3)
+        let newPlanet = SCNNode(geometry: sphere)
+        newPlanet.scale = SCNVector3(0, 0, 0)
+        newPlanet.position = newPlanetPosition
+        rootNode.addChild(newPlanet)
+        newPlanet.runAction(SCNAction.scale(to: 1, duration: 1)) {
+            self.moveSpaceShipToNewPlanet()
+        }
+    }
+    
+    func moveSpaceShipToNewPlanet() {
+        var position = spawnBarrierPositions[1]
+        position.y += 0.45
+        spaceShip.runAction(SCNAction.move(to: position, duration: 3)) {
+            position.y -= 0.2
+            self.spaceShip.runAction(SCNAction.move(to: position, duration: 5), completionHandler: {
+                self.gameCompleted()
+            })
+        }
+    }
+    
+    func gameCompleted() {
+        print("you rule")
+        gameOverDelegate?.gameIsCompleted()
+    }
 }
 
 extension GameScene: SCNPhysicsContactDelegate{
@@ -291,6 +352,10 @@ extension GameScene: SCNPhysicsContactDelegate{
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if gameShouldFinish{
+            isGameRunning = false
+        }
+        
         let deltaTime = time - lastUpdate
         if isGameRunning, deltaTime > timeToSpawn {
             randomlySpawnBarriers()
