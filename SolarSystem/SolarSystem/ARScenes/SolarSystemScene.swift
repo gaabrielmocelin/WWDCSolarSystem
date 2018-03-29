@@ -233,7 +233,12 @@ public extension SolarSystemScene{
 
             Timer.scheduledTimer(withTimeInterval: TimeInterval(time), repeats: false, block: { (_) in
                 node.removeAllActions()
-                node.runAction(SCNAction.move(to: blackHolePosition, duration: TimeInterval(time)), completionHandler: {
+                
+                let rotateAction = SCNAction.repeatForever(SCNAction.rotateBy(x: CGFloat(blackHolePosition.x), y: CGFloat(blackHolePosition.y), z: CGFloat(blackHolePosition.z), duration: 2))
+                node.runAction(rotateAction)
+                
+                let moveDuration = arc4random_uniform(6) + 2
+                node.runAction(SCNAction.move(to: blackHolePosition, duration: TimeInterval(moveDuration)), completionHandler: {
                     node.removeFromParentNode()
                     self.planetsRemoved += 1
                     if self.planetsRemoved == 9{
