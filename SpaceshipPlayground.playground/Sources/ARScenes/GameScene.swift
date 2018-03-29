@@ -62,6 +62,8 @@ public class GameScene: SCNScene {
     public var blackHole: SCNNode?
     public var smoke: SCNNode?
     
+    public var ambientLightNode: SCNNode?
+    
     public override init() {
         originalSpaceshipPositon = SCNVector3()
         spaceshipPositions = []
@@ -88,6 +90,7 @@ public class GameScene: SCNScene {
         node.light = ambientLight
         node.light?.intensity = 500
         rootNode.addChildNode(node)
+        ambientLightNode = node
     }
     
     func setupSpaceship() {
@@ -327,7 +330,7 @@ extension GameScene: GamePerformer{
 
 extension GameScene{
     func arriveOnNewPlanet()  {
-        guard let blackHole = blackHole else { return }
+        guard let blackHole = blackHole, let ambientLightNode = ambientLightNode else { return }
         
         blackHole.runAction(SCNAction.scale(to: 0, duration: 1)) {
             blackHole.removeFromParentNode()
@@ -339,6 +342,7 @@ extension GameScene{
             })
         }
         
+        ambientLightNode.light?.intensity = 50
         smoke?.removeFromParentNode()
         
         let newPlanetPosition = spawnBarrierPositions[1]

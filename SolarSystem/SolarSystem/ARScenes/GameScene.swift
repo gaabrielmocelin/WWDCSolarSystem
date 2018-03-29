@@ -89,6 +89,7 @@ public class GameScene: SCNScene {
         rootNode.addChildNode(node)
     }
     
+    
     func setupSpaceship() {
         guard let model3D = SCNScene(named: "art.scnassets/SpaceshipModel3d.scn"), let spaceshipNode = model3D.rootNode.childNode(withName: "spaceship", recursively: true) else { return }
         
