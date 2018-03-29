@@ -81,9 +81,6 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
         }
         
         let scene = GameScene()
-        
-        
-        
         sceneView.scene = scene
         
         //delegates
@@ -91,9 +88,11 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
         overLayGame.gameDelegate = scene
         scene.gameOverDelegate = overLayGame
         
-        scene.placeSpaceship(atPosition: position)
-        scene.generateSpawnPositions(withPosition: position)
-        scene.generateRowLines(withPosition: position)
+        var spaceshipPosition = position
+        spaceshipPosition.z -= 0.2
+        scene.placeSpaceship(atPosition: spaceshipPosition)
+        scene.generateSpawnPositions(withPosition: spaceshipPosition)
+        scene.generateRowLines(withPosition: spaceshipPosition)
     }
     
     func resetSession() {
