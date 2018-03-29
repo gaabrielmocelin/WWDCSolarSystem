@@ -164,13 +164,20 @@ public class GameScene: SCNScene {
         
         for _ in 0..<3 {
             spawnBarrierPositions.append(mutablePosition)
-            let node = SCNNode(geometry: SCNCone(topRadius: 0.01, bottomRadius: 0.01, height: 0.01))
-            node.position = mutablePosition
-            rootNode.addChild(node)
             mutablePosition.x += 0.3
         }
         
         setupGameFloor()
+        setupGameGenerateBox()
+    }
+    
+    func setupGameGenerateBox() {
+        let position = spawnBarrierPositions[1]
+        let particleSystem = SCNParticleSystem(named: "Smoke", inDirectory: "art.scnassets")!
+        let particleEmitter = SCNNode()
+        particleEmitter.position = position
+        particleEmitter.addParticleSystem(particleSystem)
+        rootNode.addChild(particleEmitter)
     }
     
     func setupGameFloor() {
@@ -231,14 +238,16 @@ public class GameScene: SCNScene {
             let sphere = SCNSphere(radius: 0.1)
             sphere.setMaterial(with: randomTextureForBarrier())
             let barrier = SCNNode(geometry: sphere)
-            barrier.position = self.spawnBarrierPositions[row]
+            var starterPosition = self.spawnBarrierPositions[row]
+            starterPosition.z += -0.1
+            barrier.position = starterPosition
             barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
             barrier.physicsBody?.isAffectedByGravity = false
             barrier.physicsBody?.categoryBitMask = CategoryBitMask.barrier
             barrier.physicsBody?.collisionBitMask = CategoryBitMask.spaceship
             barrier.physicsBody?.contactTestBitMask = CategoryBitMask.spaceship
             var moveToPosition = self.spaceshipPositions[row]
-            moveToPosition.z += 0.7
+            moveToPosition.z += 1
             
             self.rootNode.addChild(barrier)
             barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
