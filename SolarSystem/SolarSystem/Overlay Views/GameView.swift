@@ -124,6 +124,7 @@ public class GameView: UIView {
         
         if score == 50{
             gameDelegate?.CompleteGame()
+            scoreView.fadeOut()
         }
     }
     

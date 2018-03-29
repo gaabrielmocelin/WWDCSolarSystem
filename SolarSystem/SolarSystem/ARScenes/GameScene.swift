@@ -42,6 +42,8 @@ public class GameScene: SCNScene {
     public var spawnBarrierPositions: [SCNVector3]
     public var rowLines: [SCNNode] = []
     
+    public var numberOfBarriersActive = 0
+    
     //for now
     public var spaceshipRow: SpaceshipRow
     
@@ -218,6 +220,8 @@ public class GameScene: SCNScene {
     func generateBarrier(atRow row: Int) {
         if !gameShouldFinish{
             
+            numberOfBarriersActive += 1
+            
             let sphere = SCNSphere(radius: 0.1)
             sphere.setMaterial(with: randomTextureForBarrier())
             let barrier = SCNNode(geometry: sphere)
@@ -233,8 +237,10 @@ public class GameScene: SCNScene {
             self.rootNode.addChild(barrier)
             barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
                 barrier.removeFromParentNode()
+                self.numberOfBarriersActive -= 1
                 
-                if self.gameShouldFinish{
+                if self.gameShouldFinish, self.numberOfBarriersActive == 0, self.isGameRunning{
+                    self.isGameRunning = false
                     self.arriveOnNewPlanet()
                 }
             })
@@ -352,10 +358,6 @@ extension GameScene: SCNPhysicsContactDelegate{
     }
     
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        if gameShouldFinish{
-            isGameRunning = false
-        }
-        
         let deltaTime = time - lastUpdate
         if isGameRunning, deltaTime > timeToSpawn {
             randomlySpawnBarriers()

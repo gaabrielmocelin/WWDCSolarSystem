@@ -110,7 +110,7 @@ public class GameOverView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func gameCompleted() {
+    public func gameCompleted() {
         DispatchQueue.main.async {
             self.scoreLabel.text = "You have saved the humanity"
             self.gameOverLabel.text = "CONGRATULATIONS"
