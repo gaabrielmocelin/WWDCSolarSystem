@@ -239,7 +239,7 @@ public class GameScene: SCNScene {
             let material = SCNMaterial()
             
             //CHANGE COLORRR *****************
-            material.diffuse.contents = UIColor(red: 57/255, green: 255/255, blue: 20/255, alpha: 1)
+            material.diffuse.contents = UIColor(red: 34/255, green: 136/255, blue: 221/255, alpha: 1)
             capsule.materials = [material]
             
             let light = SCNLight()
