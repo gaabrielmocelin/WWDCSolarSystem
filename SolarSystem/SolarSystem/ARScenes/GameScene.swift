@@ -113,10 +113,12 @@ public class GameScene: SCNScene {
             mutablePosition.x += 0.3
         }
         rootNode.addChild(spaceShip)
+        addReactorsToTheShip()
         
-        
-        //REFACTORRR *******************
-        
+        placeBlackHole(basedOnPosition: position)
+    }
+    
+    func addReactorsToTheShip() {
         let particleSystem = SCNParticleSystem(named: "Reactor", inDirectory: "art.scnassets")!
         let particleEmitter = SCNNode()
         particleEmitter.addParticleSystem(particleSystem)
@@ -133,6 +135,18 @@ public class GameScene: SCNScene {
         particleEmitter2.position.x += 1.5
         particleEmitter2.position.y += 2
         particleEmitter2.position.z += 3.3
+    }
+    
+    func placeBlackHole(basedOnPosition position: SCNVector3) {
+        var blackHolePosition = position
+        blackHolePosition.z += 2
+        
+        let cylinder = SCNCylinder(radius: 0.4, height: 0.1)
+        cylinder.setMaterial(with: UIImage(named: "art.scnassets/BlackHole.png"), constant: true)
+        let blackHole = SCNNode(geometry: cylinder)
+        blackHole.position = blackHolePosition
+        blackHole.eulerAngles.x = Float(90).radians
+        rootNode.addChild(blackHole)
     }
     
     public func generateSpawnPositions(withPosition position: SCNVector3) {
