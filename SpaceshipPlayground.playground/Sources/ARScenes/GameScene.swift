@@ -317,9 +317,7 @@ extension GameScene: GamePerformer{
     }
     
     public func startGame() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.isGameRunning = true
-        }
+        self.isGameRunning = true
     }
     
     public func CompleteGame() {

@@ -229,7 +229,7 @@ public extension SolarSystemScene{
         
         celestialBodies.forEach { (body) in
             let node = body.node
-            let time = arc4random_uniform(4) + 1
+            let time = arc4random_uniform(3) + 2
             
             Timer.scheduledTimer(withTimeInterval: TimeInterval(time), repeats: false, block: { (_) in
                 node.removeAllActions()
