@@ -351,7 +351,16 @@ extension GameScene{
 
 extension GameScene: SCNPhysicsContactDelegate{
     public func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
-        spaceShip.removeFromParentNode()
+        let spaceshipPosition = spaceShip.position
+        
+        let particleSystem = SCNParticleSystem(named: "FireExplosion", inDirectory: "art.scnassets")!
+        let particleEmitter = SCNNode()
+        particleEmitter.position = spaceshipPosition
+        particleEmitter.addParticleSystem(particleSystem)
+        rootNode.addChild(particleEmitter)
+        
+        contact.nodeA.removeFromParentNode()
+        contact.nodeB.removeFromParentNode()
         
         isGameRunning = false
         gameOverDelegate?.gameIsOver()
