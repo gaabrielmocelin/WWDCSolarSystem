@@ -23,7 +23,6 @@ public class GameView: UIView {
         view.image = UIImage(named: "art.scnassets/ScoreView.png")
         return view
     }()
-    
     var scoreLabel: UILabel!
     
     var startLabel: UILabel = {
@@ -31,6 +30,22 @@ public class GameView: UIView {
         label.text = "Tap to play"
         label.textAlignment = .center
         label.textColor = UIColor(red: 34/255, green: 136/255, blue: 221/255, alpha: 1)
+        return label
+    }()
+    
+    var backgroundWarningView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art.scnassets/BackgroundGameView.png")
+        view.contentMode = .scaleAspectFit
+        return view
+    }()
+    
+    var warningLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Look at the ship and when you are read, tap anywhere to play"
+        label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        label.textAlignment = .center
+        label.numberOfLines = 2
         return label
     }()
     
@@ -44,6 +59,23 @@ public class GameView: UIView {
         setupScoreView()
         setupButton()
         setupSwipes()
+        setupWarningView()
+    }
+    
+    func setupWarningView() {
+        self.addSubview(backgroundWarningView)
+        backgroundWarningView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundWarningView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        backgroundWarningView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 5).isActive = true
+        backgroundWarningView.heightAnchor.constraint(equalToConstant: 123).isActive = true
+        backgroundWarningView.widthAnchor.constraint(equalToConstant: 577).isActive = true
+        
+        backgroundWarningView.addSubview(warningLabel)
+        warningLabel.translatesAutoresizingMaskIntoConstraints = false
+        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 10).isActive = true
+        warningLabel.bottomAnchor.constraint(equalTo: backgroundWarningView.bottomAnchor).isActive = true
+        warningLabel.leadingAnchor.constraint(equalTo: backgroundWarningView.leadingAnchor, constant: 40).isActive = true
+        warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: 40).isActive = true
     }
     
     func setupButton() {
@@ -64,6 +96,7 @@ public class GameView: UIView {
         super.touchesBegan(touches, with: event)
         gameDelegate?.startGame()
         startLabel.isHidden = true
+        backgroundWarningView.fadeOut()
         triggerTimer()
     }
     
