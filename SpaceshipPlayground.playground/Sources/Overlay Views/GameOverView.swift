@@ -21,7 +21,7 @@ public class GameOverView: UIView {
     
     var backgroundImage: UIImageView = {
         var image = UIImageView()
-        image.image = UIImage(named: "art.scnassets/BackgroundGameover.png")
+        image.image = UIImage(named: "BackgroundGameover.png")
         image.contentMode = .scaleAspectFit
         return image
     }()
@@ -30,7 +30,7 @@ public class GameOverView: UIView {
         let button = UIButton(frame: CGRect())
         button.setTitle("Play Again", for: .normal)
         button.addTarget(self, action: #selector(handleRestartButton), for: .touchUpInside)
-        button.setBackgroundImage(UIImage(named: "art.scnassets/Button.png"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "Button.png"), for: .normal)
         return button
     }()
     

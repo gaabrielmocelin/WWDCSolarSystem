@@ -6,7 +6,7 @@ public class WelcomeView: UIView {
     
     var welcomeView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "art.scnassets/BackgroundView.png")
+        view.image = UIImage(named: "BackgroundView.png")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -34,7 +34,7 @@ public class WelcomeView: UIView {
         let button = UIButton(frame: CGRect())
         button.setTitle("I'm Ready", for: .normal)
         button.addTarget(self, action: #selector(handleReadyButton), for: .touchUpInside)
-        button.setBackgroundImage(UIImage.init(named: "art.scnassets/Button.png"), for: .normal)
+        button.setBackgroundImage(UIImage.init(named: "Button.png"), for: .normal)
         button.titleLabel?.font = Fonts.shared.boldFont(withSize: 20)
         return button
     }()

@@ -91,7 +91,7 @@ public class GameScene: SCNScene {
     }
     
     func setupSpaceship() {
-        guard let model3D = SCNScene(named: "art.scnassets/SpaceshipModel3d.scn"), let spaceshipNode = model3D.rootNode.childNode(withName: "spaceship", recursively: true) else { return }
+        guard let model3D = SCNScene(named: "SpaceshipModel3d.scn"), let spaceshipNode = model3D.rootNode.childNode(withName: "spaceship", recursively: true) else { return }
         
         spaceShip = spaceshipNode
         spaceShip.categoryBitMask = LightType.light1
@@ -127,7 +127,7 @@ public class GameScene: SCNScene {
     }
     
     func addReactorsToTheShip() {
-        let particleSystem = SCNParticleSystem(named: "Reactor", inDirectory: "art.scnassets")!
+        let particleSystem = SCNParticleSystem(named: "Reactor", inDirectory: nil)!
         let particleEmitter = SCNNode()
         particleEmitter.addParticleSystem(particleSystem)
         
@@ -150,7 +150,7 @@ public class GameScene: SCNScene {
         blackHolePosition.z += 2
         
         let cylinder = SCNCylinder(radius: 0.4, height: 0.1)
-        cylinder.setMaterial(with: UIImage(named: "art.scnassets/BlackHole.png"), constant: true)
+        cylinder.setMaterial(with: UIImage(named: "BlackHole.png"), constant: true)
         let blackHole = SCNNode(geometry: cylinder)
         blackHole.position = blackHolePosition
         blackHole.eulerAngles.x = Float(90).radians
@@ -174,7 +174,7 @@ public class GameScene: SCNScene {
     
     func setupGameGenerateBox() {
         let position = spawnBarrierPositions[1]
-        let particleSystem = SCNParticleSystem(named: "Smoke", inDirectory: "art.scnassets")!
+        let particleSystem = SCNParticleSystem(named: "Smoke", inDirectory: nil)!
         let particleEmitter = SCNNode()
         particleEmitter.position = position
         particleEmitter.addParticleSystem(particleSystem)
@@ -187,7 +187,7 @@ public class GameScene: SCNScene {
         var position = spawnBarrierPositions[1]
         position.y -= 0.2
         
-        let particleSystem = SCNParticleSystem(named: "GameFloor", inDirectory: "art.scnassets")!
+        let particleSystem = SCNParticleSystem(named: "GameFloor", inDirectory: nil)!
         let particleEmitter = SCNNode()
         particleEmitter.position = position
         particleEmitter.addParticleSystem(particleSystem)
@@ -268,7 +268,7 @@ public class GameScene: SCNScene {
     func randomTextureForBarrier() -> UIImage?{
         let index = arc4random_uniform(3)
         
-        return UIImage(named: "art.scnassets/comet\(index).jpg")
+        return UIImage(named: "comet\(index).jpg")
     }
     
     public func generateRowLines(withPosition position: SCNVector3) {
@@ -345,7 +345,7 @@ extension GameScene{
         
         let newPlanetPosition = spawnBarrierPositions[1]
         let sphere = SCNSphere(radius: 0.3)
-        sphere.setMaterial(with: UIImage(named: "art.scnassets/NewPlanet.png"))
+        sphere.setMaterial(with: UIImage(named: "NewPlanet.png"))
         let newPlanet = SCNNode(geometry: sphere)
         newPlanet.scale = SCNVector3(0, 0, 0)
         newPlanet.position = newPlanetPosition
@@ -375,7 +375,7 @@ extension GameScene: SCNPhysicsContactDelegate{
     public func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
         let spaceshipPosition = spaceShip.position
         
-        let particleSystem = SCNParticleSystem(named: "FireExplosion", inDirectory: "art.scnassets")!
+        let particleSystem = SCNParticleSystem(named: "FireExplosion", inDirectory: nil)!
         let particleEmitter = SCNNode()
         particleEmitter.position = spaceshipPosition
         particleEmitter.addParticleSystem(particleSystem)

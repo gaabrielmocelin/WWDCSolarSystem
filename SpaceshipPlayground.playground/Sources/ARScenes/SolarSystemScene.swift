@@ -53,7 +53,7 @@ public class SolarSystemScene: SCNScene {
     func setupStars() {
         guard let sunPosition = sunAnchor?.transform.translation else { return }
         
-        let particleSystem = SCNParticleSystem(named: "Stars", inDirectory: "art.scnassets")!
+        let particleSystem = SCNParticleSystem(named: "Stars", inDirectory: nil)!
         let particleEmitter = SCNNode()
         particleEmitter.position = SCNVector3(sunPosition)
         particleEmitter.addParticleSystem(particleSystem)
@@ -86,63 +86,63 @@ public class SolarSystemScene: SCNScene {
         switch body {
         case .sun:
             let sphere = SCNSphere(radius: 0.05)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/sun.jpg"), constant: true)
+            sphere.setMaterial(with: UIImage(named: "sun.jpg"), constant: true)
             let sun = CelestialBody(planetName: body, sphere: sphere)
             sun.node.light = SCNLight()
             sun.node.light?.type = .omni
             return sun
         case .mercury:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/mercury.jpg"))
+            sphere.setMaterial(with: UIImage(named: "mercury.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 10
             return planet
         case .venus:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/venus.jpg"))
+            sphere.setMaterial(with: UIImage(named: "venus.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 17
             return planet
         case .earth:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/earth_day.jpg"))
+            sphere.setMaterial(with: UIImage(named: "earth_day.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 22
             return planet
         case .mars:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/mars.jpg"))
+            sphere.setMaterial(with: UIImage(named: "mars.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 32
             return planet
         case .jupiter:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/jupiter.jpg"))
+            sphere.setMaterial(with: UIImage(named: "jupiter.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 45
             return planet
         case .saturn:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/saturn.jpg"))
+            sphere.setMaterial(with: UIImage(named: "saturn.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 60
             
             // PLEASE REFACTOR **************  saturn ring
             let tube = SCNTube(innerRadius: 0.03, outerRadius: 0.05, height: 0.0005)
-            tube.setMaterial(with: UIImage(named: "art.scnassets/SaturnRing2.png"))
+            tube.setMaterial(with: UIImage(named: "SaturnRing2.png"))
             let tubeNode = SCNNode(geometry: tube)
             planet.node.addChild(tubeNode)
             
             return planet
         case .uranus:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/uranus.jpg"))
+            sphere.setMaterial(with: UIImage(named: "uranus.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 90
             return planet
         case .neptune:
             let sphere = SCNSphere(radius: 0.025)
-            sphere.setMaterial(with: UIImage(named: "art.scnassets/neptune.jpg"))
+            sphere.setMaterial(with: UIImage(named: "neptune.jpg"))
             let planet = CelestialBody(planetName: body, sphere: sphere)
             planet.yearDuration = 125
             return planet
@@ -260,7 +260,7 @@ public extension SolarSystemScene{
         let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, ((0.2 + distanceCameraAndSun + distanceNeptuneAndSun) * camera.0.z))
         
         let cylinder = SCNCylinder(radius: 0.2, height: 0.04)
-        cylinder.setMaterial(with: UIImage(named: "art.scnassets/BlackHole.png"), constant: true)
+        cylinder.setMaterial(with: UIImage(named: "BlackHole.png"), constant: true)
         let blackHole = SCNNode(geometry: cylinder)
         blackHole.light = SCNLight()
         blackHole.light?.type = .omni

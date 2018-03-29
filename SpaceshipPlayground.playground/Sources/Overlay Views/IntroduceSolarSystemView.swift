@@ -10,7 +10,7 @@ class IntroduceSolarSystemView: UIView {
         let button = UIButton(frame: CGRect())
         button.setTitle("Next", for: .normal)
         button.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
-        button.setBackgroundImage(UIImage(named: "art.scnassets/Button.png"), for: .normal)
+        button.setBackgroundImage(UIImage(named: "Button.png"), for: .normal)
         return button
     }()
     

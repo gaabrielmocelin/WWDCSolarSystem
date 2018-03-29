@@ -23,14 +23,14 @@ public class GameView: UIView {
     
     var scoreView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "art.scnassets/ScoreView.png")
+        view.image = UIImage(named: "ScoreView.png")
         return view
     }()
     var scoreLabel: UILabel!
     
     var backgroundWarningView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "art.scnassets/BackgroundGameView.png")
+        view.image = UIImage(named: "BackgroundGameView.png")
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -46,7 +46,7 @@ public class GameView: UIView {
     
     var swipeTutorialView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "art.scnassets/SwipeTutorial.png")
+        view.image = UIImage(named: "SwipeTutorial.png")
         view.contentMode = .scaleAspectFit
         view.alpha = 0
         return view
