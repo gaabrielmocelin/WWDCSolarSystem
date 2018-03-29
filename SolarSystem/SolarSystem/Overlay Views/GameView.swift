@@ -25,14 +25,6 @@ public class GameView: UIView {
     }()
     var scoreLabel: UILabel!
     
-    var startLabel: UILabel = {
-        var label = UILabel()
-        label.text = "Tap to play"
-        label.textAlignment = .center
-        label.textColor = UIColor(red: 34/255, green: 136/255, blue: 221/255, alpha: 1)
-        return label
-    }()
-    
     var backgroundWarningView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "art.scnassets/BackgroundGameView.png")
@@ -49,17 +41,42 @@ public class GameView: UIView {
         return label
     }()
     
+    var swipeTutorialView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "art.scnassets/SwipeTutorial.png")
+        view.contentMode = .scaleAspectFit
+        view.alpha = 0
+        return view
+    }()
+    
     var score: Int
     var scoreTimer: Timer?
+    
+    var isGameRunning = false
     
    public  override init(frame: CGRect) {
         myState = .game
         score = 0
         super.init(frame: frame)
         setupScoreView()
-        setupButton()
         setupSwipes()
         setupWarningView()
+        setupTutorial()
+    }
+    
+    func setupTutorial() {
+        self.addSubview(swipeTutorialView)
+        swipeTutorialView.translatesAutoresizingMaskIntoConstraints = false
+        swipeTutorialView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        swipeTutorialView.topAnchor.constraint(equalTo: scoreView.bottomAnchor, constant: 30).isActive = true
+        swipeTutorialView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        swipeTutorialView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        swipeTutorialView.fadeIn()
+        
+        UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse], animations: {
+            self.swipeTutorialView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        }, completion: nil)
     }
     
     func setupWarningView() {
@@ -78,26 +95,18 @@ public class GameView: UIView {
         warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: 40).isActive = true
     }
     
-    func setupButton() {
-        self.addSubview(startLabel)
-        startLabel.translatesAutoresizingMaskIntoConstraints = false
-        startLabel.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        startLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
-        startLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        startLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
-        
-        UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse], animations: {
-            self.startLabel.alpha = 0
-        }, completion: nil)
+    fileprivate func startedGame() {
+        if !isGameRunning{
+            gameDelegate?.startGame()
+            backgroundWarningView.fadeOut()
+            triggerTimer()
+            isGameRunning = true
+        }
     }
-    
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        gameDelegate?.startGame()
-        startLabel.isHidden = true
-        backgroundWarningView.fadeOut()
-        triggerTimer()
+        startedGame()
     }
     
     func triggerTimer() {
@@ -143,7 +152,15 @@ public class GameView: UIView {
     }
     
     @objc func handleSwipe(swipe: UISwipeGestureRecognizer) {
+        startedGame()
+        
         gameDelegate?.didSwipe(swipe.direction)
+        
+        if swipeTutorialView.alpha == 1{
+            swipeTutorialView.fadeOut(completion: { (_) in
+                self.swipeTutorialView.layer.removeAllAnimations()
+            })
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
