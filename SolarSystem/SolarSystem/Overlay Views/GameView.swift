@@ -122,7 +122,7 @@ public class GameView: UIView {
             self.scoreLabel.text = "\(self.score)"
         }
         
-        if score == 50{
+        if score == 200{
             gameDelegate?.CompleteGame()
             scoreView.fadeOut()
         }

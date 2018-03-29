@@ -65,7 +65,7 @@ public class GameScene: SCNScene {
         originalSpaceshipPositon = SCNVector3()
         spaceshipPositions = []
         spawnBarrierPositions = []
-        timeToSpawn = 3
+        timeToSpawn = 3.6
         barrierVelocity = 3
         lastUpdate = 0
         lastUpdateConstants = 0
@@ -383,11 +383,11 @@ extension GameScene: SCNPhysicsContactDelegate{
         
         let deltaConstantsTime = time - lastUpdateConstants
         if isGameRunning, deltaConstantsTime > 5{
-            if timeToSpawn > 0.7{
+            if timeToSpawn > 1{
                 timeToSpawn -= 0.3
             }
             if barrierVelocity > 1{
-                barrierVelocity -= 0.2
+                barrierVelocity -= 0.1
             }
             
             print("timespawn \(timeToSpawn) --- barriervelocity \(barrierVelocity)")
