@@ -254,8 +254,8 @@ public extension SolarSystemScene{
         
         let position = SCNVector3(camera.0.x, (camera.0.y - camera.1.y) / 2, ((0.2 + distanceCameraAndSun + distanceNeptuneAndSun) * camera.0.z))
         
-        let cylinder = SCNCylinder(radius: 0.2, height: 0.02)
-        cylinder.setMaterial(with: UIColor.black)
+        let cylinder = SCNCylinder(radius: 0.2, height: 0.04)
+        cylinder.setMaterial(with: UIImage(named: "art.scnassets/BlackHole.png"))
         let blackHole = SCNNode(geometry: cylinder)
         blackHole.position = position
         blackHole.look(at: camera.1)
