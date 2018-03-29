@@ -9,13 +9,15 @@ public class GameOverView: UIView {
         var label = UILabel()
         label.textColor = UIColor.white
         label.textAlignment = .center
+        label.font = Fonts.shared.regularFont(withSize: 22)
         return label
     }()
     var gameOverLabel: UILabel = {
         var label = UILabel()
-        label.text = "GAME OVER"
+        label.text = "GAME OVER!"
         label.textColor = UIColor.white
         label.textAlignment = .center
+        label.font = Fonts.shared.boldFont(withSize: 22)
         return label
     }()
     
@@ -65,7 +67,7 @@ public class GameOverView: UIView {
         backgroundImage.addSubview(gameOverLabel)
         gameOverLabel.translatesAutoresizingMaskIntoConstraints = false
         gameOverLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        gameOverLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        gameOverLabel.widthAnchor.constraint(equalToConstant: 600).isActive = true
         gameOverLabel.centerXAnchor.constraint(equalTo: backgroundImage.centerXAnchor).isActive = true
         gameOverLabel.centerYAnchor.constraint(equalTo: backgroundImage.centerYAnchor, constant: 25).isActive = true
     }
@@ -73,7 +75,7 @@ public class GameOverView: UIView {
     func updateScoreLabel() {
         guard let score = score else { return }
         DispatchQueue.main.async {
-            self.scoreLabel.text = "Your score was: \(score)"
+            self.scoreLabel.text = "You have traveled only: \(score) light years"
         }
     }
     
@@ -81,7 +83,7 @@ public class GameOverView: UIView {
         backgroundImage.addSubview(scoreLabel)
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
         scoreLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        scoreLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        scoreLabel.widthAnchor.constraint(equalToConstant: 600).isActive = true
         scoreLabel.centerXAnchor.constraint(equalTo: backgroundImage.centerXAnchor).isActive = true
         scoreLabel.centerYAnchor.constraint(equalTo: backgroundImage.centerYAnchor, constant: -25).isActive = true
     }
@@ -106,7 +108,7 @@ public class GameOverView: UIView {
     public func gameCompleted() {
         DispatchQueue.main.async {
             self.scoreLabel.text = "You have saved the humanity"
-            self.gameOverLabel.text = "CONGRATULATIONS"
+            self.gameOverLabel.text = "CONGRATULATIONS PILOT!"
         }
     }
 }

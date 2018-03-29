@@ -32,7 +32,7 @@ class GameHistoryView: UIView {
         historyText.heightAnchor.constraint(equalToConstant: 500).isActive = true
         historyText.widthAnchor.constraint(equalToConstant: 400).isActive = true
         historyText.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 700)
+        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 500)
         labelCenterYAnchor!.isActive = true
     }
     

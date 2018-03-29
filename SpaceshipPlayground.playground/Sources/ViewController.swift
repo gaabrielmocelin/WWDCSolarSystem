@@ -31,6 +31,7 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     var musicPlayer: AVAudioPlayer?
+    var solarSystemScene: SolarSystemScene?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,7 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
         musicPlayer?.numberOfLoops = -1
         musicPlayer?.prepareToPlay()
         
+        solarSystemScene = SolarSystemScene()
     }
     
     func setupInitialState() {
@@ -58,13 +60,10 @@ public class ViewController: UIViewController, ARSCNViewDelegate {
     func setupSceneView() {
         sceneView = ARSCNView(frame: CGRect())
         self.view.addSubviewWithSameAnchors(sceneView)
-        
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
     }
     
     func presentSolarSystem()  {
-        let scene = SolarSystemScene()
+        guard let scene = solarSystemScene else { return }
         
         // Set the scene to the view
         sceneView.scene = scene
