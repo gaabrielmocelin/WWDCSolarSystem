@@ -7,18 +7,7 @@ class GameHistoryView: UIView {
     
     var historyText: UITextView = {
         var textView = UITextView()
-        textView.text = """
-        2764 AD
-        
-        The death of a star suddenly creates a
-        black hole that swallows our solar system.
-        The United Nations activated the Noah's ark mission,
-        trying to send people and different animal species to a
-        planet recently discovered. The planet is 200.000 light years
-        away and you are the ship's pilot in charge to complete the mission.
-        
-        Good Luck!
-        """
+        textView.text = "2764 AD\n The death of a star suddenly creates a black hole that swallows our solar system. The United Nations activated the Noah's ark mission, trying to send people and different animal species to a planet recently discovered. The planet is 200.000 light years away and you are the ship's pilot in charge to complete the mission. \nGood Luck!"
         textView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         textView.backgroundColor = UIColor.clear
         textView.textAlignment = .center
@@ -41,7 +30,7 @@ class GameHistoryView: UIView {
         self.addSubview(historyText)
         historyText.translatesAutoresizingMaskIntoConstraints = false
         historyText.heightAnchor.constraint(equalToConstant: 700).isActive = true
-        historyText.widthAnchor.constraint(equalToConstant: 600).isActive = true
+        historyText.widthAnchor.constraint(equalToConstant: 400).isActive = true
         historyText.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 700)
         labelCenterYAnchor!.isActive = true
