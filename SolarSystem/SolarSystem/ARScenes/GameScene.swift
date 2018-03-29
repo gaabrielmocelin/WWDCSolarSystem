@@ -196,7 +196,9 @@ public class GameScene: SCNScene {
     }
     
     func generateBarrier(atRow row: Int) {
-        let barrier = SCNNode(geometry: SCNSphere(radius: 0.1))
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.setMaterial(with: randomTextureForBarrier())
+        let barrier = SCNNode(geometry: sphere)
         barrier.position = self.spawnBarrierPositions[row]
         barrier.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         barrier.physicsBody?.isAffectedByGravity = false
@@ -210,6 +212,12 @@ public class GameScene: SCNScene {
         barrier.runAction(SCNAction.move(to: moveToPosition, duration: barrierVelocity), completionHandler: {
             barrier.removeFromParentNode()
         })
+    }
+    
+    func randomTextureForBarrier() -> UIImage?{
+        let index = arc4random_uniform(3)
+        
+        return UIImage(named: "art.scnassets/comet\(index).jpg")
     }
     
     public func generateRowLines(withPosition position: SCNVector3) {
