@@ -342,7 +342,6 @@ extension GameScene{
             })
         }
         
-        ambientLightNode.light?.intensity = 50
         smoke?.removeFromParentNode()
         
         let newPlanetPosition = spawnBarrierPositions[1]
