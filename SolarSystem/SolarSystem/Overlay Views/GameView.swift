@@ -18,6 +18,8 @@ public class GameView: UIView {
     public var myState: ControlState
     public var stateDelegate: StateManager?
     public var gameDelegate: GamePerformer?
+
+    public var gameWasCompleted = false
     
     var scoreView: UIImageView = {
         let view = UIImageView()
@@ -180,6 +182,7 @@ extension GameView: GameFinishedDelegate{
     }
     
     public func gameIsCompleted() {
+        gameWasCompleted = true
         stateDelegate?.nextState(currentState: myState)
     }
 }

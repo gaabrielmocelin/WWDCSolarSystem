@@ -173,6 +173,9 @@ extension ViewController: StateManager{
                     let score = gameOverlay.score
                     let gameOverView = GameOverView()
                     gameOverView.score = score
+                    if gameOverlay.gameWasCompleted {
+                        gameOverView.gameCompleted()
+                    }
                     self.overLayView = gameOverView
                 }
             }

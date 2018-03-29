@@ -317,6 +317,7 @@ extension GameScene{
         
         let newPlanetPosition = spawnBarrierPositions[1]
         let sphere = SCNSphere(radius: 0.3)
+        sphere.setMaterial(with: UIImage(named: "art.scnassets/NewPlanet.png"))
         let newPlanet = SCNNode(geometry: sphere)
         newPlanet.scale = SCNVector3(0, 0, 0)
         newPlanet.position = newPlanetPosition
@@ -338,7 +339,6 @@ extension GameScene{
     }
     
     func gameCompleted() {
-        print("you rule")
         gameOverDelegate?.gameIsCompleted()
     }
 }
