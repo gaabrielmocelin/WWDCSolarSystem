@@ -11,6 +11,7 @@ class IntroduceSolarSystemView: UIView {
         button.setTitle("Next", for: .normal)
         button.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
         button.setBackgroundImage(UIImage(named: "Button.png"), for: .normal)
+        button.titleLabel?.font = Fonts.shared.boldFont(withSize: 20)
         return button
     }()
     

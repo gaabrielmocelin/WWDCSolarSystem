@@ -40,7 +40,8 @@ public class GameView: UIView {
         label.text = "Look at the ship and when you are read, tap anywhere to play"
         label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         label.textAlignment = .center
-        label.numberOfLines = 2
+        label.numberOfLines = 0
+        label.font = Fonts.shared.boldFont(withSize: 20)
         return label
     }()
     
@@ -92,7 +93,7 @@ public class GameView: UIView {
         
         backgroundWarningView.addSubview(warningLabel)
         warningLabel.translatesAutoresizingMaskIntoConstraints = false
-        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 10).isActive = true
+        warningLabel.topAnchor.constraint(equalTo: backgroundWarningView.topAnchor, constant: 15).isActive = true
         warningLabel.bottomAnchor.constraint(equalTo: backgroundWarningView.bottomAnchor).isActive = true
         warningLabel.leadingAnchor.constraint(equalTo: backgroundWarningView.leadingAnchor, constant: 40).isActive = true
         warningLabel.trailingAnchor.constraint(equalTo: backgroundWarningView.trailingAnchor, constant: 40).isActive = true
@@ -117,12 +118,12 @@ public class GameView: UIView {
     }
     
     @objc func updateScore() {
-        score += 1
+        score += 1000
         DispatchQueue.main.async {
             self.scoreLabel.text = "\(self.score)"
         }
         
-        if score == 200{
+        if score == 200000{
             gameDelegate?.CompleteGame()
             scoreView.fadeOut()
         }
@@ -140,6 +141,7 @@ public class GameView: UIView {
         scoreLabel.textColor = UIColor.white
         scoreLabel.text = "0"
         scoreLabel.textAlignment = .center
+        scoreLabel.font = Fonts.shared.boldFont(withSize: 24)
         
         scoreView.addSubview(scoreLabel)
         scoreLabel.translatesAutoresizingMaskIntoConstraints = false
