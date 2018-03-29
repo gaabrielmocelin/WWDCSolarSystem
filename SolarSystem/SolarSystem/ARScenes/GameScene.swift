@@ -189,6 +189,9 @@ public class GameScene: SCNScene {
         
         spaceshipRow = row
         spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
+        spaceShip.runAction(SCNAction.rotateBy(x: 0, y: 0, z: 0.7, duration: 0.15)) {
+            self.spaceShip.runAction(SCNAction.rotateBy(x: 0, y: 0, z: -0.7, duration: 0.05))
+        }
         
     }
     
@@ -197,6 +200,9 @@ public class GameScene: SCNScene {
         
         spaceshipRow = row
         spaceShip.runAction(SCNAction.move(to: spaceshipPositions[row.rawValue], duration: 0.2))
+        spaceShip.runAction(SCNAction.rotateBy(x: 0, y: 0, z: -0.7, duration: 0.15)) {
+            self.spaceShip.runAction(SCNAction.rotateBy(x: 0, y: 0, z: 0.7, duration: 0.05))
+        }
     }
     
     func randomlySpawnBarriers() {
