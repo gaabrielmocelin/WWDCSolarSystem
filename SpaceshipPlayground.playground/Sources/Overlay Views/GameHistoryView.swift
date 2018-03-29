@@ -8,12 +8,21 @@ class GameHistoryView: UIView {
     var historyText: UITextView = {
         var textView = UITextView()
         textView.text = """
-        this is where i tell the game history,
-        bkabalbak blabla bla blablablabla bla blablabla
-        blabla bla blabla bla bla "
+        2764 AD
+        
+        The death of a star suddenly creates a
+        black hole that swallows our solar system.
+        The United Nations activated the Noah's ark mission,
+        trying to send people and different animal species to a
+        planet recently discovered. The planet is 200.000 light years
+        away and you are the ship's pilot in charge to complete the mission.
+        
+        Good Luck!
         """
-        textView.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        textView.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         textView.backgroundColor = UIColor.clear
+        textView.textAlignment = .center
+        textView.font = Fonts.shared.regularFont(withSize: 26)
         return textView
     }()
     var labelCenterYAnchor: NSLayoutConstraint?
@@ -31,15 +40,15 @@ class GameHistoryView: UIView {
         
         self.addSubview(historyText)
         historyText.translatesAutoresizingMaskIntoConstraints = false
-        historyText.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        historyText.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        historyText.heightAnchor.constraint(equalToConstant: 700).isActive = true
+        historyText.widthAnchor.constraint(equalToConstant: 600).isActive = true
         historyText.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 200)
+        labelCenterYAnchor =  historyText.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 700)
         labelCenterYAnchor!.isActive = true
     }
     
     func tellHistory()  {
-        UIView.animate(withDuration: 10, delay: 0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: 30, delay: 0, options: .curveLinear, animations: {
             self.labelCenterYAnchor?.isActive = false
             self.historyText.bottomAnchor.constraint(equalTo: self.topAnchor).isActive = true
             self.layoutIfNeeded()
